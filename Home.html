@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html class="no-js" lang="it">
+
+<head>
+    <meta charset="utf-8">
+    <title>வரைபடவி - Varaipadavi</title>
+    <link rel="icon" href="http://www.filippobello.com/assets/images/favicon.gif" type="image/gif">
+    <meta name="theme-color" content="#0a0a0a">
+    <script src="http://www.filippobello.com/assets/vendors/modernizr/modernizr.js"></script>
+    <link rel="stylesheet" href="http://www.filippobello.com/assets/css/application.css">
+    <style>
+        .tchan {
+            font-size: 30px;
+        }
+        .vchan {
+            font-size: 100px;
+        }
+        .tel-Btn {
+            display: inline-block;
+            border-radius: 4px;
+            background-color: #f4511e;
+            border: none;
+            color: #FFFFFF;
+            text-align: center;
+            font-size: 28px;
+            padding: 20px;
+            width: 200px;
+            transition: all 0.5s;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        .tel-Btn span {
+            cursor: pointer;
+            display: inline-block;
+            position: relative;
+            transition: 0.5s;
+        }
+
+        .tel-Btn span:after {
+            content: '\00bb';
+            position: absolute;
+            opacity: 0;
+            top: 0;
+            right: -20px;
+            transition: 0.5s;
+        }
+
+        .tel-Btn:hover span {
+            padding-right: 25px;
+        }
+
+        .tel-Btn:hover span:after {
+            opacity: 1;
+            right: 0;
+        }
+    </style>
+</head>
+
+<body class="">
+
+    <div id="loader" class="c-loader">
+        <div class="c-loader__wrapper">
+            <div class="c-loader__bar" data-bar></div>
+        </div>
+    </div>
+
+
+    <main>
+        <div data-page="portfolio" data-immediate>
+
+            <div class="c-header">
+                <a href="About.html" class="c-header__link o-link o-link--white" data-hover="About">மேலும் அறிக</a>
+                <a href="contacts.html" class="c-header__link o-link o-link--white" data-hover="Scrivici">தொடர்பு கொள்க</a>
+            </div>
+
+
+            <div id="sections">
+                <section class="c-section is-active">
+                    <div class="c-section__wrapper js-mask">
+                        <div class="c-section__masks masks-1">
+                            <div style="background-image: url('world3.jpg')" data-mask class="c-mask c-mask--1"></div>
+                            <div style="background-image: url('world3.jpg')" data-mask class="c-mask c-mask--2"></div>
+                            <div style="background-image: url('world3.jpg')" data-mask class="c-mask c-mask--3"></div>
+                            <div style="background-image: url('world3.jpg')" data-mask class="c-mask c-mask--4"></div>
+                            <div style="background-image: url('world3.jpg')" data-mask class="c-mask--background"></div>
+                        </div>
+                        <div class="c-section__typo">
+                            <a href="/About.html" data-nav="postershow" data-transition="portfolioToSingle">
+                               <h2 data-reveal class="o-title tchan">
+                                    <span>கணிமை வழங்கும்</span> 
+                               </h2>
+                            </a>
+                            <a href="/Quiz.html" data-nav="postershow" data-transition="portfolioToSingle">
+                                <h1 data-reveal class="o-title vchan">
+                                    <span>வரைபடவி</span>
+                                </h1>
+                            </a>
+                            <a data-reveal href="/postershow" data-nav="postershow" data-transition="portfolioToSingle">
+                        <span class="o-link o-link--white" data-hover="Scopri">மேலும்..</span>
+                    </a>
+                        </div>
+                    </div>
+                </section>
+
+
+
+                <div class="c-navigator">
+                    <ul class="c-navigator__dots">
+                        <li data-dot><button></button></li>
+                    </ul>
+                    <ul class="c-navigator__buttons">
+                        <li>
+                            <a href="Quiz.html"><button class="tel-Btn"><span>செயலிக்குச் செல்க</span></button></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+        <div data-clear></div>
+    </main>
+
+    <script>
+        (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-83704220-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+
+    <script type="text/javascript">
+        var _iub = _iub || [];
+        _iub.csConfiguration = {
+            cookiePolicyId: 7958354,
+            siteId: 654104,
+            lang: "it"
+        };
+
+    </script>
+    <script type="text/javascript" src="//cdn.iubenda.com/cookie_solution/safemode/iubenda_cs.js" charset="UTF-8" async></script>
+
+    <script src="http://www.filippobello.com/assets/js/app.js"></script>
+
+</body>
+
+</html>
