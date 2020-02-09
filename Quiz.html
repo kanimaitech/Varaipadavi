@@ -251,7 +251,6 @@
                 <div class="container">
                     <img align="center" src='lkmap.png' usemap='#lkmap' class='map' title='imgmap201293016112'
                         alt='imgmap201293016112' id='lkmap' />
-
                 </div>
                 <map id='innermap' name='lkmap'>
                 </map>
@@ -464,11 +463,29 @@ ${pad0(Math.floor(times[2]), 2)}`;
                 var text = '<tr><td>' + rank + '</td><td>' + user + '</td><td>' + time + '</td></tr>';
                 document.getElementById('rank-t').innerHTML = document.getElementById('rank-t').innerHTML + text;
             }
-            addrank('1', 'Maathavan', '00:00:01')
-            addrank('2', 'Aathavan', '00:00:21')
 
-            addarea('யாழ்ப்பாணம்', '57,14')
-            addquest('யாழ்ப்பாணம்')
+            var places = [["யாழ்ப்பாணம்", "57,14"],
+                        ["வவுனியா", "131,146"],
+                        ["கிளிநொச்சி", "92,75"],
+                        ["மன்னார்", "55,138"],
+                        ["முல்லைத்தீவு", "137,67"],
+                        ["திருகோணமலை", "235,183"],
+                        ["மட்டக்களப்பு", "266,253"],
+                        ["நல்லூர்", "62,24"],
+                        ["அநுராதபுரம்", "144,231"],
+                        ["தலை_மன்னார்", "24,114"],
+                        ["கொழும்பு", "47,425"],
+                        ["அம்பாந்தோட்டை", "281,520"],
+                        ["கண்டி", "157,386"],
+                        ["நுவரெலியா", "192,423"],
+                        ["காலி", "94,568"],
+                        ];
+            addrank('1', 'Maathavan', '00:00:01')
+
+            for (x in places) {
+                addarea(places[x][0], places[x][1]);
+                addquest(places[x][0]);
+            }
         </script>
 
 </body>
