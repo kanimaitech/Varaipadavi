@@ -10,10 +10,12 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
     <script type="text/javascript" src="https://davidlynch.org/projects/maphilight/jquery.maphilight.min.js"></script>
-    <style>
-        /* (document.documentElement.innerText.match(new RegExp("is", "g") */
-        /* For device width smaller than 400px: */
 
+
+
+    <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-firestore.js"></script>
+    <style>
         .stopwatch {
             color: #DF3D82;
             font-size: 50px;
@@ -202,9 +204,9 @@
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav navbar-left">
                         <li><a href=""><i class="te-fa te-fa-4x glyphicon glyphicon-home"></i> முகப்பு</a></li>
-                        <li><a href="About"><i class="te-fa te-fa-4x glyphicon glyphicon-globe"></i> எங்களை பற்றி</a>
+                        <li><a href=""><i class="te-fa te-fa-4x glyphicon glyphicon-globe"></i> எங்களை பற்றி</a>
                         </li>
-                        <li><a href="Contact"><i class="te-fa te-fa-4x glyphicon glyphicon-phone-alt"></i> தொடர்பு
+                        <li><a href=""><i class="te-fa te-fa-4x glyphicon glyphicon-phone-alt"></i> தொடர்பு
                                 கொள்க</a></li>
                         <li class="active"><a><i class="te-fa te-fa-4x glyphicon glyphicon-flag"></i> போட்டி </a></li>
                     </ul>
@@ -277,8 +279,14 @@
                     if ($("#" + place).length == 0) {
                         alert("இவ்விடை தவறு");
                     } else {
-                        document.getElementById(place).innerHTML = '✓';
                         answers += 1;
+                        if (answers == 5) {
+                            stopwatch.stop();
+                            document.getElementById('question').innerHTML = '';
+                            document.getElementById('adti').style.display = 'block';
+                        } else {
+                            addquest(places[answers][0]);
+                        }
                         $(function () {
                             var c = $('#a-' + place).attr("coords");
                             var coord = c.split(',');
@@ -330,13 +338,6 @@
             function ClearCookie() {
                 document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
                 location.reload();
-            }
-            setInterval(StopTimer, 1);
-            function StopTimer() {
-                if (answers == 5) {
-                    stopwatch.stop();
-                    document.getElementById('adti').style.display = 'block';
-                }
             }
             class Stopwatch {
                 constructor(display, results) {
@@ -429,8 +430,8 @@ ${pad0(Math.floor(times[2]), 2)}`;
             }
 
             function addquest(place) {
-                var text = "<div class='row'><div class='col-sm-6'>" + place + "</div><div class='totick col-sm-2' id='" + place + "'></div></div>";
-                document.getElementById('question').innerHTML = document.getElementById('question').innerHTML + text;
+                var text = "<div id=" + place + ">" + place + "</div>";
+                document.getElementById('question').innerHTML = text;
             }
             $("#question").hide();
             $("#restart").hide();
@@ -464,30 +465,40 @@ ${pad0(Math.floor(times[2]), 2)}`;
                 document.getElementById('rank-t').innerHTML = document.getElementById('rank-t').innerHTML + text;
             }
 
-            var places = [["யாழ்ப்பாணம்", "57,14"],
-                        ["வவுனியா", "131,146"],
-                        ["கிளிநொச்சி", "92,75"],
-                        ["மன்னார்", "55,138"],
-                        ["முல்லைத்தீவு", "137,67"],
-                        ["திருகோணமலை", "235,183"],
-                        ["மட்டக்களப்பு", "266,253"],
-                        ["நல்லூர்", "62,24"],
-                        ["அநுராதபுரம்", "144,231"],
-                        ["தலை_மன்னார்", "24,114"],
-                        ["கொழும்பு", "47,425"],
-                        ["அம்பாந்தோட்டை", "281,520"],
-                        ["கண்டி", "157,386"],
-                        ["நுவரெலியா", "192,423"],
-                        ["காலி", "94,568"],
-                        ];
-            addrank('1', 'Maathavan', '00:00:01')
 
-            for (x in places) {
-                addarea(places[x][0], places[x][1]);
-                addquest(places[x][0]);
+            const firebaseConfig = {
+                apiKey: "AIzaSyCHAsGid0iA0FUpL0F-HGanJ3jvzfD8uqs",
+                authDomain: "varaipadavi.firebaseapp.com",
+                databaseURL: "https://varaipadavi.firebaseio.com",
+                projectId: "varaipadavi",
+                storageBucket: "varaipadavi.appspot.com",
+                messagingSenderId: "120572762230",
+                appId: "1:120572762230:web:b2c04402f971a05b0fa757",
+                measurementId: "G-2ZNXL3S5RR"
+            };
+
+            firebase.initializeApp(firebaseConfig);
+            var db = firebase.firestore();
+
+            var places = [];
+            db.collection("places").get().then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    places.push([doc.data()['Place'], doc.data()['Coordinates']])
+                    addarea(doc.data()['Place'], doc.data()['Coordinates']);
+                    console.log(doc.data()['Place']);
+                });
+                var i = 0;
+                var qPlaces = shuffle(places);
+                addquest(places[0][0]);
+            });
+
+            addrank('', 'Feature Coming Soon..', '')
+
+            function shuffle(array) {
+                array.sort(() => Math.random() - 0.5);
             }
-        </script>
 
+        </script>
 </body>
 
 </html>
