@@ -4,14 +4,11 @@
 
 <head>
     <title>வரைபடவி - Varaipadavi</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <link rel="icon" href="http://www.filippobello.com/assets/images/favicon.gif" type="image/gif">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
     <script type="text/javascript" src="https://davidlynch.org/projects/maphilight/jquery.maphilight.min.js"></script>
-
-
 
     <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-firestore.js"></script>
@@ -185,6 +182,38 @@
         .navbar-brand {
             font-size: 22px !important;
         }
+
+        .loader {
+            border: 16px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 16px solid #3498db;
+            width: 100px;
+            height: 100px;
+            -webkit-animation: spin 2s linear infinite;
+            /* Safari */
+            animation: spin 2s linear infinite;
+        }
+
+        /* Safari */
+        @-webkit-keyframes spin {
+            0% {
+                -webkit-transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
     </style>
 
     <title></title>
@@ -238,14 +267,24 @@
                         <th>நிலை</th>
                         <th>பயனர்</th>
                         <th>நேரம்</th>
+                    <tr id="rankLoader">
+                        <td></td>
+                        <td>
+                            <div class="loader"></div>
+                        </td>
+                        <td></td>
+                    </tr>
                 </table>
             </div>
             <div class="q-area">
                 <div class="stopwatch"></div>
                 <div id="question"></div>
-                <button id="start" onclick="runphp()">தொடங்குக</button>
+                <center>
+                    <div id="questLoader" class="loader"></div>
+                </center>
+                <button id="start">தொடங்குக</button>
                 <button id="restart" onclick="restart()">Restart</button>
-                <button id="adti" onclick="addtime()">புள்ளியை சேர்</button>
+                <button id="adti" onclick="addRankToDatabase()">புள்ளியை சேர்</button>
                 <div id="text"></div>
                 <div id="datatr"></div>
             </div>
@@ -280,7 +319,7 @@
                         alert("இவ்விடை தவறு");
                     } else {
                         answers += 1;
-                        if (answers == 5) {
+                        if (answers == 10) {
                             stopwatch.stop();
                             document.getElementById('question').innerHTML = '';
                             document.getElementById('adti').style.display = 'block';
@@ -434,6 +473,7 @@ ${pad0(Math.floor(times[2]), 2)}`;
                 document.getElementById('question').innerHTML = text;
             }
             $("#question").hide();
+            $("#start").hide();
             $("#restart").hide();
             $(".map").hide();
             $(document).ready(function () {
@@ -448,19 +488,8 @@ ${pad0(Math.floor(times[2]), 2)}`;
             function restart() {
                 location.reload();
             }
-            function addtime() {
-                var ltime = stopwatch.lap();
-                var rtime = ltime.replace(/;/g, "a")
-                $.post("addtime.php", { score: rtime })
-                    .done(function (data) {
-                        alert("Score Added");
-                        location.reload();
-                    });
-                $.post("rank.php")
-                    .done(function () {
-                    });
-            }
-            function addrank(rank, user, time) {
+
+            function addRankToTable(rank, user, time) {
                 var text = '<tr><td>' + rank + '</td><td>' + user + '</td><td>' + time + '</td></tr>';
                 document.getElementById('rank-t').innerHTML = document.getElementById('rank-t').innerHTML + text;
             }
@@ -485,18 +514,34 @@ ${pad0(Math.floor(times[2]), 2)}`;
                 querySnapshot.forEach((doc) => {
                     places.push([doc.data()['Place'], doc.data()['Coordinates']])
                     addarea(doc.data()['Place'], doc.data()['Coordinates']);
+                    $("#questLoader").hide();
+                    $("#start").show();
                     console.log(doc.data()['Place']);
                 });
                 var i = 0;
                 var qPlaces = shuffle(places);
                 addquest(places[0][0]);
             });
+            var rank = 1;
+            db.collection("rank").limit(10).get().then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    $("#rankLoader").hide();
+                    addRankToTable(rank, doc.data()['name'], doc.data()['time']);
+                    rank++;
+                });
+            });
 
-            addrank('', 'Feature Coming Soon..', '')
-
+            function addRankToDatabase(){
+                var time = stopwatch.lap().replace(/;/g, "a");
+                var name = prompt("Your Name?")
+                db.collection("rank").add({
+                    name: name,
+                    time: time
+                })
+            };
             function shuffle(array) {
                 array.sort(() => Math.random() - 0.5);
-            }
+            };
 
         </script>
 </body>
