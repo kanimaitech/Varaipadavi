@@ -523,7 +523,7 @@ ${pad0(Math.floor(times[2]), 2)}`;
                 addquest(places[0][0]);
             });
             var rank = 1;
-            db.collection("rank").limit(10).get().then((querySnapshot) => {
+            db.collection("rank").orderBy("time").limit(10).get().then((querySnapshot) => {
                 querySnapshot.forEach((doc) => {
                     $("#rankLoader").hide();
                     addRankToTable(rank, doc.data()['name'], doc.data()['time']);
