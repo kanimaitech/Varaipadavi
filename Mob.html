@@ -136,7 +136,7 @@
             padding: 0;
             border: 1px solid #888;
             width: 80%;
-            height: 60%;
+            height: fit-content;
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
             -webkit-animation-name: animatetop;
             -webkit-animation-duration: 0.4s;
@@ -280,7 +280,8 @@
                         <button class="vp-btn" id="addTimeBtn" onclick="addRankToDatabase()">புள்ளியை
                             சேர்</button>
                         <button class="vp-btn" id="replay" onclick="restart()">விளையாடு</button>
-                        <button class="vp-btn" id="rankTable"><a href="rank.html">நிலை</a></button>
+                        </br>
+                        <a href="rank.html"><button class="vp-btn" id="rankTable">நிலை</button></a>
                     </div>
                 </div>
 
@@ -312,7 +313,7 @@
                     alert("இவ்விடை தவறு");
                 } else {
                     answers += 1;
-                    if (answers >= 10) {
+                    if (answers >= 3) {
                         stopwatch.stop();
                         document.getElementById('question').innerHTML = '';
                         document.getElementById('modal-header-text').innerHTML = 'வாழ்த்துக்கள்!';

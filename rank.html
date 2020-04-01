@@ -64,7 +64,7 @@
         }
 
         .navbar {
-            margin-bottom: 0;
+            visibility: hidden;
             background-color: #0080ff;
             font-family: Montserrat, sans-serif;
         }
@@ -111,7 +111,14 @@
                 transform: rotate(360deg);
             }
         }
-
+        #rankLoader {
+            top: 100px;
+            left: 150px;
+            position: fixed;
+        }
+        .r-area {
+            display: none;
+        }
     </style>
 
     <title></title>
@@ -121,7 +128,7 @@
 
     <div class="web-view">
 
-        <nav class="navbar navbar-expand-lg">
+        <nav id="myNav" class="navbar navbar-expand-lg">
             <div class="navbar-header">
                 <img class="brand" src="brand.png" height="35px" />
             </div>
@@ -146,28 +153,24 @@
 
             </div>
         </nav>
-
         <div class="r-area">
             <table id="rank-t">
                 <tr>
                     <th>நிலை</th>
                     <th>பயனர்</th>
                     <th>நேரம்</th>
-                <tr id="rankLoader">
-                    <td></td>
-                    <td>
-                        <div class="loader"></div>
-                    </td>
-                    <td></td>
+                <tr>
                 </tr>
             </table>
         </div>
+        <div id="rankLoader">
+        <div class="loader"></div></div>
 
     </div>
 
 
     <script>
-
+        
         function addRankToTable(rank, user, time) {
             var text = '<tr><td>' + rank + '</td><td>' + user + '</td><td>' + time + '</td></tr>';
             document.getElementById('rank-t').innerHTML = document.getElementById('rank-t').innerHTML + text;
@@ -192,19 +195,12 @@
         db.collection("rank").orderBy("time").get().then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
                 $("#rankLoader").hide();
+                document.getElementById("myNav").style.visibility = "visible";
+                $(".r-area").show();
                 addRankToTable(rank, doc.data()['name'], doc.data()['time']);
                 rank++;
             });
         });
-
-        function addRankToDatabase() {
-            var time = stopwatch.lap().replace(/;/g, "a");
-            var name = prompt("Your Name?")
-            db.collection("rank").add({
-                name: name,
-                time: time
-            })
-        };
 
     </script>
 </body>
