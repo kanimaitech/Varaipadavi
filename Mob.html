@@ -242,10 +242,9 @@
                     <li class="nav-item"><a class="nav-link" href=""><i
                                 class="te-fa te-fa-4x glyphicon glyphicon-globe"></i> எங்களை பற்றி</a>
                     </li>
-                    <li class="nav-item"><a class="nav-link" href=""><i
-                                class="te-fa te-fa-4x glyphicon glyphicon-phone-alt"></i> தொடர்பு
-                            கொள்க</a></li>
-                    <li class="nav-item active"><a class="nav-link"><i
+                    <li class="nav-item"><a class="nav-link" href="rank.html"><i
+                                class="te-fa te-fa-4x glyphicon glyphicon-phone-alt"></i> நிலை </a></li>
+                    <li class="nav-item active"><a class="nav-link" href="Mob.html"><i
                                 class="te-fa te-fa-4x glyphicon glyphicon-flag"></i> போட்டி </a></li>
 
                 </ul>
@@ -281,6 +280,7 @@
                         <button class="vp-btn" id="addTimeBtn" onclick="addRankToDatabase()">புள்ளியை
                             சேர்</button>
                         <button class="vp-btn" id="replay" onclick="restart()">Replay</button>
+                        <button class="vp-btn" id="rankTable"><a href="rank.html">Rank Table</a></button>
                     </div>
                 </div>
 
@@ -472,6 +472,7 @@ ${pad0(Math.floor(times[2]), 2)}`;
         $("#addTimeBtn").hide();
         $("#start").hide();
         $("#replay").hide();
+        $("#rankTable").hide();
         $("#username").hide();
         $("#restart").hide();
         $(".map").hide();
@@ -545,6 +546,7 @@ ${pad0(Math.floor(times[2]), 2)}`;
             document.getElementById('modal-header-text').innerHTML = 'Success';
             document.getElementById('modal-text').innerHTML = 'Your Score has been added, ' + name + "\n\n Want to Play again?";
             $("#replay").show();
+            $("#rankTable").show();
         };
         function shuffle(array) {
             array.sort(() => Math.random() - 0.5);
