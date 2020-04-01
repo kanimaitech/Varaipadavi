@@ -18,19 +18,46 @@
     <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-firestore.js"></script>
 
-    <link type="text/css" rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link type="text/css" rel="stylesheet"
+        href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
+        body {
+            width: fit-content;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .map {
+            top: 15px;
+            right: 5px;
+        }
+
+        .question-area {
+            position: fixed;
+            top: 50px;
+            right: 10px;
+        }
+
+        #question {
+            padding-bottom: 5px;
+        }
+
+        .mobile-view {
+            zoom: 259%;
+        }
+
         .stopwatch {
-            font-size: 50px;
+            font-size: 38px;
             text-align: center;
         }
 
         .loader {
-            border: 16px solid #f3f3f3;
+            margin: auto;
+            width: 50%;
+            border: 10px solid #f3f3f3;
             border-radius: 50%;
-            border-top: 16px solid #3498db;
-            width: 100px;
-            height: 100px;
+            border-top: 10px solid #3498db;
+            width: 40px;
+            height: 40px;
             -webkit-animation: spin 2s linear infinite;
             /* Safari */
             animation: spin 2s linear infinite;
@@ -69,23 +96,110 @@
         }
 
         .navbar-nav li a:hover,
-        .navbar-nav li.active a, .navbar-toggler {
+        .navbar-nav li.active a,
+        .navbar-toggler {
             color: #ffffff !important;
         }
 
-        .map {
-            top: 15px;
-            left: 20px;
-        }
 
-        .question-area {
+        /* Modal */
+
+        /* The Modal (background) */
+        .modal {
+            display: none;
+            /* Hidden by default */
             position: fixed;
-            top: 50px;
-            right: 20px;
+            /* Stay in place */
+            z-index: 1;
+            /* Sit on top */
+            padding-top: 100px;
+            /* Location of the box */
+            left: 0;
+            top: 0;
+            width: 100%;
+            /* Full width */
+            height: 100%;
+            /* Full height */
+            overflow: auto;
+            /* Enable scroll if needed */
+            background-color: rgb(0, 0, 0);
+            /* Fallback color */
+            background-color: rgba(0, 0, 0, 0.6);
+            /* Black w/ opacity */
         }
 
-        #question {
-            padding-bottom: 5px;
+        /* Modal Content */
+        .modal-content {
+            position: relative;
+            background-color: #fefefe;
+            margin: auto;
+            padding: 0;
+            border: 1px solid #888;
+            width: 80%;
+            height: 60%;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            -webkit-animation-name: animatetop;
+            -webkit-animation-duration: 0.4s;
+            animation-name: animatetop;
+            animation-duration: 0.4s
+        }
+
+        /* Add Animation */
+        @-webkit-keyframes animatetop {
+            from {
+                top: -300px;
+                opacity: 0
+            }
+
+            to {
+                top: 0;
+                opacity: 1
+            }
+        }
+
+        @keyframes animatetop {
+            from {
+                top: -300px;
+                opacity: 0
+            }
+
+            to {
+                top: 0;
+                opacity: 1
+            }
+        }
+
+        .modal-header {
+            padding: 2px 16px;
+            background-color: #0080ff;
+            color: white;
+        }
+
+        .modal-body {
+            padding: 15px 16px;
+        }
+
+        .vp-btn {
+            width: 100%;
+            position: relative;
+            background-color: #0080ff;
+            border: none;
+            font-size: 18px;
+            color: #FFFFFF;
+            padding: 8px;
+            text-align: center;
+            transition-duration: 0.4s;
+            text-decoration: none;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        #modal-header-text {
+            font-size: 28px;
+        }
+
+        #modal-text {
+            text-align: center;
         }
     </style>
 
@@ -107,12 +221,16 @@
 
             <div class="collapse navbar-collapse" id="navbarToggler">
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                    <li class="nav-item"><a class="nav-link" href=""><i class="te-fa te-fa-4x glyphicon glyphicon-home"></i> முகப்பு</a></li>
-                    <li class="nav-item"><a class="nav-link" href=""><i class="te-fa te-fa-4x glyphicon glyphicon-globe"></i> எங்களை பற்றி</a>
+                    <li class="nav-item"><a class="nav-link" href=""><i
+                                class="te-fa te-fa-4x glyphicon glyphicon-home"></i> முகப்பு</a></li>
+                    <li class="nav-item"><a class="nav-link" href=""><i
+                                class="te-fa te-fa-4x glyphicon glyphicon-globe"></i> எங்களை பற்றி</a>
                     </li>
-                    <li class="nav-item"><a class="nav-link" href=""><i class="te-fa te-fa-4x glyphicon glyphicon-phone-alt"></i> தொடர்பு
+                    <li class="nav-item"><a class="nav-link" href=""><i
+                                class="te-fa te-fa-4x glyphicon glyphicon-phone-alt"></i> தொடர்பு
                             கொள்க</a></li>
-                    <li class="nav-item active"><a class="nav-link"><i class="te-fa te-fa-4x glyphicon glyphicon-flag"></i> போட்டி </a></li>
+                    <li class="nav-item active"><a class="nav-link"><i
+                                class="te-fa te-fa-4x glyphicon glyphicon-flag"></i> போட்டி </a></li>
 
                 </ul>
 
@@ -130,17 +248,31 @@
             <div class="question-area">
                 <div class="stopwatch"></div>
                 <div id="question"></div>
-                <button id="start">தொடங்குக</button>
-                <button id="restart" onclick="restart()">Restart</button>
-                <button class="d-none" id="adti" onclick="addRankToDatabase()">புள்ளியை சேர்</button>
-                <div id="text"></div>
-                <div id="datatr"></div>
+                <button class="vp-btn" id="restart" onclick="restart()">Restart</button>
+            </div>
+            <div id="myModal" class="modal">
+
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div id="modal-header-text">Varaipadavi</div>
+                    </div>
+                    <div class="modal-body">
+                        <div class="loader" id="questLoader"></div>
+                        <div id="modal-text">Loading</div>
+                        <button class="vp-btn" id="start">தொடங்குக</button>
+                        <button class="vp-btn" id="addTimeBtn" onclick="addRankToDatabase()">புள்ளியை
+                            சேர்</button>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
 
 
     <script>
+
         $(function () {
             $('.map').maphilight({
                 fillColor: '008800'
@@ -165,7 +297,10 @@
                     if (answers == 10) {
                         stopwatch.stop();
                         document.getElementById('question').innerHTML = '';
-                        document.getElementById('adti').style.display = 'block';
+                        document.getElementById('modal-header-text').innerHTML = 'Congratulations!';
+                        document.getElementById('modal-text').innerHTML = 'You Win';
+                        modal.style.display = "block";
+                        document.getElementById('addTimeBtn').style.display = 'block';
                     } else {
                         addquest(places[answers][0]);
                     }
@@ -315,7 +450,7 @@ ${pad0(Math.floor(times[2]), 2)}`;
             var text = "<div id=" + place + ">" + place.replace("_", " ") + "</div>";
             document.getElementById('question').innerHTML = text;
         }
-        $("#question").hide();
+        $("#addTimeBtn").hide();
         $("#start").hide();
         $("#restart").hide();
         $(".map").hide();
@@ -326,7 +461,9 @@ ${pad0(Math.floor(times[2]), 2)}`;
                 $("#start").hide();
                 $("#restart").show();
                 $(".map").show();
+                $("#myModal").hide();
             });
+            modal.style.display = "block";
         });
         function restart() {
             location.reload();
@@ -358,6 +495,7 @@ ${pad0(Math.floor(times[2]), 2)}`;
                 places.push([doc.data()['Place'], doc.data()['Coordinates']])
                 addarea(doc.data()['Place'], doc.data()['Coordinates']);
                 $("#questLoader").hide();
+                document.getElementById('modal-text').innerHTML = 'Are you Ready?';
                 $("#start").show();
                 console.log(doc.data()['Place']);
             });
@@ -385,6 +523,9 @@ ${pad0(Math.floor(times[2]), 2)}`;
         function shuffle(array) {
             array.sort(() => Math.random() - 0.5);
         };
+
+        var modal = document.getElementById("myModal");
+
 
     </script>
 </body>
