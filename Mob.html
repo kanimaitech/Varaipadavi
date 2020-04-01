@@ -27,7 +27,7 @@
         }
 
         .map {
-            top: 15px;
+            top: 8px;
             right: 5px;
         }
 
@@ -270,17 +270,17 @@
                 <!-- Modal content -->
                 <div class="modal-content">
                     <div class="modal-header">
-                        <div id="modal-header-text">Varaipadavi</div>
+                        <div id="modal-header-text">வரைபடவி</div>
                     </div>
                     <div class="modal-body">
                         <div class="loader" id="questLoader"></div>
                         <div id="modal-text">Loading</div>
                         <button class="vp-btn" id="start">தொடங்குக</button>
-                        <input type="text" id="username" placeholder="Enter your name" />
+                        <input type="text" id="username" placeholder="உங்கள் பெயரை உள்ளிடுக" />
                         <button class="vp-btn" id="addTimeBtn" onclick="addRankToDatabase()">புள்ளியை
                             சேர்</button>
-                        <button class="vp-btn" id="replay" onclick="restart()">Replay</button>
-                        <button class="vp-btn" id="rankTable"><a href="rank.html">Rank Table</a></button>
+                        <button class="vp-btn" id="replay" onclick="restart()">விளையாடு</button>
+                        <button class="vp-btn" id="rankTable"><a href="rank.html">நிலை</a></button>
                     </div>
                 </div>
 
@@ -315,8 +315,8 @@
                     if (answers >= 10) {
                         stopwatch.stop();
                         document.getElementById('question').innerHTML = '';
-                        document.getElementById('modal-header-text').innerHTML = 'Congratulations!';
-                        document.getElementById('modal-text').innerHTML = 'Your Score Time: <b>' + stopwatch.lap().replace(/;/g, "a") + '</b>';
+                        document.getElementById('modal-header-text').innerHTML = 'வாழ்த்துக்கள்!';
+                        document.getElementById('modal-text').innerHTML = 'உங்கள் புள்ளி நேரம்: <b>' + stopwatch.lap().replace(/;/g, "a") + '</b>';
                         $("#username").show();
                         modal.style.display = "block";
                         document.getElementById('addTimeBtn').style.display = 'block';
@@ -332,7 +332,6 @@
                         var data = $('#a-' + place).mouseout().data('maphilight') || {};
                         data.alwaysOn = !data.alwaysOn;
                         $('#a-' + place).data('maphilight', data).trigger('alwaysOn.maphilight');
-                        $('#a-' + place).attr("onclick", "alert('Already done');");
                     });
                 }
             }
@@ -517,7 +516,7 @@ ${pad0(Math.floor(times[2]), 2)}`;
                 places.push([doc.data()['Place'], doc.data()['Coordinates']])
                 addarea(doc.data()['Place'], doc.data()['Coordinates']);
                 $("#questLoader").hide();
-                document.getElementById('modal-text').innerHTML = 'Are you Ready?';
+                document.getElementById('modal-text').innerHTML = 'நீங்கள் விளையாடத் தயாரா?';
                 $("#start").show();
                 console.log(doc.data()['Place']);
             });
@@ -543,8 +542,8 @@ ${pad0(Math.floor(times[2]), 2)}`;
             })
             $("#addTimeBtn").hide();
             $("#username").hide();
-            document.getElementById('modal-header-text').innerHTML = 'Success';
-            document.getElementById('modal-text').innerHTML = 'Your Score has been added, ' + name + "\n\n Want to Play again?";
+            document.getElementById('modal-header-text').innerHTML = 'வெற்றி!';
+            document.getElementById('modal-text').innerHTML = 'உங்கள் புள்ளி சேர்க்கப்பட்டது, ' + name + "\n\n மறுதடவை விளையாடப் போகின்றீர்களா??";
             $("#replay").show();
             $("#rankTable").show();
         };
