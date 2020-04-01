@@ -200,6 +200,22 @@
 
         #modal-text {
             text-align: center;
+            padding-bottom: 10px;
+        }
+
+        input[type=text] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: 3px solid #ccc;
+            -webkit-transition: 0.5s;
+            transition: 0.5s;
+            outline: none;
+        }
+
+        input[type=text]:focus {
+            border: 3px solid #555;
         }
     </style>
 
@@ -261,8 +277,10 @@
                         <div class="loader" id="questLoader"></div>
                         <div id="modal-text">Loading</div>
                         <button class="vp-btn" id="start">தொடங்குக</button>
+                        <input type="text" id="username" placeholder="Enter your name" />
                         <button class="vp-btn" id="addTimeBtn" onclick="addRankToDatabase()">புள்ளியை
                             சேர்</button>
+                        <button class="vp-btn" id="replay" onclick="restart()">Replay</button>
                     </div>
                 </div>
 
@@ -294,11 +312,12 @@
                     alert("இவ்விடை தவறு");
                 } else {
                     answers += 1;
-                    if (answers == 10) {
+                    if (answers >= 10) {
                         stopwatch.stop();
                         document.getElementById('question').innerHTML = '';
                         document.getElementById('modal-header-text').innerHTML = 'Congratulations!';
-                        document.getElementById('modal-text').innerHTML = 'You Win';
+                        document.getElementById('modal-text').innerHTML = 'Your Score Time: <b>' + stopwatch.lap().replace(/;/g, "a") + '</b>';
+                        $("#username").show();
                         modal.style.display = "block";
                         document.getElementById('addTimeBtn').style.display = 'block';
                     } else {
@@ -452,6 +471,8 @@ ${pad0(Math.floor(times[2]), 2)}`;
         }
         $("#addTimeBtn").hide();
         $("#start").hide();
+        $("#replay").hide();
+        $("#username").hide();
         $("#restart").hide();
         $(".map").hide();
         $(document).ready(function () {
@@ -514,11 +535,16 @@ ${pad0(Math.floor(times[2]), 2)}`;
 
         function addRankToDatabase() {
             var time = stopwatch.lap().replace(/;/g, "a");
-            var name = prompt("Your Name?")
+            var name = document.getElementById("username").value;
             db.collection("rank").add({
                 name: name,
                 time: time
             })
+            $("#addTimeBtn").hide();
+            $("#username").hide();
+            document.getElementById('modal-header-text').innerHTML = 'Success';
+            document.getElementById('modal-text').innerHTML = 'Your Score has been added, ' + name + "\n\n Want to Play again?";
+            $("#replay").show();
         };
         function shuffle(array) {
             array.sort(() => Math.random() - 0.5);
