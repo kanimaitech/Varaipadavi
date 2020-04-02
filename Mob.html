@@ -313,12 +313,13 @@
                     alert("இவ்விடை தவறு");
                 } else {
                     answers += 1;
-                    if (answers >= 3) {
+                    if (answers >= 10) {
                         stopwatch.stop();
                         document.getElementById('question').innerHTML = '';
                         document.getElementById('modal-header-text').innerHTML = 'வாழ்த்துக்கள்!';
                         document.getElementById('modal-text').innerHTML = 'உங்கள் புள்ளி நேரம்: <b>' + stopwatch.lap().replace(/;/g, "a") + '</b>';
                         $("#username").show();
+                        $("#replay").show();
                         modal.style.display = "block";
                         document.getElementById('addTimeBtn').style.display = 'block';
                     } else {
