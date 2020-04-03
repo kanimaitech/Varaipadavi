@@ -374,13 +374,11 @@
             $('.map').maphilight({
                 fillColor: '008800'
             });
+            
+            modal.style.display = "block";
         });
 
         var answers = 0;
-
-        $(document).ready(function () {
-            modal.style.display = "block";
-        });
         
         function startGame() {
                 $("#question").show();
@@ -391,7 +389,7 @@
                 $("#myModal").hide();
         }
 
-        function Doit(place) {
+        function markPlace(place) {
             if ($("#" + place).length == 0) {
                 showSnackbar("தவறு, அது " + place.replace("_", " "), "red", 2000);
             } else {
@@ -402,8 +400,7 @@
                     showModal('வாழ்த்துக்கள்!', 'உங்கள் புள்ளி நேரம்: <b>' + stopwatch.lap().replace(/;/g, "a") + '</b>');
                     $("#username-input").show();
                     $("#replay-btn").show();
-                    modal.style.display = "block";
-                    document.getElementById('add-time-btn').style.display = 'block';
+                    $("#add-time-btn").show();
                 } else {
                     showSnackbar("சரியான பதில்.", "green", 800);
                     addQuestion(places[answers][0]);
@@ -422,7 +419,7 @@
         }
 
         function addArea(place, coords) {
-            var text = '<area id="a-' + place + '" class="m-area" style="display: none;" shape="circ" coords="' + coords + ', 14"  onclick="Doit(\'' + place + '\')" data-maphilight=\'{"strokeColor":"0000ff","strokeWidth":3,"fillColor":"00ff00","fillOpacity":0.6}\' data-clicked="0"/>'
+            var text = '<area id="a-' + place + '" class="m-area" style="display: none;" shape="circ" coords="' + coords + ', 14"  onclick="markPlace(\'' + place + '\')" data-maphilight=\'{"strokeColor":"0000ff","strokeWidth":3,"fillColor":"00ff00","fillOpacity":0.6}\' data-clicked="0"/>'
             document.getElementById('innermap').innerHTML = document.getElementById('innermap').innerHTML + text;
         }
 
@@ -447,7 +444,7 @@
                 $("#start-btn").show();
             });
             var i = 0;
-            var qPlaces = shuffle(places);
+            shuffle(places);
             addQuestion(places[0][0]);
         });
 
@@ -464,6 +461,8 @@
             $("#replay-btn").show();
             $("#rank-link-btn").show();
         };
+
+
         function shuffle(array) {
             array.sort(() => Math.random() - 0.5);
         };
