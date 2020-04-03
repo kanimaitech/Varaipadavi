@@ -64,7 +64,7 @@
             width: 100%;
             position: relative;
             background-color: #0080ff;
-            border: none;
+            border: 2px solid white;
             font-size: 18px;
             color: #FFFFFF;
             padding: 8px;
@@ -396,7 +396,7 @@
                 showSnackbar("தவறு, அது " + place.replace("_", " "), "red", 2000);
             } else {
                 answers += 1;
-                if (answers >= 3) {
+                if (answers >= 10) {
                     stopwatch.stop();
                     document.getElementById('question').innerHTML = '';
                     showModal('வாழ்த்துக்கள்!', 'உங்கள் புள்ளி நேரம்: <b>' + stopwatch.lap().replace(/;/g, "a") + '</b>');
@@ -450,7 +450,6 @@
                 $("#question-loader").hide();
                 document.getElementById('modal-text').innerHTML = 'நீங்கள் விளையாடத் தயாரா?';
                 $("#start-btn").show();
-                console.log(doc.data()['Place']);
             });
             var i = 0;
             var qPlaces = shuffle(places);
