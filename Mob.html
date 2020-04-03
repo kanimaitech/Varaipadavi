@@ -263,7 +263,7 @@
             <div class="question-area">
                 <div class="stopwatch"></div>
                 <div id="question"></div>
-                <button class="vp-btn" id="restart" onclick="restart()">Restart</button>
+                <button class="vp-btn" id="restart-btn" onclick="restart()">Restart</button>
             </div>
             <div id="myModal" class="modal">
 
@@ -273,15 +273,15 @@
                         <div id="modal-header-text">வரைபடவி</div>
                     </div>
                     <div class="modal-body">
-                        <div class="loader" id="questLoader"></div>
+                        <div class="loader" id="question-loader"></div>
                         <div id="modal-text">Loading</div>
-                        <button class="vp-btn" id="start">தொடங்குக</button>
-                        <input type="text" id="username" placeholder="உங்கள் பெயரை உள்ளிடுக" />
-                        <button class="vp-btn" id="addTimeBtn" onclick="addRankToDatabase()">புள்ளியை
+                        <button class="vp-btn" id="start-btn">தொடங்குக</button>
+                        <input type="text" id="username-input" placeholder="உங்கள் பெயரை உள்ளிடுக" />
+                        <button class="vp-btn" id="add-time-btn" onclick="addRankToDatabase()">புள்ளியை
                             சேர்</button>
-                        <button class="vp-btn" id="replay" onclick="restart()">விளையாடு</button>
+                        <button class="vp-btn" id="replay-btn" onclick="restart()">விளையாடு</button>
                         </br>
-                        <a href="rank.html"><button class="vp-btn" id="rankTable">நிலை</button></a>
+                        <a href="rank.html"><button class="vp-btn" id="rank-table">நிலை</button></a>
                     </div>
                 </div>
 
@@ -318,10 +318,10 @@
                         document.getElementById('question').innerHTML = '';
                         document.getElementById('modal-header-text').innerHTML = 'வாழ்த்துக்கள்!';
                         document.getElementById('modal-text').innerHTML = 'உங்கள் புள்ளி நேரம்: <b>' + stopwatch.lap().replace(/;/g, "a") + '</b>';
-                        $("#username").show();
-                        $("#replay").show();
+                        $("#username-input").show();
+                        $("#replay-btn").show();
                         modal.style.display = "block";
-                        document.getElementById('addTimeBtn').style.display = 'block';
+                        document.getElementById('add-time-btn').style.display = 'block';
                     } else {
                         addquest(places[answers][0]);
                     }
@@ -470,19 +470,19 @@ ${pad0(Math.floor(times[2]), 2)}`;
             var text = "<div id=" + place + ">" + place.replace("_", " ") + "</div>";
             document.getElementById('question').innerHTML = text;
         }
-        $("#addTimeBtn").hide();
-        $("#start").hide();
-        $("#replay").hide();
-        $("#rankTable").hide();
-        $("#username").hide();
-        $("#restart").hide();
+        $("#add-time-btn").hide();
+        $("#start-btn").hide();
+        $("#replay-btn").hide();
+        $("#rank-table").hide();
+        $("#username-input").hide();
+        $("#restart-btn").hide();
         $(".map").hide();
         $(document).ready(function () {
-            $("#start").on("click", function () {
+            $("#start-btn").on("click", function () {
                 $("#question").show();
                 stopwatch.start();
-                $("#start").hide();
-                $("#restart").show();
+                $("#start-btn").hide();
+                $("#restart-btn").show();
                 $(".map").show();
                 $("#myModal").hide();
             });
@@ -517,9 +517,9 @@ ${pad0(Math.floor(times[2]), 2)}`;
             querySnapshot.forEach((doc) => {
                 places.push([doc.data()['Place'], doc.data()['Coordinates']])
                 addarea(doc.data()['Place'], doc.data()['Coordinates']);
-                $("#questLoader").hide();
+                $("#question-loader").hide();
                 document.getElementById('modal-text').innerHTML = 'நீங்கள் விளையாடத் தயாரா?';
-                $("#start").show();
+                $("#start-btn").show();
                 console.log(doc.data()['Place']);
             });
             var i = 0;
@@ -537,17 +537,17 @@ ${pad0(Math.floor(times[2]), 2)}`;
 
         function addRankToDatabase() {
             var time = stopwatch.lap().replace(/;/g, "a");
-            var name = document.getElementById("username").value;
+            var name = document.getElementById("username-input").value;
             db.collection("rank").add({
                 name: name,
                 time: time
             })
-            $("#addTimeBtn").hide();
-            $("#username").hide();
+            $("#add-time-btn").hide();
+            $("#username-input").hide();
             document.getElementById('modal-header-text').innerHTML = 'வெற்றி!';
             document.getElementById('modal-text').innerHTML = 'உங்கள் புள்ளி சேர்க்கப்பட்டது, ' + name + "\n\n மறுதடவை விளையாடப் போகின்றீர்களா??";
-            $("#replay").show();
-            $("#rankTable").show();
+            $("#replay-btn").show();
+            $("#rank-table").show();
         };
         function shuffle(array) {
             array.sort(() => Math.random() - 0.5);
