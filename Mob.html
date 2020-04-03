@@ -37,7 +37,7 @@
             right: 5px;
         }
 
-        .question-area {
+        #question-area {
             position: fixed;
             top: 50px;
             right: 10px;
@@ -47,8 +47,17 @@
             padding-bottom: 5px;
         }
 
-        .mobile-view {
+        #mobile-view {
             zoom: 259%;
+        }
+
+        #add-time-btn,
+        #start-btn,
+        #restart-btn,
+        #replay-btn,
+        #rank-link-btn,
+        #username-input {
+            display: none;
         }
 
         .stopwatch {
@@ -220,7 +229,7 @@
 
 <body>
 
-    <div class="mobile-view">
+    <div id="mobile-view">
 
         <nav class="navbar navbar-expand-lg">
             <div class="navbar-header">
@@ -256,7 +265,7 @@
             <map id='innermap' name='lkmap'>
             </map>
 
-            <div class="question-area">
+            <div id="question-area">
                 <div class="stopwatch"></div>
                 <div id="question"></div>
                 <button class="vp-btn" id="restart-btn" onclick="restart()">Restart</button>
@@ -277,7 +286,7 @@
                             சேர்</button>
                         <button class="vp-btn" id="replay-btn" onclick="restart()">விளையாடு</button>
                         </br>
-                        <a href="rank.html"><button class="vp-btn" id="rank-table">நிலை</button></a>
+                        <a href="rank.html"><button class="vp-btn" id="rank-link-btn">நிலை</button></a>
                     </div>
                 </div>
 
@@ -296,11 +305,10 @@
                 fillColor: '008800'
             });
         });
-        
+
         var answers = 0;
 
-        function Doit(element) {
-            var place = element;
+        function Doit(place) {
             if (place == 'Wrong') {
                 alert("இவ்விடை தவறு");
             } else {
@@ -343,12 +351,6 @@
             var text = "<div id=" + place + ">" + place.replace("_", " ") + "</div>";
             document.getElementById('question').innerHTML = text;
         }
-        $("#add-time-btn").hide();
-        $("#start-btn").hide();
-        $("#replay-btn").hide();
-        $("#rank-table").hide();
-        $("#username-input").hide();
-        $("#restart-btn").hide();
         $(document).ready(function () {
             $("#start-btn").on("click", function () {
                 $("#question").show();
@@ -406,7 +408,7 @@
             document.getElementById('modal-header-text').innerHTML = 'வெற்றி!';
             document.getElementById('modal-text').innerHTML = 'உங்கள் புள்ளி சேர்க்கப்பட்டது, ' + name + "\n\n மறுதடவை விளையாடப் போகின்றீர்களா??";
             $("#replay-btn").show();
-            $("#rank-table").show();
+            $("#rank-link-btn").show();
         };
         function shuffle(array) {
             array.sort(() => Math.random() - 0.5);
