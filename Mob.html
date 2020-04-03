@@ -19,6 +19,9 @@
     <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-firestore.js"></script>
 
+    <script src="js/timer.js"></script>
+    <script src="js/firebase.js"></script>
+
     <link type="text/css" rel="stylesheet"
         href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -29,6 +32,7 @@
         }
 
         .map {
+            display: none;
             top: 8px;
             right: 5px;
         }
@@ -106,28 +110,18 @@
 
         /* Modal */
 
-        /* The Modal (background) */
         .modal {
             display: none;
-            /* Hidden by default */
             position: fixed;
-            /* Stay in place */
             z-index: 1;
-            /* Sit on top */
             padding-top: 100px;
-            /* Location of the box */
             left: 0;
             top: 0;
             width: 100%;
-            /* Full width */
             height: 100%;
-            /* Full height */
             overflow: auto;
-            /* Enable scroll if needed */
             background-color: rgb(0, 0, 0);
-            /* Fallback color */
             background-color: rgba(0, 0, 0, 0.6);
-            /* Black w/ opacity */
         }
 
         /* Modal Content */
@@ -207,7 +201,7 @@
 
         input[type=text] {
             width: 100%;
-            padding: 12px 20px;
+            padding: 5px 8px;
             margin: 8px 0;
             box-sizing: border-box;
             border: 3px solid #ccc;
@@ -293,19 +287,18 @@
 
 
     <script>
+        let stopwatch = new Stopwatch(
+            document.querySelector('.stopwatch'),
+            document.querySelector('.results'));
 
         $(function () {
             $('.map').maphilight({
                 fillColor: '008800'
             });
         });
-        var Glodata = {};
+        
         var answers = 0;
-        var time = "";
-        var cuname = "";
-        function Ditext(Distext) {
-            document.getElementById("text").innerHTML = Distext;
-        }
+
         function Doit(element) {
             var place = element;
             if (place == 'Wrong') {
@@ -340,128 +333,6 @@
                 }
             }
         }
-        function setCookie(cname, cvalue, exdays) {
-            var d = new Date();
-            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-            var expires = "expires=" + d.toUTCString();
-            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-        }
-        function getCookie(cname) {
-            var name = cname + "=";
-            var decodedCookie = decodeURIComponent(document.cookie);
-            var ca = decodedCookie.split(';');
-            for (var i = 0; i < ca.length; i++) {
-                var c = ca[i];
-                while (c.charAt(0) == ' ') {
-                    c = c.substring(1);
-                }
-                if (c.indexOf(name) == 0) {
-                    return c.substring(name.length, c.length);
-                }
-            }
-            return "";
-        }
-        function LoggedIn() {
-            var username = getCookie("username");
-            if (username != "") {
-                cuname += username;
-                document.getElementById('un-fi').innerHTML = username;
-                document.getElementById('us-na').style.display = "block";
-                document.getElementById('lg-out').style.display = "block";
-                document.getElementById('lg-in').style.display = "none";
-                document.getElementById('cr-ac').style.display = "none";
-            } else {
-                location.replace('quiz/Login.php');
-            }
-        }
-        function ClearCookie() {
-            document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-            location.reload();
-        }
-        class Stopwatch {
-            constructor(display, results) {
-                this.running = false;
-                this.display = display;
-                this.results = results;
-                this.laps = [];
-                this.reset();
-                this.print(this.times);
-            }
-
-            reset() {
-                this.times = [0, 0, 0];
-            }
-
-            start() {
-                if (!this.time) this.time = performance.now();
-                if (!this.running) {
-                    this.running = true;
-                    requestAnimationFrame(this.step.bind(this));
-                }
-            }
-
-            lap() {
-                let times = this.times;
-                let li = this.format(times);
-                return li;
-            }
-
-            stop() {
-                this.running = false;
-                this.time = null;
-            }
-
-            step(timestamp) {
-                if (!this.running) return;
-                this.calculate(timestamp);
-                this.time = timestamp;
-                this.print();
-                requestAnimationFrame(this.step.bind(this));
-            }
-
-            calculate(timestamp) {
-                var diff = timestamp - this.time;
-                // Hundredths of a second are 100 ms
-                this.times[2] += diff / 10;
-                // Seconds are 100 hundredths of a second
-                if (this.times[2] >= 100) {
-                    this.times[1] += 1;
-                    this.times[2] -= 100;
-                }
-                // Minutes are 60 seconds
-                if (this.times[1] >= 60) {
-                    this.times[0] += 1;
-                    this.times[1] -= 60;
-                }
-            }
-
-            print() {
-                this.display.innerText = this.format(this.times);
-            }
-
-            format(times) {
-                return `\
-${pad0(times[0], 2)}:\
-${pad0(times[1], 2)}:\
-${pad0(Math.floor(times[2]), 2)}`;
-            }
-        }
-
-        function pad0(value, count) {
-            var result = value.toString();
-            for (; result.length < count; --count)
-                result = '0' + result;
-            return result;
-        }
-
-        function clearChildren(node) {
-            while (node.lastChild)
-                node.removeChild(node.lastChild);
-        }
-
-        let stopwatch = new Stopwatch(
-            document.querySelector('.stopwatch'),
-            document.querySelector('.results'));
 
         function addarea(place, coords) {
             var text = '<area id="a-' + place + '" class="m-area" style="display: none;" shape="circ" coords="' + coords + ', 14"  onclick="Doit(\'' + place + '\')" data-maphilight=\'{"strokeColor":"0000ff","strokeWidth":3,"fillColor":"00ff00","fillOpacity":0.6}\' data-clicked="0"/>'
@@ -478,11 +349,10 @@ ${pad0(Math.floor(times[2]), 2)}`;
         $("#rank-table").hide();
         $("#username-input").hide();
         $("#restart-btn").hide();
-        $(".map").hide();
         $(document).ready(function () {
             $("#start-btn").on("click", function () {
                 $("#question").show();
-                stopwatch.start();
+                setTimeout(stopwatch.start(), 1000);
                 $("#start-btn").hide();
                 $("#restart-btn").show();
                 $(".map").show();
@@ -499,23 +369,10 @@ ${pad0(Math.floor(times[2]), 2)}`;
             document.getElementById('rank-t').innerHTML = document.getElementById('rank-t').innerHTML + text;
         }
 
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyCHAsGid0iA0FUpL0F-HGanJ3jvzfD8uqs",
-            authDomain: "varaipadavi.firebaseapp.com",
-            databaseURL: "https://varaipadavi.firebaseio.com",
-            projectId: "varaipadavi",
-            storageBucket: "varaipadavi.appspot.com",
-            messagingSenderId: "120572762230",
-            appId: "1:120572762230:web:b2c04402f971a05b0fa757",
-            measurementId: "G-2ZNXL3S5RR"
-        };
-
-        firebase.initializeApp(firebaseConfig);
-        var db = firebase.firestore();
+        var database = firebase.firestore();
 
         var places = [];
-        db.collection("places").get().then((querySnapshot) => {
+        database.collection("places").get().then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
                 places.push([doc.data()['Place'], doc.data()['Coordinates']])
                 addarea(doc.data()['Place'], doc.data()['Coordinates']);
@@ -529,7 +386,7 @@ ${pad0(Math.floor(times[2]), 2)}`;
             addquest(places[0][0]);
         });
         var rank = 1;
-        db.collection("rank").orderBy("time").limit(10).get().then((querySnapshot) => {
+        database.collection("rank").orderBy("time").limit(10).get().then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
                 $("#rankLoader").hide();
                 addRankToTable(rank, doc.data()['name'], doc.data()['time']);
@@ -540,7 +397,7 @@ ${pad0(Math.floor(times[2]), 2)}`;
         function addRankToDatabase() {
             var time = stopwatch.lap().replace(/;/g, "a");
             var name = document.getElementById("username-input").value;
-            db.collection("rank").add({
+            database.collection("rank").add({
                 name: name,
                 time: time
             })
