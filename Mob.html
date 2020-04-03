@@ -435,11 +435,6 @@
             location.reload();
         }
 
-        function addRankToTable(rank, user, time) {
-            var text = '<tr><td>' + rank + '</td><td>' + user + '</td><td>' + time + '</td></tr>';
-            document.getElementById('rank-t').innerHTML = document.getElementById('rank-t').innerHTML + text;
-        }
-
         var database = firebase.firestore();
 
         var places = [];
@@ -454,14 +449,6 @@
             var i = 0;
             var qPlaces = shuffle(places);
             addQuestion(places[0][0]);
-        });
-        var rank = 1;
-        database.collection("rank").orderBy("time").limit(10).get().then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                $("#rankLoader").hide();
-                addRankToTable(rank, doc.data()['name'], doc.data()['time']);
-                rank++;
-            });
         });
 
         function addRankToDatabase() {
