@@ -435,6 +435,7 @@
         var database = firebase.firestore();
 
         var places = [];
+
         database.collection("places").get().then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
                 places.push([doc.data()['Place'], doc.data()['Coordinates']])
