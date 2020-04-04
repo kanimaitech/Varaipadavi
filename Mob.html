@@ -7,292 +7,15 @@
 
     <link rel="icon" href="img/favicon.png" type="image/png">
 
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-    <script type="text/javascript" src="https://davidlynch.org/projects/maphilight/jquery.maphilight.min.js"></script>
-
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
-
-    <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-firestore.js"></script>
-
-    <script src="js/timer.js"></script>
-    <script src="js/firebase.js"></script>
 
     <link type="text/css" rel="stylesheet"
         href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <style>
-        body {
-            width: fit-content;
-            font-family: Arial, Helvetica, sans-serif;
-        }
-
-        .map {
-            display: none;
-            top: 8px;
-            right: 5px;
-        }
-
-        #question-area {
-            position: fixed;
-            top: 50px;
-            right: 10px;
-        }
-
-        #question {
-            padding-bottom: 5px;
-        }
-
-        #mobile-view {
-            zoom: 259%;
-        }
-
-        #add-time-btn,
-        #start-btn,
-        #restart-btn,
-        #replay-btn,
-        #rank-link-btn,
-        #username-input {
-            display: none;
-        }
-
-        .vp-btn {
-            width: 100%;
-            position: relative;
-            background-color: #0080ff;
-            border: 2px solid white;
-            font-size: 18px;
-            color: #FFFFFF;
-            padding: 8px;
-            text-align: center;
-            transition-duration: 0.4s;
-            text-decoration: none;
-            overflow: hidden;
-            cursor: pointer;
-        }
-
-        .stopwatch {
-            font-size: 38px;
-            text-align: center;
-        }
-
-        .loader {
-            margin: auto;
-            width: 50%;
-            border: 10px solid #f3f3f3;
-            border-radius: 50%;
-            border-top: 10px solid #3498db;
-            width: 40px;
-            height: 40px;
-            -webkit-animation: spin 2s linear infinite;
-            /* Safari */
-            animation: spin 2s linear infinite;
-        }
-
-        /* Safari */
-        @-webkit-keyframes spin {
-            0% {
-                -webkit-transform: rotate(0deg);
-            }
-
-            100% {
-                -webkit-transform: rotate(360deg);
-            }
-        }
-
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
-        .navbar {
-            margin-bottom: 0;
-            background-color: #0080ff;
-            font-family: Montserrat, sans-serif;
-        }
-
-        .navbar li a,
-        .navbar .navbar-brand {
-            color: rgb(233, 233, 233) !important;
-        }
-
-        .navbar-nav li a:hover,
-        .navbar-nav li.active a,
-        .navbar-toggler {
-            color: #ffffff !important;
-        }
-
-
-        /* Modal */
-
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            padding-top: 100px;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgb(0, 0, 0);
-            background-color: rgba(0, 0, 0, 0.6);
-        }
-
-        /* Modal Content */
-        .modal-content {
-            position: relative;
-            background-color: #fefefe;
-            margin: auto;
-            padding: 0;
-            border: 1px solid #888;
-            width: 80%;
-            height: fit-content;
-            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-            -webkit-animation-name: animatetop;
-            -webkit-animation-duration: 0.4s;
-            animation-name: animatetop;
-            animation-duration: 0.4s
-        }
-
-        /* Add Animation */
-        @-webkit-keyframes animatetop {
-            from {
-                top: -300px;
-                opacity: 0
-            }
-
-            to {
-                top: 0;
-                opacity: 1
-            }
-        }
-
-        @keyframes animatetop {
-            from {
-                top: -300px;
-                opacity: 0
-            }
-
-            to {
-                top: 0;
-                opacity: 1
-            }
-        }
-
-        .modal-header {
-            padding: 2px 16px;
-            background-color: #0080ff;
-            color: white;
-        }
-
-        .modal-body {
-            padding: 15px 16px;
-        }
-
-        #modal-header-text {
-            font-size: 28px;
-        }
-
-        #modal-text {
-            text-align: center;
-            padding-bottom: 10px;
-        }
-
-        input[type=text] {
-            width: 100%;
-            padding: 5px 8px;
-            margin: 8px 0;
-            box-sizing: border-box;
-            border: 3px solid #ccc;
-            -webkit-transition: 0.5s;
-            transition: 0.5s;
-            outline: none;
-        }
-
-        input[type=text]:focus {
-            border: 3px solid #555;
-        }
-
-        #snackbar {
-            visibility: hidden;
-            min-width: 50%;
-            margin-left: -25%;
-            background-color: red;
-            color: #fff;
-            text-align: center;
-            border-radius: 2px;
-            padding: 8px;
-            position: fixed;
-            z-index: 1;
-            left: 50%;
-            bottom: 30px;
-            font-size: 17px;
-        }
-
-        #snackbar.show {
-            visibility: visible;
-            -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
-            animation: fadein 0.5s, fadeout 0.5s 2.5s;
-        }
-
-        @-webkit-keyframes fadein {
-            from {
-                bottom: 0;
-                opacity: 0;
-            }
-
-            to {
-                bottom: 30px;
-                opacity: 1;
-            }
-        }
-
-        @keyframes fadein {
-            from {
-                bottom: 0;
-                opacity: 0;
-            }
-
-            to {
-                bottom: 30px;
-                opacity: 1;
-            }
-        }
-
-        @-webkit-keyframes fadeout {
-            from {
-                bottom: 30px;
-                opacity: 1;
-            }
-
-            to {
-                bottom: 0;
-                opacity: 0;
-            }
-        }
-
-        @keyframes fadeout {
-            from {
-                bottom: 30px;
-                opacity: 1;
-            }
-
-            to {
-                bottom: 0;
-                opacity: 0;
-            }
-        }
-    </style>
+    <link type="text/css" rel="stylesheet" href="css/main.css">
+    <link type="text/css" rel="stylesheet" href="css/components.css">
+    <link type="text/css" rel="stylesheet" href="css/bootstrap.css">
 
     <title></title>
 </head>
@@ -374,19 +97,19 @@
             $('.map').maphilight({
                 fillColor: '008800'
             });
-            
+
             modal.style.display = "block";
         });
 
         var answers = 0;
-        
+
         function startGame() {
-                $("#question").show();
-                setTimeout(stopwatch.start(), 1000);
-                $("#start-btn").hide();
-                $("#restart-btn").show();
-                $(".map").show();
-                $("#myModal").hide();
+            $("#question").show();
+            setTimeout(stopwatch.start(), 1000);
+            $("#start-btn").hide();
+            $("#restart-btn").show();
+            $(".map").show();
+            $("#myModal").hide();
         }
 
         function markPlace(place) {
@@ -484,6 +207,19 @@
             modal.style.display = "block";
         }
     </script>
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <script type="text/javascript" src="https://davidlynch.org/projects/maphilight/jquery.maphilight.min.js"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-firestore.js"></script>
+
+    <script src="js/timer.js"></script>
+    <script src="js/firebase.js"></script>
 </body>
 
 </html>
