@@ -16,8 +16,9 @@
     <link type="text/css" rel="stylesheet" href="css/main.css">
     <link type="text/css" rel="stylesheet" href="css/utilities.css">
 
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-    <script type="text/javascript" src="https://davidlynch.org/projects/maphilight/jquery.maphilight.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="js/maphilight.js"></script>
 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
@@ -47,14 +48,14 @@
             <div class="collapse navbar-collapse" id="navbarToggler">
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                     <li class="nav-item"><a class="nav-link" href=""><i
-                                class="te-fa te-fa-4x glyphicon glyphicon-home"></i> முகப்பு</a></li>
+                                class="te-fa te-fa-4x glyphicon glyphicon-home"></i>முகப்பு</a></li>
                     <li class="nav-item"><a class="nav-link" href=""><i
-                                class="te-fa te-fa-4x glyphicon glyphicon-globe"></i> எங்களை பற்றி</a>
+                                class="te-fa te-fa-4x glyphicon glyphicon-globe"></i>எங்களை பற்றி</a>
                     </li>
                     <li class="nav-item"><a class="nav-link" href="rank.html"><i
-                                class="te-fa te-fa-4x glyphicon glyphicon-phone-alt"></i> நிலை </a></li>
+                                class="te-fa te-fa-4x glyphicon glyphicon-phone-alt"></i>நிலை</a></li>
                     <li class="nav-item active"><a class="nav-link" href="Mob.html"><i
-                                class="te-fa te-fa-4x glyphicon glyphicon-flag"></i> போட்டி </a></li>
+                                class="te-fa te-fa-4x glyphicon glyphicon-flag"></i>போட்டி</a></li>
 
                 </ul>
 
@@ -143,7 +144,7 @@
             document.getElementById('question').innerHTML = text;
         }
 
-        
+
         // *****
         // ***
         // Main Script
@@ -188,7 +189,7 @@
                     $('#a-' + place).data('maphilight', data).trigger('alwaysOn.maphilight');
                 });
             }
-        }   
+        }
 
         // ***
         // Firebase
