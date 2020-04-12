@@ -73,6 +73,7 @@
                 <div class="stopwatch"></div>
                 <div id="question"></div>
                 <button class="vp-btn" id="restart-btn" onclick="restartGame()">Restart</button>
+                <div class="text-center" id="answer">விடைகள்: 0/10</div>
             </div>
             <div id="myModal" class="modal">
 
@@ -175,6 +176,7 @@
                     $("#add-time-btn").show();
                 } else {
                     showSnackbar("சரியான பதில்.", "green", 800);
+                    $("#answer").replaceWith('<div class="text-center" id="answer">விடைகள்: ' + answers + '/10</div>');
                     addQuestion(places[answers][0]);
                 }
                 $(function () {
