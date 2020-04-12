@@ -143,6 +143,10 @@
             document.getElementById('question').innerHTML = text;
         }
 
+        
+        // *****
+        // ***
+        // Main Script
         function startGame() {
             $("#question").show();
             setTimeout(stopwatch.start(), 1000);
@@ -184,8 +188,10 @@
                     $('#a-' + place).data('maphilight', data).trigger('alwaysOn.maphilight');
                 });
             }
-        }
+        }   
 
+        // ***
+        // Firebase
         var database = firebase.firestore();
 
         var places = [];
@@ -215,9 +221,6 @@
             $("#replay-btn").show();
             $("#rank-link-btn").show();
         };
-
-
-
     </script>
 </body>
 
