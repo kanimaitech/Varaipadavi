@@ -153,7 +153,6 @@
             setTimeout(stopwatch.start(), 1000);
             $("#start-btn").hide();
             $("#restart-btn").show();
-            $(".map").show();
             $("#myModal").hide();
         }
 
@@ -180,10 +179,10 @@
                     addQuestion(places[answers][0]);
                 }
                 $(function () {
-                    var c = $('#a-' + place).attr("coords");
-                    var coord = c.split(',');
-                    var tval = +coord[1] + 3;
-                    $('#candiv').append('<div style="color: #0040ff; position: absolute; top: ' + tval + 'px; left: ' + coord[0] + 'px; font-size:10px;"><b>' + place + '</b></div>');
+                    var coord = $('#a-' + place).attr("coords").split(',');
+                    var textVerticalCoord = +coord[1] + 51;
+                    var textHorizontalCoord = +coord[0] + 16;
+                    $('#innermap').append('<div style="color: #0040ff; position: absolute; top: ' + textVerticalCoord + 'px; left: ' + textHorizontalCoord + 'px; font-size:10px;"><b>' + place + '</b></div>');
                     $('#a-' + place).attr("coords", coord[0] + ", " + coord[1] + ", 4");
                     var data = $('#a-' + place).mouseout().data('maphilight') || {};
                     data.alwaysOn = !data.alwaysOn;
