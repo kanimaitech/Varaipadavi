@@ -53,8 +53,10 @@
                     </li>
                     <li class="nav-item"><a class="nav-link" href="rank.html"><i
                                 class="te-fa te-fa-4x glyphicon glyphicon-phone-alt"></i>நிலை</a></li>
-                    <li class="nav-item active"><a class="nav-link" href="Mob.html"><i
+                    <li class="nav-item active"><a class="nav-link" href="index.html"><i
                                 class="te-fa te-fa-4x glyphicon glyphicon-flag"></i>போட்டி</a></li>
+                    <li class="nav-item"><a class="nav-link" href="study.html"><i
+                                class="fa-fa fa-fa-4x glyphicon glyphicon-flag"></i>பயில்க</a></li>
 
                 </ul>
 
@@ -86,6 +88,7 @@
                         <div class="loader" id="question-loader"></div>
                         <div id="modal-text">Loading</div>
                         <button class="vp-btn" id="start-btn" onclick="startGame()">தொடங்குக</button>
+                        <a href="study.html"><button class="vp-btn" id="study-link-btn">பயில்க</button></a>
                         <input type="text" id="username-input" placeholder="உங்கள் பெயரை உள்ளிடுக" />
                         <button class="vp-btn" id="add-time-btn" onclick="addRankToDatabase()">புள்ளியை
                             சேர்</button>
@@ -152,6 +155,7 @@
             $("#question").show();
             setTimeout(stopwatch.start(), 1000);
             $("#start-btn").hide();
+            $("#study-link-btn").hide();
             $("#restart-btn").show();
             $("#myModal").hide();
         }
