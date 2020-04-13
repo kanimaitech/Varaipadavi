@@ -70,8 +70,8 @@
             </map>
 
             <div id="question-area">
-                <div>Select the places to show</div>
-                <button class="vp-btn" id="open-btn" onclick="modal.style.display = 'block';">Select</button>
+                <div>காட்ட வேண்டிய இடங்களை தெரிவு செய்க</div>
+                <button class="vp-btn" id="open-btn" onclick="modal.style.display = 'block';">தெரிக</button>
             </div>
 
             <div id="myModal" class="modal">
@@ -164,7 +164,7 @@
                 addArea(doc.data()['Place'], doc.data()['Coordinates']);
                 addPlace(doc.data()['Place']);
                 $("#question-loader").hide();
-                $("#modal-text").hide();
+                $("#modal-text").html("<b>காட்ட வேண்டிய இடங்களை தெரிவு செய்க</b>");
                 $("#show-btn").show();
                 $("#places-list").show();
             });

@@ -12,6 +12,7 @@ body {
     position: fixed;
     top: 50px;
     right: 10px;
+    max-width: 160px;
 }
 
 #question {
