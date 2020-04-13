@@ -136,21 +136,20 @@
         // ***
         // Main Script
         function markPlace(place) {
+            var coord = $('#a-' + place).attr("coords").split(',');
+            $('#a-' + place).attr("coords", coord[0] + ", " + coord[1] + ", 4");
+            var data = $('#a-' + place).mouseout().data('maphilight') || {};
+            data.alwaysOn = !data.alwaysOn;
+            $('#a-' + place).data('maphilight', data).trigger('alwaysOn.maphilight');
             if ($("#t-" + place).length == 0) {
-                $(function () {
-                    var coord = $('#a-' + place).attr("coords").split(',');
-                    var textVerticalCoord = +coord[1] + 51;
-                    var textHorizontalCoord = +coord[0] + 16;
-                    $('#innermap').append('<div id="t-' + place + '" style="color: #0040ff; position: absolute; top: ' + textVerticalCoord + 'px; left: ' + textHorizontalCoord + 'px; font-size:10px;"><b>' + place + '</b></div>');
-                    $('#a-' + place).attr("coords", coord[0] + ", " + coord[1] + ", 4");
-                    var data = $('#a-' + place).mouseout().data('maphilight') || {};
-                    data.alwaysOn = !data.alwaysOn;
-                    $('#a-' + place).data('maphilight', data).trigger('alwaysOn.maphilight');
-                });
-            } else if (document.getElementById("t-" + place).style.display == "none") {
-                document.getElementById("t-" + place).style.display == "block";
-            } else {
-                document.getElementById("t-" + place).style.display == "none";
+                var textVerticalCoord = +coord[1] + 51;
+                var textHorizontalCoord = +coord[0] + 16;
+                $('#innermap').append('<div id="t-' + place + '" style="color: #0040ff; position: absolute; top: ' + textVerticalCoord + 'px; left: ' + textHorizontalCoord + 'px; font-size:10px;"><b>' + place + '</b></div>');
+            } else if (document.getElementById('t-'+ place).style.display == "none") {
+                document.getElementById('t-'+ place).style.display = "block";
+            } 
+            else {
+                document.getElementById('t-'+ place).style.display = "none";
             }
         }
 
