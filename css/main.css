@@ -28,7 +28,8 @@ body {
 #replay-btn,
 #rank-link-btn,
 #username-input,
-#question {
+#question,
+#places-list {
     display: none;
 }
 
