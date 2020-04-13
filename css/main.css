@@ -28,7 +28,8 @@ body {
 #restart-btn,
 #replay-btn,
 #rank-link-btn,
-#username-input {
+#username-input,
+#question {
     display: none;
 }
 
