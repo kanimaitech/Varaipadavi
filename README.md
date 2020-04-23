@@ -2,4 +2,4 @@
 
 * A Map Marking Web Application for O/L Students.
 
-* http://vp.kanimaitech.com/
+* https://vp.kanimai.tech/
