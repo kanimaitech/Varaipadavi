@@ -13,6 +13,10 @@
     cursor: pointer;
 }
 
+.vp-btn:hover {
+    background-color: #2391ff;
+}
+
 .stopwatch {
     font-size: 38px;
     text-align: center;
@@ -25,6 +29,8 @@ table {
 }
 
 th {
+    position: sticky;
+    top: 0;
     background-color: #0080ff;
     font-weight: bold;
     color: #fff;
@@ -33,7 +39,7 @@ th {
 
 td,
 th {
-    padding: 1em 1.5em;
+    padding: 0.75em 1.5em;
     text-align: left;
 }
 

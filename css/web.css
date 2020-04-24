@@ -1,0 +1,48 @@
+.map-area,
+#add-time-btn {
+    display: none;
+}
+
+.map {
+    margin-top: 0.5%;
+}
+
+#question-area {
+    position: fixed;
+    right: 0.5%;
+    background-color: white;
+    height: 593px;
+    width: 380px;
+    padding: 15px;
+    border: 3px solid #111197;
+}
+
+#rank-area {
+    position: fixed;
+    overflow: scroll;
+    left: 0.5%;
+    background-color: white;
+    height: 593px;
+    width: 420px;
+    border: 3px solid #111197;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #0070e0; 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #0070e0; 
+  }
