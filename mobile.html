@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+
+<head>
+    <title>வரைபடவி - Varaipadavi</title>
+
+    <link rel="icon" href="img/favicon.png" type="image/png">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link type="text/css" rel="stylesheet"
+        href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link type="text/css" rel="stylesheet" href="css/main.css">
+    <link type="text/css" rel="stylesheet" href="css/utilities.css">
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-firestore.js"></script>
+
+    <script type="text/javascript" src="js/timer.js"></script>
+    <script type="text/javascript" src="js/firebase.js"></script>
+    <script type="text/javascript" src="js/maphilight.js"></script>
+</head>
+
+<body>
+
+    <div id="mobile-view">
+
+        <nav class="navbar navbar-expand-lg">
+            <div class="navbar-header">
+                <img class="brand" src="img/brand.png" height="35px" />
+            </div>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler"
+                aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fa fa-bars navbarBars"></i>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarToggler">
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                    <li class="nav-item"><a class="nav-link" href=""><i
+                                class="te-fa te-fa-4x glyphicon glyphicon-home"></i>முகப்பு</a></li>
+                    <li class="nav-item"><a class="nav-link" href=""><i
+                                class="te-fa te-fa-4x glyphicon glyphicon-globe"></i>எங்களை பற்றி</a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="rank.html"><i
+                                class="te-fa te-fa-4x glyphicon glyphicon-phone-alt"></i>நிலை</a></li>
+                    <li class="nav-item active"><a class="nav-link" href="mobile.html"><i
+                                class="te-fa te-fa-4x glyphicon glyphicon-flag"></i>போட்டி</a></li>
+                    <li class="nav-item"><a class="nav-link" href="study.html"><i
+                                class="fa-fa fa-fa-4x glyphicon glyphicon-flag"></i>பயில்க</a></li>
+
+                </ul>
+
+            </div>
+        </nav>
+
+        <div id="quiz">
+            <div class="container">
+                <img src='img/lkmap.png' usemap='#lkmap' class='map' title='imgmap201293016112' alt='imgmap201293016112'
+                    id='lkmap' />
+            </div>
+            <map id='innermap' name='lkmap'>
+            </map>
+
+            <div id="question-area">
+                <div class="stopwatch"></div>
+                <div id="question"></div>
+                <button class="vp-btn" id="restart-btn" onclick="restartGame()">Restart</button>
+                <div class="text-center" id="answer">விடைகள்: 0/10</div>
+            </div>
+            <div id="myModal" class="modal">
+
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div id="modal-header-text">வரைபடவி</div>
+                    </div>
+                    <div class="modal-body">
+                        <div class="loader" id="question-loader"></div>
+                        <div id="modal-text">Loading</div>
+                        <button class="vp-btn" id="start-btn" onclick="startGame()">தொடங்குக</button>
+                        <a href="study.html"><button class="vp-btn" id="study-link-btn">பயில்க</button></a>
+                        <input type="text" id="username-input" placeholder="உங்கள் பெயரை உள்ளிடுக" />
+                        <button class="vp-btn" id="add-time-btn" onclick="addRankToDatabase()">புள்ளியை
+                            சேர்</button>
+                        <button class="vp-btn" id="replay-btn" onclick="restartGame()">திரும்ப விளையாடு</button>
+                        <a href="rank.html"><button class="vp-btn" id="rank-link-btn">நிலைகளை காட்டு</button></a>
+                    </div>
+                </div>
+
+            </div>
+            <!-- Snackbar -->
+            <div id="snackbar"></div>
+        </div>
+    </div>
+
+
+    <script>
+        let stopwatch = new Stopwatch(
+            document.querySelector('.stopwatch'),
+            document.querySelector('.results'));
+
+        var modal = document.getElementById("myModal");
+
+        $(function () {
+            $('.map').maphilight({
+                fillColor: '008800'
+            });
+
+            modal.style.display = "block";
+        });
+
+        function showModal(header, text) {
+            document.getElementById('modal-header-text').innerHTML = header;
+            document.getElementById('modal-text').innerHTML = text;
+            modal.style.display = "block";
+        }
+
+        function showSnackbar(text, color, time) {
+            var snackbar = document.getElementById("snackbar");
+            snackbar.style.backgroundColor = color;
+            snackbar.innerHTML = text;
+            snackbar.className = "show";
+            setTimeout(function () { snackbar.className = snackbar.className.replace("show", ""); }, time);
+        }
+
+        function shuffle(array) {
+            array.sort(() => Math.random() - 0.5);
+        };
+
+        function addArea(place, coords) {
+            var text = '<area id="a-' + place + '" class="m-area" style="display: none;" shape="circ" coords="' + coords + ', 14"  onclick="markPlace(\'' + place + '\')" data-maphilight=\'{"strokeColor":"0000ff","strokeWidth":3,"fillColor":"00ff00","fillOpacity":0.6}\' data-clicked="0"/>'
+            document.getElementById('innermap').innerHTML = document.getElementById('innermap').innerHTML + text;
+        }
+
+        function addQuestion(place) {
+            var text = "<div id=" + place + ">" + place.replace("_", " ") + "</div>";
+            document.getElementById('question').innerHTML = text;
+        }
+
+
+        // *****
+        // ***
+        // Main Script
+        function startGame() {
+            $("#question").show();
+            setTimeout(stopwatch.start(), 1000);
+            $("#start-btn").hide();
+            $("#study-link-btn").hide();
+            $("#restart-btn").show();
+            $("#myModal").hide();
+        }
+
+        function restartGame() {
+            location.reload();
+        }
+
+        var answers = 0;
+        function markPlace(place) {
+            if ($("#" + place).length == 0) {
+                showSnackbar("தவறு, அது " + place.replace("_", " "), "red", 2000);
+            } else {
+                answers += 1;
+                if (answers >= 10) {
+                    stopwatch.stop();
+                    document.getElementById('question').innerHTML = '';
+                    showModal('வாழ்த்துக்கள்!', 'உங்கள் புள்ளி நேரம்: <b>' + stopwatch.lap().replace(/;/g, "a") + '</b>');
+                    $("#username-input").show();
+                    $("#replay-btn").show();
+                    $("#add-time-btn").show();
+                } else {
+                    showSnackbar("சரியான பதில்.", "green", 800);
+                    $("#answer").replaceWith('<div class="text-center" id="answer">விடைகள்: ' + answers + '/10</div>');
+                    addQuestion(places[answers][0]);
+                }
+                $(function () {
+                    var coord = $('#a-' + place).attr("coords").split(',');
+                    var textVerticalCoord = +coord[1] + 51;
+                    var textHorizontalCoord = +coord[0] + 16;
+                    $('#innermap').append('<div style="color: #0040ff; position: absolute; top: ' + textVerticalCoord + 'px; left: ' + textHorizontalCoord + 'px; font-size:10px;"><b>' + place + '</b></div>');
+                    $('#a-' + place).attr("coords", coord[0] + ", " + coord[1] + ", 4");
+                    var data = $('#a-' + place).mouseout().data('maphilight') || {};
+                    data.alwaysOn = !data.alwaysOn;
+                    $('#a-' + place).data('maphilight', data).trigger('alwaysOn.maphilight');
+                });
+            }
+        }
+
+        // ***
+        // Firebase
+        var database = firebase.firestore();
+
+        var places = [];
+        database.collection("places").get().then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                places.push([doc.data()['Place'], doc.data()['Coordinates']])
+                addArea(doc.data()['Place'], doc.data()['Coordinates']);
+                $("#question-loader").hide();
+                document.getElementById('modal-text').innerHTML = 'நீங்கள் விளையாடத் தயாரா?';
+                $("#start-btn").show();
+            });
+            var i = 0;
+            shuffle(places);
+            addQuestion(places[0][0]);
+        });
+
+        function addRankToDatabase() {
+            var time = stopwatch.lap().replace(/;/g, "a");
+            var name = document.getElementById("username-input").value;
+            database.collection("rank").add({
+                name: name,
+                time: time
+            })
+            $("#add-time-btn").hide();
+            $("#username-input").hide();
+            showModal('வெற்றி!', 'உங்கள் புள்ளி சேர்க்கப்பட்டது, ' + name + ".\n மறுதடவை விளையாடப் போகின்றீர்களா?");
+            $("#replay-btn").show();
+            $("#rank-link-btn").show();
+        };
+    </script>
+</body>
+
+</html>
