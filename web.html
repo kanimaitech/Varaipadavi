@@ -86,7 +86,7 @@
                 <div class="stopwatch"></div>
                 <div id="question"></div>
                 <div id="question-loader" class="loader text-center"></div>
-                <button class="vp-btn" id="start-btn">தொடங்குக</button>
+                <button class="vp-btn" id="start-btn" onclick="startGame()">தொடங்குக</button>
                 <button class="vp-btn" id="restart-btn" onclick="restartGame()">Restart</button>
                 <button class="vp-btn" id="add-time-btn" onclick="addRankToDatabase()">புள்ளியை சேர்</button>
             </div>
@@ -101,15 +101,47 @@
         </div>
 
         <script>
+            let stopwatch = new Stopwatch(
+                document.querySelector('.stopwatch'),
+                document.querySelector('.results'));
+
             $(function () {
                 $('.map').maphilight({
                     fillColor: '008800'
                 });
             });
 
-            let stopwatch = new Stopwatch(
-                document.querySelector('.stopwatch'),
-                document.querySelector('.results'));
+            function shuffle(array) {
+                array.sort(() => Math.random() - 0.5);
+            };
+
+            function addArea(place, coords) {
+                var text = '<area id="a-' + place + '" style="display: none;" shape="circ" coords="' + coords + ', 14"  onclick="markPlace(\'' + place + '\')" data-maphilight=\'{"strokeColor":"0000ff","strokeWidth":3,"fillColor":"00ff00","fillOpacity":0.6}\' data-clicked="0"/>'
+                document.getElementById('innermap').innerHTML = document.getElementById('innermap').innerHTML + text;
+            }
+
+            function addQuestion(place) {
+                var text = "<div id=" + place + ">" + place.replace("_", " ") + "</div>";
+                document.getElementById('question').innerHTML = text;
+            }
+
+            function addRankToTable(rank, user, time) {
+                var text = '<tr><td>' + rank + '</td><td>' + user + '</td><td>' + time + '</td></tr>';
+                document.getElementById('rank-table').innerHTML = document.getElementById('rank-table').innerHTML + text;
+            }
+
+            // *****
+            // ***
+            // Main Script
+            function startGame() {
+                $("#question, #restart-btn, .map").show();
+                stopwatch.start();
+                $("#start-btn").hide();
+            }
+
+            function restartGame() {
+                location.reload();
+            }
 
             var answers = 0;
             function markPlace(element) {
@@ -126,7 +158,7 @@
                             document.getElementById('question').innerHTML = '';
                             document.getElementById('add-time-btn').style.display = 'block';
                         } else {
-                            addquest(places[answers][0]);
+                            addQuestion(places[answers][0]);
                         }
                         $(function () {
                             var coord = $('#a-' + place).attr("coords").split(',');
@@ -142,53 +174,24 @@
                 }
             }
 
-            function addarea(place, coords) {
-                var text = '<area id="a-' + place + '" style="display: none;" shape="circ" coords="' + coords + ', 14"  onclick="markPlace(\'' + place + '\')" data-maphilight=\'{"strokeColor":"0000ff","strokeWidth":3,"fillColor":"00ff00","fillOpacity":0.6}\' data-clicked="0"/>'
-                document.getElementById('innermap').innerHTML = document.getElementById('innermap').innerHTML + text;
-            }
-
-            function addquest(place) {
-                var text = "<div id=" + place + ">" + place + "</div>";
-                document.getElementById('question').innerHTML = text;
-            }
-            $("#question").hide();
-            $("#start-btn").hide();
-            $("#restart-btn").hide();
-            $(".map").hide();
-            $(document).ready(function () {
-                $("#start-btn").on("click", function () {
-                    $("#question").show();
-                    stopwatch.start();
-                    $("#start-btn").hide();
-                    $("#restart-btn").show();
-                    $(".map").show();
-                });
-            });
-            function restartGame() {
-                location.reload();
-            }
-
-            function addRankToTable(rank, user, time) {
-                var text = '<tr><td>' + rank + '</td><td>' + user + '</td><td>' + time + '</td></tr>';
-                document.getElementById('rank-table').innerHTML = document.getElementById('rank-table').innerHTML + text;
-            }
-
-
+            // ***
+            // Firebase
             var db = firebase.firestore();
 
             var places = [];
             db.collection("places").get().then((querySnapshot) => {
                 querySnapshot.forEach((doc) => {
                     places.push([doc.data()['Place'], doc.data()['Coordinates']])
-                    addarea(doc.data()['Place'], doc.data()['Coordinates']);
+                    addArea(doc.data()['Place'], doc.data()['Coordinates']);
                     $("#question-loader").hide();
                     $("#start-btn").show();
                     console.log(doc.data()['Place']);
                 });
                 var i = 0;
                 var qPlaces = shuffle(places);
-                addquest(places[0][0]);
+                addQuestion(places[0][0]);
             });
+
             var rank = 1;
             db.collection("rank").orderBy("time").get().then((querySnapshot) => {
                 querySnapshot.forEach((doc) => {
@@ -205,9 +208,6 @@
                     name: name,
                     time: time
                 })
-            };
-            function shuffle(array) {
-                array.sort(() => Math.random() - 0.5);
             };
 
         </script>
