@@ -27,7 +27,8 @@
     <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-firestore.js"></script>
 
-    <title></title>
+    <script type="text/javascript" src="js/firebase.js"></script>
+    
 </head>
 
 <body>
@@ -76,25 +77,11 @@
 
 
     <script>
-        
         function addRankToTable(rank, user, time) {
             var text = '<tr><td>' + rank + '</td><td>' + user + '</td><td>' + time + '</td></tr>';
             document.getElementById('rank-t').innerHTML = document.getElementById('rank-t').innerHTML + text;
         }
 
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyCHAsGid0iA0FUpL0F-HGanJ3jvzfD8uqs",
-            authDomain: "varaipadavi.firebaseapp.com",
-            databaseURL: "https://varaipadavi.firebaseio.com",
-            projectId: "varaipadavi",
-            storageBucket: "varaipadavi.appspot.com",
-            messagingSenderId: "120572762230",
-            appId: "1:120572762230:web:b2c04402f971a05b0fa757",
-            measurementId: "G-2ZNXL3S5RR"
-        };
-
-        firebase.initializeApp(firebaseConfig);
         var db = firebase.firestore();
 
         var rank = 1;

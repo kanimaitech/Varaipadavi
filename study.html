@@ -71,7 +71,7 @@
             <map id='innermap' name='lkmap'>
             </map>
 
-            <div id="question-area">
+            <div id="study-area">
                 <div>காட்ட வேண்டிய இடங்களை தெரிவு செய்க</div>
                 <button class="vp-btn" id="open-btn" onclick="modal.style.display = 'block';">தெரிக</button>
             </div>
@@ -84,7 +84,7 @@
                         <div id="modal-header-text">வரைபடவி</div>
                     </div>
                     <div class="modal-body">
-                        <div class="loader" id="question-loader"></div>
+                        <div class="loader" id="place-loader"></div>
                         <div id="modal-text">Loading</div>
                         <div id="places-list"></div>
                         <button class="vp-btn" id="show-btn" onclick="modal.style.display = 'none';">Show</button>
@@ -165,7 +165,7 @@
                 places.push([doc.data()['Place'], doc.data()['Coordinates']])
                 addArea(doc.data()['Place'], doc.data()['Coordinates']);
                 addPlace(doc.data()['Place']);
-                $("#question-loader").hide();
+                $("#place-loader").hide();
                 $("#modal-text").html("<b>காட்ட வேண்டிய இடங்களை தெரிவு செய்க</b>");
                 $("#show-btn").show();
                 $("#places-list").show();
