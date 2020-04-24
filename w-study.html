@@ -88,7 +88,6 @@
                 <div id="question-loader" class="loader text-center"></div>
                 <button class="vp-btn" id="start-btn" onclick="startGame()">தொடங்குக</button>
                 <button class="vp-btn" id="restart-btn" onclick="restartGame()">திரும்ப விளையாடு</button>
-                <a href="study.html"><button class="vp-btn" id="study-link-btn">பயில்க</button></a>
             </div>
 
             <div id="map-area" class="d-flex justify-content-center">
@@ -109,7 +108,6 @@
                         <input type="text" id="username-input" placeholder="உங்கள் பெயரை உள்ளிடுக" />
                         <button class="vp-btn" id="add-time-btn" onclick="addRankToDatabase()">புள்ளியை சேர்</button>
                         <button class="vp-btn" id="replay-btn" onclick="restartGame()">திரும்ப விளையாடு</button>
-                        <a href="study.html"><button class="vp-btn" id="study-link-btn">பயில்க</button></a>
                     </div>
                 </div>
             </div>
@@ -174,7 +172,7 @@
                 alert("இவ்விடை தவறு");
             } else {
                 answers += 1;
-                if (answers == 10) {
+                if (answers == 1) {
                     stopwatch.stop();
                     document.getElementById('question').innerHTML = '';
                     $("#add-time-btn").show();
