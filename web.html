@@ -99,118 +99,119 @@
             </map>
 
         </div>
+    </div>
 
-        <script>
-            let stopwatch = new Stopwatch(
-                document.querySelector('.stopwatch'),
-                document.querySelector('.results'));
+    <script>
+        let stopwatch = new Stopwatch(
+            document.querySelector('.stopwatch'),
+            document.querySelector('.results'));
 
-            $(function () {
-                $('.map').maphilight({
-                    fillColor: '008800'
-                });
+        $(function () {
+            $('.map').maphilight({
+                fillColor: '008800'
             });
+        });
 
-            function shuffle(array) {
-                array.sort(() => Math.random() - 0.5);
-            };
+        function shuffle(array) {
+            array.sort(() => Math.random() - 0.5);
+        };
 
-            function addArea(place, coords) {
-                var text = '<area id="a-' + place + '" style="display: none;" shape="circ" coords="' + coords + ', 14"  onclick="markPlace(\'' + place + '\')" data-maphilight=\'{"strokeColor":"0000ff","strokeWidth":3,"fillColor":"00ff00","fillOpacity":0.6}\' data-clicked="0"/>'
-                document.getElementById('innermap').innerHTML = document.getElementById('innermap').innerHTML + text;
-            }
+        function addArea(place, coords) {
+            var text = '<area id="a-' + place + '" style="display: none;" shape="circ" coords="' + coords + ', 14"  onclick="markPlace(\'' + place + '\')" data-maphilight=\'{"strokeColor":"0000ff","strokeWidth":3,"fillColor":"00ff00","fillOpacity":0.6}\' data-clicked="0"/>'
+            document.getElementById('innermap').innerHTML = document.getElementById('innermap').innerHTML + text;
+        }
 
-            function addQuestion(place) {
-                var text = "<div id=" + place + ">" + place.replace("_", " ") + "</div>";
-                document.getElementById('question').innerHTML = text;
-            }
+        function addQuestion(place) {
+            var text = "<div id=" + place + ">" + place.replace("_", " ") + "</div>";
+            document.getElementById('question').innerHTML = text;
+        }
 
-            function addRankToTable(rank, user, time) {
-                var text = '<tr><td>' + rank + '</td><td>' + user + '</td><td>' + time + '</td></tr>';
-                document.getElementById('rank-table').innerHTML = document.getElementById('rank-table').innerHTML + text;
-            }
+        function addRankToTable(rank, user, time) {
+            var text = '<tr><td>' + rank + '</td><td>' + user + '</td><td>' + time + '</td></tr>';
+            document.getElementById('rank-table').innerHTML = document.getElementById('rank-table').innerHTML + text;
+        }
 
-            // *****
-            // ***
-            // Main Script
-            function startGame() {
-                $("#question, #restart-btn, .map").show();
-                stopwatch.start();
-                $("#start-btn").hide();
-            }
+        // *****
+        // ***
+        // Main Script
+        function startGame() {
+            $("#question, #restart-btn, .map").show();
+            stopwatch.start();
+            $("#start-btn").hide();
+        }
 
-            function restartGame() {
-                location.reload();
-            }
+        function restartGame() {
+            location.reload();
+        }
 
-            var answers = 0;
-            function markPlace(element) {
-                var place = element;
-                if (place == 'Wrong') {
+        var answers = 0;
+        function markPlace(element) {
+            var place = element;
+            if (place == 'Wrong') {
+                alert("இவ்விடை தவறு");
+            } else {
+                if ($("#" + place).length == 0) {
                     alert("இவ்விடை தவறு");
                 } else {
-                    if ($("#" + place).length == 0) {
-                        alert("இவ்விடை தவறு");
+                    answers += 1;
+                    if (answers == 10) {
+                        stopwatch.stop();
+                        document.getElementById('question').innerHTML = '';
+                        document.getElementById('add-time-btn').style.display = 'block';
                     } else {
-                        answers += 1;
-                        if (answers == 10) {
-                            stopwatch.stop();
-                            document.getElementById('question').innerHTML = '';
-                            document.getElementById('add-time-btn').style.display = 'block';
-                        } else {
-                            addQuestion(places[answers][0]);
-                        }
-                        $(function () {
-                            var coord = $('#a-' + place).attr("coords").split(',');
-                            var textVerticalCoord = +coord[1];
-                            var textHorizontalCoord = +coord[0];
-                            $('#candiv').append('<div style="z-index: 1; color: #0040ff; position: fixed; top: ' + textVerticalCoord + 'px; left: ' + textHorizontalCoord + 'px; font-size:10px;"><b>' + place + '</b></div>');
-                            $('#a-' + place).attr("coords", coord[0] + ", " + coord[1] + ", 4");
-                            var data = $('#a-' + place).mouseout().data('maphilight') || {};
-                            data.alwaysOn = !data.alwaysOn;
-                            $('#a-' + place).data('maphilight', data).trigger('alwaysOn.maphilight');
-                        });
+                        addQuestion(places[answers][0]);
                     }
+                    $(function () {
+                        var coord = $('#a-' + place).attr("coords").split(',');
+                        var textVerticalCoord = +coord[1];
+                        var textHorizontalCoord = +coord[0];
+                        $('#candiv').append('<div style="z-index: 1; color: #0040ff; position: fixed; top: ' + textVerticalCoord + 'px; left: ' + textHorizontalCoord + 'px; font-size:10px;"><b>' + place + '</b></div>');
+                        $('#a-' + place).attr("coords", coord[0] + ", " + coord[1] + ", 4");
+                        var data = $('#a-' + place).mouseout().data('maphilight') || {};
+                        data.alwaysOn = !data.alwaysOn;
+                        $('#a-' + place).data('maphilight', data).trigger('alwaysOn.maphilight');
+                    });
                 }
             }
+        }
 
-            // ***
-            // Firebase
-            var db = firebase.firestore();
+        // ***
+        // Firebase
+        var db = firebase.firestore();
 
-            var places = [];
-            db.collection("places").get().then((querySnapshot) => {
-                querySnapshot.forEach((doc) => {
-                    places.push([doc.data()['Place'], doc.data()['Coordinates']])
-                    addArea(doc.data()['Place'], doc.data()['Coordinates']);
-                    $("#question-loader").hide();
-                    $("#start-btn").show();
-                    console.log(doc.data()['Place']);
-                });
-                var i = 0;
-                var qPlaces = shuffle(places);
-                addQuestion(places[0][0]);
+        var places = [];
+        db.collection("places").get().then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                places.push([doc.data()['Place'], doc.data()['Coordinates']])
+                addArea(doc.data()['Place'], doc.data()['Coordinates']);
+                $("#question-loader").hide();
+                $("#start-btn").show();
+                console.log(doc.data()['Place']);
             });
+            var i = 0;
+            var qPlaces = shuffle(places);
+            addQuestion(places[0][0]);
+        });
 
-            var rank = 1;
-            db.collection("rank").orderBy("time").get().then((querySnapshot) => {
-                querySnapshot.forEach((doc) => {
-                    $("#rank-loader").hide();
-                    addRankToTable(rank, doc.data()['name'], doc.data()['time']);
-                    rank++;
-                });
+        var rank = 1;
+        db.collection("rank").orderBy("time").get().then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                $("#rank-loader").hide();
+                addRankToTable(rank, doc.data()['name'], doc.data()['time']);
+                rank++;
             });
+        });
 
-            function addRankToDatabase() {
-                var time = stopwatch.lap().replace(/;/g, "a");
-                var name = prompt("Your Name?")
-                db.collection("rank").add({
-                    name: name,
-                    time: time
-                })
-            };
+        function addRankToDatabase() {
+            var time = stopwatch.lap().replace(/;/g, "a");
+            var name = prompt("Your Name?")
+            db.collection("rank").add({
+                name: name,
+                time: time
+            })
+        };
 
-        </script>
+    </script>
 </body>
 
 </html>
