@@ -4,13 +4,22 @@
 
 <head>
     <title>வரைபடவி - Varaipadavi</title>
-    <link rel="icon" href="img/favicon.png" type="image/png">
 
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-    <script type="text/javascript" src="https://davidlynch.org/projects/maphilight/jquery.maphilight.min.js"></script>
+    <link rel="icon" href="img/favicon.png" type="image/png">
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link type="text/css" rel="stylesheet"
+        href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link type="text/css" rel="stylesheet" href="css/mobile.css">
+    <link type="text/css" rel="stylesheet" href="css/common.css">
+    <link type="text/css" rel="stylesheet" href="css/rank.css">
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
@@ -18,115 +27,12 @@
     <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-firestore.js"></script>
 
-    <link type="text/css" rel="stylesheet"
-        href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <style>
-        body {
-            width: max-content;
-            font-family: Arial, Helvetica, sans-serif;
-        }
-
-        .web-view {
-            zoom: 259%;
-        }
-
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            background: #fff;
-        }
-
-        th {
-            background-color: #0074e9;
-            font-weight: bold;
-            color: #fff;
-            white-space: nowrap;
-        }
-
-        td,
-        th {
-            padding: 1em 1.5em;
-            text-align: left;
-        }
-
-
-        tbody tr:nth-child(2n-1) {
-            background-color: #f5f5f5;
-            transition: all .125s ease-in-out;
-        }
-
-        tbody tr:hover {
-            background-color: rgba(50, 98, 149, .3);
-        }
-
-        td.rank {
-            text-transform: capitalize;
-        }
-
-        .navbar {
-            visibility: hidden;
-            background-color: #0080ff;
-            font-family: Montserrat, sans-serif;
-        }
-
-        .navbar li a,
-        .navbar .navbar-brand {
-            color: rgb(233, 233, 233) !important;
-        }
-
-        .navbar-nav li a:hover,
-        .navbar-nav li.active a,
-        .navbar-toggler {
-            color: #ffffff !important;
-        }
-
-        .loader {
-            border: 16px solid #f3f3f3;
-            border-radius: 50%;
-            border-top: 16px solid #3498db;
-            width: 100px;
-            height: 100px;
-            -webkit-animation: spin 2s linear infinite;
-            /* Safari */
-            animation: spin 2s linear infinite;
-        }
-
-        /* Safari */
-        @-webkit-keyframes spin {
-            0% {
-                -webkit-transform: rotate(0deg);
-            }
-
-            100% {
-                -webkit-transform: rotate(360deg);
-            }
-        }
-
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-        #rankLoader {
-            top: 100px;
-            left: 150px;
-            position: fixed;
-        }
-        .r-area {
-            display: none;
-        }
-    </style>
-
     <title></title>
 </head>
 
 <body>
 
-    <div class="web-view">
+    <div id="mobile-view">
 
         <nav id="myNav" class="navbar navbar-expand-lg">
             <div class="navbar-header">

@@ -1,0 +1,24 @@
+#rankLoader {
+    top: 100px;
+    left: 150px;
+    position: fixed;
+}
+
+.r-area {
+    display: none;
+}
+
+.navbar {
+    visibility: hidden;
+}
+
+.loader {
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid #3498db;
+    width: 100px;
+    height: 100px;
+    -webkit-animation: spin 2s linear infinite;
+    /* Safari */
+    animation: spin 2s linear infinite;
+}
