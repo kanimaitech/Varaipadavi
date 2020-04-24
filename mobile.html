@@ -139,7 +139,7 @@
         };
 
         function addArea(place, coords) {
-            var text = '<area id="a-' + place + '" class="m-area" style="display: none;" shape="circ" coords="' + coords + ', 14"  onclick="markPlace(\'' + place + '\')" data-maphilight=\'{"strokeColor":"0000ff","strokeWidth":3,"fillColor":"00ff00","fillOpacity":0.6}\' data-clicked="0"/>'
+            var text = '<area id="a-' + place + '" class="map-area" style="display: none;" shape="circ" coords="' + coords + ', 14"  onclick="markPlace(\'' + place + '\')" data-maphilight=\'{"strokeColor":"0000ff","strokeWidth":3,"fillColor":"00ff00","fillOpacity":0.6}\' data-clicked="0"/>'
             document.getElementById('innermap').innerHTML = document.getElementById('innermap').innerHTML + text;
         }
 
