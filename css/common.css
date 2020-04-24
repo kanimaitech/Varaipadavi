@@ -1,0 +1,19 @@
+.vp-btn {
+    width: 100%;
+    position: relative;
+    background-color: #0080ff;
+    border: 2px solid white;
+    font-size: 18px;
+    color: #FFFFFF;
+    padding: 8px;
+    text-align: center;
+    transition-duration: 0.4s;
+    text-decoration: none;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.stopwatch {
+    font-size: 38px;
+    text-align: center;
+}
