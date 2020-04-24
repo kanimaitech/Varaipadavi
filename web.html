@@ -85,22 +85,18 @@
             <div id="question-area">
                 <div class="stopwatch"></div>
                 <div id="question"></div>
-                <center>
-                    <div id="question-loader" class="loader"></div>
-                </center>
+                <div id="question-loader" class="loader text-center"></div>
                 <button class="vp-btn" id="start-btn">தொடங்குக</button>
                 <button class="vp-btn" id="restart-btn" onclick="restartGame()">Restart</button>
                 <button class="vp-btn" id="add-time-btn" onclick="addRankToDatabase()">புள்ளியை சேர்</button>
             </div>
 
-            <center>
-                <div class="container">
-                    <img align="center" src='img/lkmap.png' usemap='#lkmap' class='map' title='imgmap201293016112'
-                        alt='imgmap201293016112' id='lkmap' />
-                </div>
-                <map id='innermap' name='lkmap'>
-                </map>
-            </center>
+            <div id="map-area" class="d-flex justify-content-center">
+                <img src='img/lkmap.png' usemap='#lkmap' class='map img-fluid' title='imgmap201293016112'
+                    alt='imgmap201293016112' id='lkmap' />
+            </div>
+            <map id='innermap' name='lkmap'>
+            </map>
 
         </div>
 
@@ -145,9 +141,9 @@
                     }
                 }
             }
-            
+
             function addarea(place, coords) {
-                var text = '<area id="a-' + place + '" class="map-area" style="display: none;" shape="circ" coords="' + coords + ', 14"  onclick="markPlace(\'' + place + '\')" data-maphilight=\'{"strokeColor":"0000ff","strokeWidth":3,"fillColor":"00ff00","fillOpacity":0.6}\' data-clicked="0"/>'
+                var text = '<area id="a-' + place + '" style="display: none;" shape="circ" coords="' + coords + ', 14"  onclick="markPlace(\'' + place + '\')" data-maphilight=\'{"strokeColor":"0000ff","strokeWidth":3,"fillColor":"00ff00","fillOpacity":0.6}\' data-clicked="0"/>'
                 document.getElementById('innermap').innerHTML = document.getElementById('innermap').innerHTML + text;
             }
 

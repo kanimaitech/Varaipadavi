@@ -1,12 +1,10 @@
-.map-area,
 #add-time-btn {
     display: none;
 }
 
-.map {
+#map-area {
     margin-top: 0.5%;
 }
-
 #question-area {
     position: fixed;
     right: 0.5%;
