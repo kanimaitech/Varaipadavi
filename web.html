@@ -87,8 +87,7 @@
                 <div id="question"></div>
                 <div id="question-loader" class="loader text-center"></div>
                 <button class="vp-btn" id="start-btn" onclick="startGame()">தொடங்குக</button>
-                <button class="vp-btn" id="restart-btn" onclick="restartGame()">Restart</button>
-                <button class="vp-btn" id="add-time-btn" onclick="addRankToDatabase()">புள்ளியை சேர்</button>
+                <button class="vp-btn" id="restart-btn" onclick="restartGame()">திரும்ப விளையாடு</button>
             </div>
 
             <div id="map-area" class="d-flex justify-content-center">
@@ -98,6 +97,21 @@
             <map id='innermap' name='lkmap'>
             </map>
 
+            <div id="myModal" class="modal">
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div id="modal-header-text">வரைபடவி</div>
+                    </div>
+                    <div class="modal-body">
+                        <div id="modal-text">வரைபடவி</div>
+                        <input type="text" id="username-input" placeholder="உங்கள் பெயரை உள்ளிடுக" />
+                        <button class="vp-btn" id="add-time-btn" onclick="addRankToDatabase()">புள்ளியை சேர்</button>
+                        <button class="vp-btn" id="replay-btn" onclick="restartGame()">திரும்ப விளையாடு</button>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -106,11 +120,18 @@
             document.querySelector('.stopwatch'),
             document.querySelector('.results'));
 
+        var modal = document.getElementById("myModal");
         $(function () {
             $('.map').maphilight({
                 fillColor: '008800'
             });
         });
+
+        function showModal(header, text) {
+            document.getElementById('modal-header-text').innerHTML = header;
+            document.getElementById('modal-text').innerHTML = text;
+            modal.style.display = "block";
+        }
 
         function shuffle(array) {
             array.sort(() => Math.random() - 0.5);
@@ -147,40 +168,37 @@
         var answers = 0;
         function markPlace(element) {
             var place = element;
-            if (place == 'Wrong') {
+            if ($("#" + place).length == 0) {
                 alert("இவ்விடை தவறு");
             } else {
-                if ($("#" + place).length == 0) {
-                    alert("இவ்விடை தவறு");
+                answers += 1;
+                if (answers == 1) {
+                    stopwatch.stop();
+                    document.getElementById('question').innerHTML = '';
+                    $("#add-time-btn").show();
+                    showModal('வாழ்த்துக்கள்!', 'உங்கள் புள்ளி நேரம்: <b>' + stopwatch.lap().replace(/;/g, "a") + '</b>');
                 } else {
-                    answers += 1;
-                    if (answers == 10) {
-                        stopwatch.stop();
-                        document.getElementById('question').innerHTML = '';
-                        document.getElementById('add-time-btn').style.display = 'block';
-                    } else {
-                        addQuestion(places[answers][0]);
-                    }
-                    $(function () {
-                        var coord = $('#a-' + place).attr("coords").split(',');
-                        var textVerticalCoord = +coord[1];
-                        var textHorizontalCoord = +coord[0];
-                        $('#candiv').append('<div style="z-index: 1; color: #0040ff; position: fixed; top: ' + textVerticalCoord + 'px; left: ' + textHorizontalCoord + 'px; font-size:10px;"><b>' + place + '</b></div>');
-                        $('#a-' + place).attr("coords", coord[0] + ", " + coord[1] + ", 4");
-                        var data = $('#a-' + place).mouseout().data('maphilight') || {};
-                        data.alwaysOn = !data.alwaysOn;
-                        $('#a-' + place).data('maphilight', data).trigger('alwaysOn.maphilight');
-                    });
+                    addQuestion(places[answers][0]);
                 }
+                $(function () {
+                    var coord = $('#a-' + place).attr("coords").split(',');
+                    var textVerticalCoord = +coord[1];
+                    var textHorizontalCoord = +coord[0];
+                    $('#candiv').append('<div style="z-index: 1; color: #0040ff; position: fixed; top: ' + textVerticalCoord + 'px; left: ' + textHorizontalCoord + 'px; font-size:10px;"><b>' + place + '</b></div>');
+                    $('#a-' + place).attr("coords", coord[0] + ", " + coord[1] + ", 4");
+                    var data = $('#a-' + place).mouseout().data('maphilight') || {};
+                    data.alwaysOn = !data.alwaysOn;
+                    $('#a-' + place).data('maphilight', data).trigger('alwaysOn.maphilight');
+                });
             }
         }
 
         // ***
         // Firebase
-        var db = firebase.firestore();
+        var database = firebase.firestore();
 
         var places = [];
-        db.collection("places").get().then((querySnapshot) => {
+        database.collection("places").get().then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
                 places.push([doc.data()['Place'], doc.data()['Coordinates']])
                 addArea(doc.data()['Place'], doc.data()['Coordinates']);
@@ -194,7 +212,7 @@
         });
 
         var rank = 1;
-        db.collection("rank").orderBy("time").get().then((querySnapshot) => {
+        database.collection("rank").orderBy("time").get().then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
                 $("#rank-loader").hide();
                 addRankToTable(rank, doc.data()['name'], doc.data()['time']);
@@ -204,11 +222,14 @@
 
         function addRankToDatabase() {
             var time = stopwatch.lap().replace(/;/g, "a");
-            var name = prompt("Your Name?")
-            db.collection("rank").add({
+            var name = document.getElementById("username-input").value;
+            database.collection("rank").add({
                 name: name,
                 time: time
             })
+            $("#add-time-btn").hide();
+            $("#username-input").hide();
+            showModal('வெற்றி!', 'உங்கள் புள்ளி சேர்க்கப்பட்டது, ' + name + ".\n மறுதடவை விளையாடப் போகின்றீர்களா?");
         };
 
     </script>
