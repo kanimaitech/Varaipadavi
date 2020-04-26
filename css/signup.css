@@ -1,0 +1,24 @@
+#signup {
+    width: 400px;
+    border: 3px solid #0030aa;
+    border-radius: 15px;
+}
+.signup-header {
+    padding: 2px 16px;
+    background-color: #0045cc;
+    color: white;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+.signup-body {
+    padding: 15px 16px;
+}
+#signup-header-text {
+    font-size: 28px;
+    text-align: center;
+}
+.signup-icon {
+    width: 100%;
+    text-align: center;
+    color: #0045cc;
+}
