@@ -53,7 +53,7 @@
         <div class="text-center">Loading</div>
     </div>
 
-    <div id="web-view">
+    <div id="web-view" style="min-width: 1280px; margin: 0 auto;">
         <nav class="navbar navbar-expand-md">
             <div class="navbar-header">
                 <img class="d-inline-block align-top pb-2" src="img/brand.png" height="35px" />
@@ -137,6 +137,12 @@
 
         var modal = document.getElementById("myModal");
 
+        $(function () {
+            $('.map').maphilight({
+                fillColor: '008800'
+            });
+        });
+        
         function load() {
             if(loaded >= 3) {
                 $('#web-view').show();
@@ -175,7 +181,7 @@
         function startGame() {
             $("#question, #restart-btn, .map").show();
             stopwatch.start();
-        }
+        } 
 
         function restartGame() {
             location.reload();
@@ -248,12 +254,6 @@
             $("#username-input").hide();
             showModal('வெற்றி!', 'உங்கள் புள்ளி சேர்க்கப்பட்டது, ' + name + ".\n மறுதடவை விளையாடப் போகின்றீர்களா?");
         };
-
-        $(function () {
-            $('.map').maphilight({
-                fillColor: '008800'
-            });
-        });
 
         firebase.auth().onAuthStateChanged(function (user) {
             if (user) {

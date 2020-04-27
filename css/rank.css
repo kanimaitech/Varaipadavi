@@ -4,12 +4,8 @@
     position: fixed;
 }
 
-.r-area {
+#mobile-view {
     display: none;
-}
-
-.navbar {
-    visibility: hidden;
 }
 
 .loader {

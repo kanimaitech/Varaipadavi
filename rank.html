@@ -2,6 +2,7 @@
 <html>
 <meta charset="UTF-8">
 <meta content="width=device-width, initial-scale=1" name="viewport" />
+
 <head>
     <title>வரைபடவி - Varaipadavi</title>
 
@@ -31,7 +32,23 @@
 </head>
 
 <body>
-
+    <div id="rank-loader">
+        <div class="lds-spinner">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div class="text-center">Loading</div>
+    </div>
     <div id="mobile-view">
 
         <nav id="myNav" class="navbar navbar-expand-lg">
@@ -69,9 +86,6 @@
                 </tr>
             </table>
         </div>
-        <div id="rankLoader">
-            <div class="loader"></div>
-        </div>
 
     </div>
 
@@ -87,9 +101,8 @@
         var rank = 1;
         db.collection("rank").orderBy("time").get().then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
-                $("#rankLoader").hide();
-                document.getElementById("myNav").style.visibility = "visible";
-                $(".r-area").show();
+                $("#rank-loader").hide();
+                $("#mobile-view").show();
                 addRankToTable(rank, doc.data()['name'], doc.data()['time']);
                 rank++;
             });

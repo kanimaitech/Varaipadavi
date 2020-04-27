@@ -128,6 +128,7 @@ td.rank {
 }
 
 .navbar {
+	width: 100%;
 	margin-bottom: 0;
 	background-color: #0040cc;
 	font-family: Montserrat, sans-serif;
@@ -383,6 +384,7 @@ td.rank {
 	width: 80px;
 	height: 80px;
 	padding-left: 48%;
+	margin-top: 18%;
 }
 .lds-spinner div {
 	transform-origin: 25px 25px;
