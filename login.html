@@ -36,22 +36,20 @@
 <body>
     <div class="container">
         <div class="row justify-content-center pt-5">
-            <div class="col-auto pt-5">
-                <div id="signup">
-                    <div class="signup-header">
-                        <div id="signup-header-text">பதிவு செய்க</div>
+            <div id="signup">
+                <div class="signup-header">
+                    <div id="signup-header-text">பதிவு செய்க</div>
+                </div>
+                <div class="signup-body">
+                    <div class="form-group">
+                        <i class="fa fa-user fa-4x signup-icon"></i>
+                        <input type="email" class="form-control vp-input" placeholder="E-mail" id="email-input">
+                        <input type="password" class="form-control vp-input" placeholder="Enter password"
+                            id="password-input">
                     </div>
-                    <div class="signup-body">
-                        <div class="form-group">
-                            <i class="fa fa-user fa-4x signup-icon"></i>
-                            <input type="email" class="form-control vp-input" placeholder="E-mail" id="email-input">
-                            <input type="password" class="form-control vp-input" placeholder="Enter password"
-                                id="password-input">
-                        </div>
-                        <label class="checkbox-container"> Remember me<input type="checkbox" onclick="markPlace()"><span
-                                class="checkmark"></span></label>
-                        <button class="vp-btn" onclick="signIn()">Sign In</button>
-                    </div>
+                    <label class="checkbox-container"> Remember me<input type="checkbox" onclick="markPlace()"><span
+                            class="checkmark"></span></label>
+                    <button class="vp-btn" onclick="signIn()">Sign In</button>
                 </div>
             </div>
         </div>
@@ -84,7 +82,6 @@
                     }
                     console.log(error);
                 });
-                redirect();
 
             }
         }
