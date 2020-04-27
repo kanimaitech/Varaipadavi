@@ -35,8 +35,25 @@
 </head>
 
 <body>
-    <div style="min-width: 1280px; margin: 0 auto;">
+    <div id="quiz-loader">
+        <div class="lds-spinner">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div class="text-center">Loading</div>
+    </div>
 
+    <div id="web-view">
         <nav class="navbar navbar-expand-md">
             <div class="navbar-header">
                 <img class="d-inline-block align-top pb-2" src="img/brand.png" height="35px" />
@@ -60,13 +77,12 @@
                 <ul class="navbar-nav">
                     <li class="nav-item active"><a id="user" class="nav-link" href="profile.html"><i
                                 class="pr-1 fa fa-user"></i></a></li>
-                    <li class="nav-item active"><a id="sign-out" class="nav-link" href="" onclick="firebase.auth().signOut();"><i
-                                class="pr-1 fa fa-sign-out"></i>Sign Out</a>
+                    <li class="nav-item active"><a id="sign-out" class="nav-link" href=""
+                            onclick="firebase.auth().signOut();"><i class="pr-1 fa fa-sign-out"></i>Sign Out</a>
                     </li>
                 </ul>
             </div>
         </nav>
-
         <div id="quiz">
 
             <div id="rank-area">
@@ -76,20 +92,12 @@
                         <th>பயனர்</th>
                         <th>நேரம்</th>
                     </tr>
-                    <tr id="rank-loader">
-                        <td></td>
-                        <td>
-                            <div class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
-                        </td>
-                        <td></td>
-                    </tr>
                 </table>
             </div>
 
             <div id="question-area">
                 <div class="stopwatch"></div>
                 <div id="question"></div>
-                <div id="question-loader" class="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
                 <button class="vp-btn" id="start-btn" onclick="startGame()">தொடங்குக</button>
                 <button class="vp-btn" id="restart-btn" onclick="restartGame()">திரும்ப விளையாடு</button>
                 <a href="w-study.html"><button class="vp-btn" id="study-link-btn">பயில்க</button></a>
@@ -122,11 +130,19 @@
     </div>
 
     <script>
+        var loaded = 0;
         let stopwatch = new Stopwatch(
             document.querySelector('.stopwatch'),
             document.querySelector('.results'));
 
         var modal = document.getElementById("myModal");
+
+        function load() {
+            if(loaded >= 3) {
+                $('#web-view').show();
+                $('#quiz-loader').hide();
+            }
+        }
 
         function showModal(header, text) {
             document.getElementById('modal-header-text').innerHTML = header;
@@ -159,7 +175,6 @@
         function startGame() {
             $("#question, #restart-btn, .map").show();
             stopwatch.start();
-            $("#start-btn").hide();
         }
 
         function restartGame() {
@@ -203,10 +218,10 @@
             querySnapshot.forEach((doc) => {
                 places.push([doc.data()['Place'], doc.data()['Coordinates']])
                 addArea(doc.data()['Place'], doc.data()['Coordinates']);
-                $("#question-loader").hide();
-                $("#start-btn").show();
                 console.log(doc.data()['Place']);
             });
+            loaded++;
+            load();
             var i = 0;
             var qPlaces = shuffle(places);
             addQuestion(places[0][0]);
@@ -215,10 +230,11 @@
         var rank = 1;
         database.collection("rank").orderBy("time").get().then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
-                $("#rank-loader").hide();
                 addRankToTable(rank, doc.data()['name'], doc.data()['time']);
                 rank++;
             });
+            loaded++;
+            load();
         });
 
         function addRankToDatabase() {
@@ -233,21 +249,22 @@
             showModal('வெற்றி!', 'உங்கள் புள்ளி சேர்க்கப்பட்டது, ' + name + ".\n மறுதடவை விளையாடப் போகின்றீர்களா?");
         };
 
-
         $(function () {
             $('.map').maphilight({
                 fillColor: '008800'
             });
         });
-        
+
         firebase.auth().onAuthStateChanged(function (user) {
-                if (user) {
-                    var displayName = user.displayName;
-                    $('#user').append(displayName);
-                } else {
-                    window.location = "login.html";
-                }
-            });
+            if (user) {
+                var displayName = user.displayName;
+                $('#user').append(displayName);
+                loaded++;
+                load();
+            } else {
+                window.location = "login.html";
+            }
+        });
     </script>
 </body>
 

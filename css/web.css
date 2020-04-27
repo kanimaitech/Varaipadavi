@@ -1,7 +1,7 @@
 #add-time-btn,
-#start-btn,
 #restart-btn,
 #question,
+#web-view,
 .map {
 	display: none;
 }
@@ -39,4 +39,8 @@
 	overflow-x: hidden;
 	height: 500px;
 
+}
+
+#quiz-loader {
+	margin-top: 18%;
 }
