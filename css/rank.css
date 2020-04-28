@@ -1,7 +1,5 @@
-#rankLoader {
-    top: 100px;
-    left: 150px;
-    position: fixed;
+#rank-loader {
+    margin-left: auto;
 }
 
 #mobile-view {

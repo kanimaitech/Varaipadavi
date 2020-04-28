@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <meta charset="UTF-8">
+<meta content="width=device-width, initial-scale=1" name="viewport" />
 
 <head>
     <title>வரைபடவி - Varaipadavi</title>
@@ -14,7 +15,7 @@
         href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <link type="text/css" rel="stylesheet" href="css/common.css">
-    <link type="text/css" rel="stylesheet" href="css/signup.css">
+    <link type="text/css" rel="stylesheet" href="css/login.css">
 
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
@@ -36,26 +37,38 @@
 <body>
     <div class="container">
         <div class="row justify-content-center pt-5">
-            <div id="signup">
-                <div class="signup-header">
-                    <div id="signup-header-text">Login</div>
+            <div id="login">
+                <div class="login-header py-2">
+                    <div id="login-header-text">Login</div>
                 </div>
-                <div class="signup-body">
+                <div class="login-body">
                     <div class="form-group">
-                        <i class="fa fa-user fa-4x signup-icon"></i>
                         <input type="email" class="form-control vp-input" placeholder="E-mail" id="email-input">
                         <input type="password" class="form-control vp-input" placeholder="Enter password"
                             id="password-input">
                     </div>
-                    <label class="checkbox-container"> Remember me<input type="checkbox" onclick="markPlace()"><span
-                            class="checkmark"></span></label>
+                    <div class="row">
+                        <div class="col-7">
+                            <label id="remember=me" class="checkbox-container"> Remember me<input type="checkbox"
+                                    onclick="markPlace()"><span class="checkmark"></span></label>
+                        </div>
+                            <a href="forgot.html" id="forgot-password">forgot password?</a>
+                    </div>
+                    <div class="alert alert-danger" role="alert" id="alert-box"></div>
                     <button class="vp-btn" onclick="signIn()">Sign In</button>
+                    <div id="signup-link" class="pt-2 text-center">Don't have an account? <a href="signup.html">Create one</a></div>
+                
                 </div>
             </div>
         </div>
     </div>
 
     <script>
+        function displayAlert(message) {
+            $('#alert-box').text(message);
+            $('#alert-box').show();
+        }
+
         function signIn() {
             var email = $("#email-input").val().toLowerCase();
             var password = $("#password-input").val();
@@ -64,11 +77,11 @@
                 firebase.auth().signOut();
             } else {
                 if (email.length < 4) {
-                    alert('Please enter an email address.');
+                    displayAlert('Please enter an email address.');
                     return;
                 }
                 if (password.length < 4) {
-                    alert('Please enter a password.');
+                    displayAlert('Please enter a password.');
                     return;
                 }
 
@@ -76,9 +89,12 @@
                     var errorCode = error.code;
                     var errorMessage = error.message;
                     if (errorCode === 'auth/wrong-password') {
-                        alert('Wrong password.');
+                        displayAlert('Wrong password.');
+                    }
+                    else if (errorCode === 'auth/user-not-found') {
+                        displayAlert('User not found. Sign up First.');
                     } else {
-                        alert(errorMessage);
+                        displayAlert(errorMessage);
                     }
                     console.log(error);
                 });
@@ -93,10 +109,10 @@
 
         function redirect() {
             if (mobCheck()) {
-                window.location = "https://vp.kanimai.tech/mobile.html"
+                window.location = "mobile.html"
             }
             else {
-                window.location = "https://vp.kanimai.tech/web.html"
+                window.location = "web.html"
             }
         }
 

@@ -1,24 +1,37 @@
-#signup {
+body {
+    background-color: lightblue;
+}
+#login {
+    background-color: white;
     width: 380px;
-    border: 3px solid #0030aa;
     border-radius: 15px;
 }
-.signup-header {
+@media only screen and (max-width: 600px) {
+    #login {
+        width: 350px;
+    }
+}
+
+.login-header {
     padding: 2px 16px;
     background-color: #0045cc;
     color: white;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
 }
-.signup-body {
+.login-body {
     padding: 15px 16px;
 }
-#signup-header-text {
+#login-header-text {
     font-size: 28px;
     text-align: center;
 }
-.signup-icon {
+.login-icon {
     width: 100%;
     text-align: center;
     color: #0045cc;
+}
+
+#alert-box {
+    display: none;
 }

@@ -1,5 +1,5 @@
 #places-list {
-    height: 220px;
+    max-height: 40vh;
     overflow: scroll;
 }
 

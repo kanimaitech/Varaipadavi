@@ -2,7 +2,6 @@
 	width: 100%;
 	position: relative;
 	background-color: #0040cc;
-	border: 2px outset white;
 	font-size: 18px;
 	color: #ffffff;
 	padding: 8px;
@@ -383,7 +382,7 @@ td.rank {
 	position: relative;
 	width: 80px;
 	height: 80px;
-	padding-left: 48%;
+	padding-left: 42.5%;
 	margin-top: 18%;
 }
 .lds-spinner div {

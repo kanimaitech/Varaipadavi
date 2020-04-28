@@ -40,3 +40,7 @@
 	overflow-x: hidden;
 	height: 500px;
 }
+
+.lds-spinner {
+	padding-left: 48%;
+}
