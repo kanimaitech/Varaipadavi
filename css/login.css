@@ -1,0 +1,37 @@
+body {
+    background-color: lightblue;
+}
+#login {
+    background-color: white;
+    width: 380px;
+    border-radius: 15px;
+}
+@media only screen and (max-width: 600px) {
+    #login {
+        width: 350px;
+    }
+}
+
+.login-header {
+    padding: 2px 16px;
+    background-color: #0045cc;
+    color: white;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+.login-body {
+    padding: 15px 16px;
+}
+#login-header-text {
+    font-size: 28px;
+    text-align: center;
+}
+.login-icon {
+    width: 100%;
+    text-align: center;
+    color: #0045cc;
+}
+
+#alert-box {
+    display: none;
+}

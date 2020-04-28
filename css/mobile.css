@@ -1,8 +1,26 @@
-body {
-    width: fit-content;
-    font-family: Arial, Helvetica, sans-serif;
+#add-time-btn,
+#start-btn,
+#restart-btn,
+#replay-btn,
+#rank-link-btn,
+#username-input,
+#question,
+#places-list {
+    display: none;
 }
 
-#mobile-view {
-    zoom: 259%;
+#question-area {
+    position: fixed;
+    top: 50px;
+    right: 10px;
+    max-width: 160px;
+}
+
+#question {
+    padding-bottom: 5px;
+}
+
+.map {
+    margin-top: 5px;
+    margin-left: -10px;
 }

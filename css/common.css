@@ -1,342 +1,425 @@
 .vp-btn {
-    width: 100%;
-    position: relative;
-    background-color: #0080ff;
-    border: 2px solid white;
-    font-size: 18px;
-    color: #FFFFFF;
-    padding: 8px;
-    text-align: center;
-    transition-duration: 0.4s;
-    text-decoration: none;
-    overflow: hidden;
-    cursor: pointer;
+	width: 100%;
+	position: relative;
+	background-color: #0040cc;
+	font-size: 18px;
+	color: #ffffff;
+	padding: 8px;
+	text-align: center;
+	transition-duration: 0.4s;
+	text-decoration: none;
+	overflow: hidden;
+	cursor: pointer;
 }
 
 .vp-btn:hover {
-    background-color: #2391ff;
+	background-color: #0050cc;
 }
 
+.vp-input {
+	width: 100%;
+	padding: 5px 8px;
+	margin: 8px 0;
+	box-sizing: border-box;
+	border: 3px solid #d2d2d2;
+	-webkit-transition: 0.5s;
+	transition: 0.5s;
+	outline: none;
+}
+
+.vp-input:focus {
+	border: 3px solid #969696;
+}
+
+.vp-input-text[type=text] {
+	width: 100%;
+	padding: 5px 8px;
+	margin: 8px 0;
+	box-sizing: border-box;
+	border: 3px solid #ccc;
+	-webkit-transition: 0.5s;
+	transition: 0.5s;
+	outline: none;
+}
+
+.vp-input-text[type=text]:focus {
+	border: 3px solid #555;
+}
+
+
+.vp-loader {
+	color: official;
+	display: inline-block;
+	position: relative;
+	width: 80px;
+	height: 80px;
+	padding-left: 42.5%;
+	margin-top: 18%;
+}
+.vp-loader div {
+	transform-origin: 25px 25px;
+	animation: vp-loader 1.2s linear infinite;
+}
+.vp-loader div:after {
+	content: " ";
+	display: block;
+	position: absolute;
+	top: 3px;
+	left: 37px;
+	width: 6px;
+	height: 18px;
+	border-radius: 20%;
+	background: #0040cc;
+}
+.vp-loader div:nth-child(1) {
+	transform: rotate(0deg);
+	animation-delay: -1.1s;
+}
+.vp-loader div:nth-child(2) {
+	transform: rotate(30deg);
+	animation-delay: -1s;
+}
+.vp-loader div:nth-child(3) {
+	transform: rotate(60deg);
+	animation-delay: -0.9s;
+}
+.vp-loader div:nth-child(4) {
+	transform: rotate(90deg);
+	animation-delay: -0.8s;
+}
+.vp-loader div:nth-child(5) {
+	transform: rotate(120deg);
+	animation-delay: -0.7s;
+}
+.vp-loader div:nth-child(6) {
+	transform: rotate(150deg);
+	animation-delay: -0.6s;
+}
+.vp-loader div:nth-child(7) {
+	transform: rotate(180deg);
+	animation-delay: -0.5s;
+}
+.vp-loader div:nth-child(8) {
+	transform: rotate(210deg);
+	animation-delay: -0.4s;
+}
+.vp-loader div:nth-child(9) {
+	transform: rotate(240deg);
+	animation-delay: -0.3s;
+}
+.vp-loader div:nth-child(10) {
+	transform: rotate(270deg);
+	animation-delay: -0.2s;
+}
+.vp-loader div:nth-child(11) {
+	transform: rotate(300deg);
+	animation-delay: -0.1s;
+}
+.vp-loader div:nth-child(12) {
+	transform: rotate(330deg);
+	animation-delay: 0s;
+}
+@keyframes vp-loader {
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+
+.vp-blue {
+	color: #0040cc;
+}
 .stopwatch {
-    font-size: 38px;
-    text-align: center;
+	font-size: 38px;
+	text-align: center;
 }
 
 table {
-    border-collapse: collapse;
-    width: 100%;
-    background: #fff;
+	border-collapse: collapse;
+	width: 100%;
+	background: #fff;
 }
 
 th {
-    position: sticky;
-    top: 0;
-    background-color: #0080ff;
-    font-weight: bold;
-    color: #fff;
-    white-space: nowrap;
+	position: sticky;
+	top: 0;
+	background-color: #0040cc;
+	font-weight: bold;
+	color: #fff;
+	white-space: nowrap;
 }
 
 td,
 th {
-    padding: 0.75em 1.5em;
-    text-align: left;
+	padding: 0.75em 1.5em;
+	text-align: left;
 }
 
 tbody th {
-    background-color: #0080ff;
+	background-color: #0040cc;
 }
 
 tbody tr:nth-child(2n-1) {
-    background-color: #f5f5f5;
-    transition: all .125s ease-in-out;
+	background-color: #f5f5f5;
+	transition: all .125s ease-in-out;
 }
 
 tbody tr:hover {
-    background-color: rgba(50, 98, 149, .3);
+	background-color: rgba(50, 98, 149, .3);
 }
 
 td.rank {
-    text-transform: capitalize;
-}
-
-.loader {
-    margin: auto;
-    width: 50%;
-    border: 10px solid #f3f3f3;
-    border-radius: 50%;
-    border-top: 10px solid #3498db;
-    width: 40px;
-    height: 40px;
-    -webkit-animation: spin 2s linear infinite;
-    /* Safari */
-    animation: spin 2s linear infinite;
-}
-
-/* Safari */
-@-webkit-keyframes spin {
-    0% {
-        -webkit-transform: rotate(0deg);
-    }
-
-    100% {
-        -webkit-transform: rotate(360deg);
-    }
-}
-
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(360deg);
-    }
+	text-transform: capitalize;
 }
 
 .navbar {
-    margin-bottom: 0;
-    background-color: #0080ff;
-    font-family: Montserrat, sans-serif;
+	width: 100%;
+	margin-bottom: 0;
+	background-color: #0040cc;
+	font-family: Montserrat, sans-serif;
 }
 
 .navbar li a,
 .navbar .navbar-brand {
-    color: rgb(233, 233, 233) !important;
+	color: rgb(214, 214, 214) !important;
 }
 
 .navbar-nav li a:hover,
 .navbar-nav li.active a,
 .navbar-toggler {
-    color: #ffffff !important;
+	color: #ffffff !important;
 }
-
 
 /* Modal */
 
 .modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    padding-top: 100px;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgb(0, 0, 0);
-    background-color: rgba(0, 0, 0, 0.6);
+	display: none;
+	position: fixed;
+	z-index: 1;
+	padding-top: 100px;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgb(0, 0, 0);
+	background-color: rgba(0, 0, 0, 0.6);
 }
 
 /* Modal Content */
 .modal-content {
-    position: relative;
-    background-color: #fefefe;
-    margin: auto;
-    padding: 0;
-    border: 1px solid #888;
-    width: 80%;
-    height: fit-content;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    -webkit-animation-name: animatetop;
-    -webkit-animation-duration: 0.4s;
-    animation-name: animatetop;
-    animation-duration: 0.4s
+	position: relative;
+	background-color: #fefefe;
+	margin: auto;
+	padding: 0;
+	border: 1px solid #888;
+	width: 80%;
+	height: fit-content;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	-webkit-animation-name: animatetop;
+	-webkit-animation-duration: 0.4s;
+	animation-name: animatetop;
+	animation-duration: 0.4s;
 }
 
 /* Add Animation */
 @-webkit-keyframes animatetop {
-    from {
-        top: -300px;
-        opacity: 0
-    }
+	from {
+		top: -300px;
+		opacity: 0;
+	}
 
-    to {
-        top: 0;
-        opacity: 1
-    }
+	to {
+		top: 0;
+		opacity: 1;
+	}
 }
 
 @keyframes animatetop {
-    from {
-        top: -300px;
-        opacity: 0
-    }
+	from {
+		top: -300px;
+		opacity: 0;
+	}
 
-    to {
-        top: 0;
-        opacity: 1
-    }
+	to {
+		top: 0;
+		opacity: 1;
+	}
 }
 
 .modal-header {
-    padding: 2px 16px;
-    background-color: #0080ff;
-    color: white;
+	padding: 2px 16px;
+	background-color: #0040cc;
+	color: white;
 }
 
 .modal-body {
-    padding: 15px 16px;
+	padding: 15px 16px;
 }
 
 #modal-header-text {
-    font-size: 28px;
+	font-size: 28px;
 }
 
 #modal-text {
-    text-align: center;
-    padding-bottom: 10px;
+	text-align: center;
+	padding-bottom: 10px;
 }
 
-input[type=text] {
-    width: 100%;
-    padding: 5px 8px;
-    margin: 8px 0;
-    box-sizing: border-box;
-    border: 3px solid #ccc;
-    -webkit-transition: 0.5s;
-    transition: 0.5s;
-    outline: none;
-}
-
-input[type=text]:focus {
-    border: 3px solid #555;
+@media only screen and (max-width: 600px) {
+	#snackbar {
+		visibility: hidden;
+		min-width: 50%;
+		margin-left: -25%;
+		background-color: red;
+		color: #fff;
+		text-align: center;
+		border-radius: 2px;
+		padding: 8px;
+		position: fixed;
+		z-index: 1;
+		left: 50%;
+		bottom: 30px;
+		font-size: 17px;
+	}
 }
 
 #snackbar {
-    visibility: hidden;
-    min-width: 50%;
-    margin-left: -25%;
-    background-color: red;
-    color: #fff;
-    text-align: center;
-    border-radius: 2px;
-    padding: 8px;
-    position: fixed;
-    z-index: 1;
-    left: 50%;
-    bottom: 30px;
-    font-size: 17px;
+	visibility: hidden;
+	min-width: 200px;
+	margin-left: -25%;
+	background-color: red;
+	color: #fff;
+	text-align: center;
+	border-radius: 2px;
+	padding: 8px;
+	position: fixed;
+	z-index: 1;
+	left: 45%;
+	bottom: 30px;
+	font-size: 17px;
 }
 
 #snackbar.show {
-    visibility: visible;
-    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
-    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+	visibility: visible;
+	-webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+	animation: fadein 0.5s, fadeout 0.5s 2.5s;
 }
 
 @-webkit-keyframes fadein {
-    from {
-        bottom: 0;
-        opacity: 0;
-    }
+	from {
+		bottom: 0;
+		opacity: 0;
+	}
 
-    to {
-        bottom: 30px;
-        opacity: 1;
-    }
+	to {
+		bottom: 30px;
+		opacity: 1;
+	}
 }
 
 @keyframes fadein {
-    from {
-        bottom: 0;
-        opacity: 0;
-    }
+	from {
+		bottom: 0;
+		opacity: 0;
+	}
 
-    to {
-        bottom: 30px;
-        opacity: 1;
-    }
+	to {
+		bottom: 30px;
+		opacity: 1;
+	}
 }
 
 @-webkit-keyframes fadeout {
-    from {
-        bottom: 30px;
-        opacity: 1;
-    }
+	from {
+		bottom: 30px;
+		opacity: 1;
+	}
 
-    to {
-        bottom: 0;
-        opacity: 0;
-    }
+	to {
+		bottom: 0;
+		opacity: 0;
+	}
 }
 
 @keyframes fadeout {
-    from {
-        bottom: 30px;
-        opacity: 1;
-    }
+	from {
+		bottom: 30px;
+		opacity: 1;
+	}
 
-    to {
-        bottom: 0;
-        opacity: 0;
-    }
+	to {
+		bottom: 0;
+		opacity: 0;
+	}
 }
 
 /* The checkbox-container */
 .checkbox-container {
-    display: block;
-    position: relative;
-    padding-left: 25px;
-    margin-bottom: 12px;
-    cursor: pointer;
-    font-size: 15px;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-  }
-  
-  /* Hide the browser's default checkbox */
-  .checkbox-container input {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-    height: 0;
-    width: 0;
-  }
-  
-  /* Create a custom checkbox */
-  .checkmark {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 20px;
-    width: 20px;
-    background-color: #eee;
-  }
-  
-  /* On mouse-over, add a grey background color */
-  .checkbox-container:hover input ~ .checkmark {
-    background-color: #ccc;
-  }
-  
-  /* When the checkbox is checked, add a blue background */
-  .checkbox-container input:checked ~ .checkmark {
-    background-color: #2196F3;
-  }
-  
-  /* Create the checkmark/indicator (hidden when not checked) */
-  .checkmark:after {
-    content: "";
-    position: absolute;
-    display: none;
-  }
-  
-  /* Show the checkmark when checked */
-  .checkbox-container input:checked ~ .checkmark:after {
-    display: block;
-  }
-  
-  /* Style the checkmark/indicator */
-  .checkbox-container .checkmark:after {
-    left: 9px;
-    top: 5px;
-    width: 5px;
-    height: 10px;
-    border: solid white;
-    border-width: 0 3px 3px 0;
-    -webkit-transform: rotate(45deg);
-    -ms-transform: rotate(45deg);
-    transform: rotate(45deg);
-  }
+	display: block;
+	position: relative;
+	padding-left: 25px;
+	margin-bottom: 12px;
+	cursor: pointer;
+	font-size: 15px;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.checkbox-container input {
+	position: absolute;
+	opacity: 0;
+	cursor: pointer;
+	height: 0;
+	width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 20px;
+	width: 20px;
+	background-color: rgb(201, 201, 201);
+}
+
+/* On mouse-over, add a grey background color */
+.checkbox-container:hover input ~ .checkmark {
+	background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.checkbox-container input:checked ~ .checkmark {
+	background-color: #0040cc;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+	content: "";
+	position: absolute;
+	display: none;
+}
+
+/* Show the checkmark when checked */
+.checkbox-container input:checked ~ .checkmark:after {
+	display: block;
+}
+
+/* Style the checkmark/indicator */
+.checkbox-container .checkmark:after {
+	left: 9px;
+	top: 5px;
+	width: 5px;
+	height: 10px;
+	border: solid white;
+	border-width: 0 3px 3px 0;
+	-webkit-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	transform: rotate(45deg);
+}

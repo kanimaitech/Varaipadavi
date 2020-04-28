@@ -1,7 +1,8 @@
 #add-time-btn,
-#start-btn,
 #restart-btn,
 #question,
+#web-view,
+#body,
 .map {
 	display: none;
 }
@@ -21,7 +22,8 @@
 
 #rank-area {
 	position: fixed;
-	overflow: scroll;
+	overflow-y: scroll;
+	overflow-x: hidden;
 	left: 0.5%;
 	background-color: white;
 	height: 593px;
@@ -33,22 +35,12 @@
     width: 30%;
 }
 
-/* width */
-::-webkit-scrollbar {
-	width: 10px;
+#places-list {
+	overflow-y: scroll;
+	overflow-x: hidden;
+	height: 500px;
 }
 
-/* Track */
-::-webkit-scrollbar-track {
-	background: #f1f1f1;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-	background: #0070e0;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-	background: #0070e0;
+.lds-spinner {
+	padding-left: 48%;
 }

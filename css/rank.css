@@ -1,15 +1,9 @@
-#rankLoader {
-    top: 100px;
-    left: 150px;
-    position: fixed;
+#rank-loader {
+    margin-left: auto;
 }
 
-.r-area {
+#mobile-view {
     display: none;
-}
-
-.navbar {
-    visibility: hidden;
 }
 
 .loader {

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <meta charset="UTF-8">
+<meta content="width=device-width, initial-scale=1" name="viewport" />
 
 <head>
     <title>வரைபடவி - Varaipadavi</title>
@@ -13,7 +14,6 @@
     <link type="text/css" rel="stylesheet"
         href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <link type="text/css" rel="stylesheet" href="css/mobile.css">
     <link type="text/css" rel="stylesheet" href="css/common.css">
     <link type="text/css" rel="stylesheet" href="css/rank.css">
 
@@ -25,6 +25,8 @@
         crossorigin="anonymous"></script>
 
     <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-firestore.js"></script>
 
     <script type="text/javascript" src="js/firebase.js"></script>
@@ -32,7 +34,23 @@
 </head>
 
 <body>
-
+    <div id="rank-loader">
+        <div class="vp-loader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div class="text-center">Loading</div>
+    </div>
     <div id="mobile-view">
 
         <nav id="myNav" class="navbar navbar-expand-lg">
@@ -55,23 +73,24 @@
                             நிலை </a></li>
                     <li class="nav-item"><a class="nav-link" href="study.html"><i class="pr-1 fa fa-book"></i>பயில்க</a>
                     </li>
-
                 </ul>
-
+                <ul class="navbar-nav">
+                    <li class="nav-item active"><a id="user" class="nav-link" href="profile.html"><i
+                                class="pr-1 fa fa-user"></i></a></li>
+                    <li class="nav-item active"><a id="sign-out" class="nav-link" href=""
+                            onclick="firebase.auth().signOut();"><i class="pr-1 fa fa-sign-out"></i>Sign Out</a>
+                    </li>
+                </ul>
             </div>
         </nav>
         <div class="r-area">
             <table id="rank-t">
-                <tr>
+                <tr id="rank-header">
                     <th>நிலை</th>
                     <th>பயனர்</th>
                     <th>நேரம்</th>
                 <tr>
-                </tr>
             </table>
-        </div>
-        <div id="rankLoader">
-            <div class="loader"></div>
         </div>
 
     </div>
@@ -88,14 +107,21 @@
         var rank = 1;
         db.collection("rank").orderBy("time").get().then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
-                $("#rankLoader").hide();
-                document.getElementById("myNav").style.visibility = "visible";
-                $(".r-area").show();
+                $("#rank-loader").hide();
+                $("#mobile-view").show();
                 addRankToTable(rank, doc.data()['name'], doc.data()['time']);
                 rank++;
             });
         });
 
+        firebase.auth().onAuthStateChanged(function (user) {
+            if (user) {
+                var displayName = user.displayName;
+                $('#user').append(displayName);
+            } else {
+                window.location = "login.html";
+            }
+        });
     </script>
 </body>
 
