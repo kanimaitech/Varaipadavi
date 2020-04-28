@@ -206,8 +206,8 @@
                 }
                 $(function () {
                     var coord = $('#a-' + place).attr("coords").split(',');
-                    var textVerticalCoord = +coord[1] + 51;
-                    var textHorizontalCoord = +coord[0] + 16;
+                    var textVerticalCoord = +coord[1] + 48;
+                    var textHorizontalCoord = +coord[0] + 12;
                     $('#innermap').append('<div style="color: #0040ff; position: absolute; top: ' + textVerticalCoord + 'px; left: ' + textHorizontalCoord + 'px; font-size:10px;"><b>' + place + '</b></div>');
                     $('#a-' + place).attr("coords", coord[0] + ", " + coord[1] + ", 4");
                     var data = $('#a-' + place).mouseout().data('maphilight') || {};
