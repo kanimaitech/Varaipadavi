@@ -66,18 +66,15 @@
             </div>
         </nav>
         <div id="quiz">
-            <div id="question-area">
-                <input id="quiz-name" /> </br>
+            <div id="edit-area">
+                <input id="quiz-name" placeholder="Quiz name"/> </br>
                 <input type="file" id="files" name="files[]" />
-                <button onclick="upload()">Upload</button>
+                <button onclick="upload()">Create Quiz</button>
             </div>
 
             <div id="map-area">
-                <img src='' usemap='#lkmap' class='map img-fluid' title='imgmap201293016112' alt='imgmap201293016112'
-                    id='image' />
+                <img src='' id='img' style="position: fixed; max-height: 600px; max-width: 800px;"/>
             </div>
-            <map id='innermap' name='lkmap'>
-            </map>
         </div>
     </div>
 
