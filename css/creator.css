@@ -1,0 +1,12 @@
+#map-area {
+	margin-top: 0.5%;
+}
+#question-area {
+	position: fixed;
+	right: 0.5%;
+	background-color: white;
+	height: 593px;
+	width: 380px;
+	padding: 15px;
+	border: 3px solid #111197;
+}
