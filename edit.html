@@ -74,25 +74,47 @@
                     <option value="circ">Circle</option>
                     <option value="rect">Rectangle</option>
                     <option value="poly">Polygon</option>
-                  </select> </br>
-                <input id="place" /> <input id="coords" />
+                </select> </br>
+                <input id="place" /> <input id="coords"/>
                 <button onclick="addArea()">Add Area</button>
             </div>
             <div id="map-area">
                 <img src='' usemap='#lkmap' class='map img-fluid' title='imgmap201293016112' alt='imgmap201293016112'
                     id='img' style="position: fixed;" />
-                <svg id="svg-map" style="position: fixed;">
-                </svg>
+                <svg id="svg-map" style="position: fixed;"></svg>
             </div>
 
         </div>
     </div>
 
     <script>
+        $('#coords').keyup(function(){
+            showArea();
+        });
+        $('#shape').change(function(){
+            $('#coords').val('');
+            $('#svg-map').html('');
+        });
+        function showArea() {
+            var coords = $('#coords').val();
+            var left = coords.split(',')[0]
+            var top = coords.split(',')[1];
+            var shape = $('#shape').val();
+            var text;
+            switch (shape) {
+                case "poly":
+                    text = '<polygon points="' + coords + '" style="fill:lime;stroke:purple;stroke-width:2;fill-rule:evenodd;fill-opacity:0.2" />'
+                    break;
 
-        function showArea(left, top) {
-            var text = '<circle cx="' + left + '" cy="' + top + '" r="4" stroke="green" stroke-width="3" fill="yellow" />';
-            document.getElementById('svg-map').innerHTML = text;
+                case 'circ':
+                    text = '<circle cx="' + left + '" cy="' + top + '" r="14" stroke="green" stroke-width="3" fill="yellow" />';
+                    break;
+
+                case 'point':
+                    text = '<circle cx="' + left + '" cy="' + top + '" r="4" stroke="green" stroke-width="3" fill="yellow" />';
+                    break;
+            }
+            $('#svg-map').html(text);
         }
 
         $('#svg-map').click(function (e) {
@@ -101,17 +123,30 @@
 
             var left = Math.round((e.clientX - offset_l));
             var top = Math.round((e.clientY - offset_t));
-            $('#coords').val(left + ',' + top);
-            showArea(left, top);
+
+            var shape = $('#shape').val();
+            var text;
+            switch (shape) {
+                case "poly":
+                    $('#coords').val($('#coords').val() + ' ' + left + ',' + top);
+                    break;
+
+                default:
+                    $('#coords').val(left + ',' + top);
+                    break;
+            }
+            showArea();
         });
 
         function addArea() {
             var quiz = $('#quiz-name').val();
             var place = $('#place').val();
             var coords = $('#coords').val();
+            var shape = $('#shape').val().replace('point', 'circ');
             firebase.firestore().collection("quizes").doc(quiz).collection('coords').doc(place).set({
                 place: place,
-                coordinates: coords
+                coordinates: coords,
+                shape: shape
             });
             alert('added');
             $('#place').val('');
