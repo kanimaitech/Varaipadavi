@@ -72,10 +72,14 @@
                 <select id="shape">
                     <option value="circ">Circle</option>
                     <option value="poly">Polygon</option>
-                </select> <input id="radius" value="10"/> </br> <br/>
+                </select> <input id="radius" value="10" /> </br> <br />
                 <input id="place" /> <input id="coords" />
                 <button onclick="addArea()">Add Area</button>
-                <br /> <br />
+                <br />
+                <br />
+                <div id="list">
+
+                </div>
 
             </div>
             <div id="map-area">
@@ -110,9 +114,9 @@
             var shape = $('#shape').val();
             var text;
             if (shape == "poly") {
-                    text = '<polygon points="' + coords + '" style="fill:lime;stroke:purple;stroke-width:2;fill-rule:evenodd;fill-opacity:0.2" />'
-            } else  {
-                    text = '<circle cx="' + left + '" cy="' + top + '" r="'+ radius +'" style="fill:lime;stroke:purple;stroke-width:2;fill-rule:evenodd;fill-opacity:0.2" />';
+                text = '<polygon points="' + coords + '" style="fill:lime;stroke:purple;stroke-width:2;fill-rule:evenodd;fill-opacity:0.2" />'
+            } else {
+                text = '<circle cx="' + left + '" cy="' + top + '" r="' + radius + '" style="fill:lime;stroke:purple;stroke-width:2;fill-rule:evenodd;fill-opacity:0.2" />';
             }
             $('#svg-map').html(text);
         }
@@ -127,9 +131,9 @@
             var shape = $('#shape').val();
             var text;
             if (shape == "poly") {
-                    $('#coords').val($('#coords').val() + ' ' + left + ',' + top);
+                $('#coords').val($('#coords').val() + ' ' + left + ',' + top);
             } else {
-                    $('#coords').val(left + ',' + top);
+                $('#coords').val(left + ',' + top);
             }
             showArea();
         });
@@ -144,9 +148,10 @@
                 coordinates: coords.replace(' ', ','),
                 shape: shape
             });
-            alert('added');
+            $('#list').append(place + '</br>');
             $('#place').val('');
             $('#coords').val('');
+            $('#svg-map').html('');
         }
 
         function edit() {
@@ -159,11 +164,17 @@
                         $('#svg-map').attr('height', $('#img').height());
                         $('#svg-map').attr('width', $('#img').width());
                     }, 1000);
+                    firebase.firestore().collection("quizes").doc(quiz).collection('coords').get().then((querySnapshot) => {
+                        querySnapshot.forEach((doc) => {
+                            $('#list').append(doc.data()['place'] + '</br>')
+                        });
+                    });
                 } else {
                     alert("No such Quiz.");
                 }
             })
         }
+
     </script>
 </body>
 
