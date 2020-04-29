@@ -1,12 +1,12 @@
 #map-area {
 	margin-top: 0.5%;
 }
-#question-area {
+#edit-area {
 	position: fixed;
 	right: 0.5%;
 	background-color: white;
 	height: 593px;
-	width: 380px;
+	width: 40%;
 	padding: 15px;
 	border: 3px solid #111197;
 }
