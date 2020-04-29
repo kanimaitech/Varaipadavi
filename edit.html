@@ -70,13 +70,13 @@
                 <input id="quiz-name" /> <button onclick="edit()">Edit</button>
                 <br /><br />
                 <select id="shape">
-                    <option value="point">Point</option>
                     <option value="circ">Circle</option>
-                    <option value="rect">Rectangle</option>
                     <option value="poly">Polygon</option>
-                </select> </br>
-                <input id="place" /> <input id="coords"/>
+                </select> <input id="radius" value="10"/> </br> <br/>
+                <input id="place" /> <input id="coords" />
                 <button onclick="addArea()">Add Area</button>
+                <br /> <br />
+
             </div>
             <div id="map-area">
                 <img src='' usemap='#lkmap' class='map img-fluid' title='imgmap201293016112' alt='imgmap201293016112'
@@ -88,31 +88,31 @@
     </div>
 
     <script>
-        $('#coords').keyup(function(){
+        $('#coords, #radius').keyup(function () {
             showArea();
         });
-        $('#shape').change(function(){
+        $('#shape').change(function () {
             $('#coords').val('');
             $('#svg-map').html('');
+            if ($('#shape').val() == "poly") {
+                $('#radius').hide();
+            }
+            else {
+                $('#radius').show();
+            }
         });
+
         function showArea() {
             var coords = $('#coords').val();
-            var left = coords.split(',')[0]
+            var left = coords.split(',')[0];
             var top = coords.split(',')[1];
+            var radius = $('#radius').val();
             var shape = $('#shape').val();
             var text;
-            switch (shape) {
-                case "poly":
+            if (shape == "poly") {
                     text = '<polygon points="' + coords + '" style="fill:lime;stroke:purple;stroke-width:2;fill-rule:evenodd;fill-opacity:0.2" />'
-                    break;
-
-                case 'circ':
-                    text = '<circle cx="' + left + '" cy="' + top + '" r="14" stroke="green" stroke-width="3" fill="yellow" />';
-                    break;
-
-                case 'point':
-                    text = '<circle cx="' + left + '" cy="' + top + '" r="4" stroke="green" stroke-width="3" fill="yellow" />';
-                    break;
+            } else  {
+                    text = '<circle cx="' + left + '" cy="' + top + '" r="'+ radius +'" style="fill:lime;stroke:purple;stroke-width:2;fill-rule:evenodd;fill-opacity:0.2" />';
             }
             $('#svg-map').html(text);
         }
@@ -126,14 +126,10 @@
 
             var shape = $('#shape').val();
             var text;
-            switch (shape) {
-                case "poly":
+            if (shape == "poly") {
                     $('#coords').val($('#coords').val() + ' ' + left + ',' + top);
-                    break;
-
-                default:
+            } else {
                     $('#coords').val(left + ',' + top);
-                    break;
             }
             showArea();
         });
@@ -142,10 +138,10 @@
             var quiz = $('#quiz-name').val();
             var place = $('#place').val();
             var coords = $('#coords').val();
-            var shape = $('#shape').val().replace('point', 'circ');
+            var shape = $('#shape').val();
             firebase.firestore().collection("quizes").doc(quiz).collection('coords').doc(place).set({
                 place: place,
-                coordinates: coords,
+                coordinates: coords.replace(' ', ','),
                 shape: shape
             });
             alert('added');
