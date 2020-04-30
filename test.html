@@ -14,6 +14,7 @@
         href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <link type="text/css" rel="stylesheet" href="css/common.css">
+    <link type="text/css" rel="stylesheet" href="css/web.css">
     <link type="text/css" rel="stylesheet" href="css/creator.css">
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
@@ -25,7 +26,7 @@
 
     <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-analytics.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-firestore.js"></script>
 
     <script type="text/javascript" src="js/maphilight.js"></script>
@@ -35,6 +36,23 @@
 </head>
 
 <body>
+    <div id="quiz-loader">
+        <div class="vp-loader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div class="text-center">Loading</div>
+    </div>
 
     <div id="web-view" style="min-width: 1280px; margin: 0 auto;">
         <nav class="navbar navbar-expand-md">
@@ -66,28 +84,160 @@
             </div>
         </nav>
         <div id="quiz">
-            <div id="edit-area">
-                <input id="quiz-name" /> </br>
-                <button onclick="test()">Test</button>
+
+            <div id="question-area">
+                <div class="stopwatch"></div>
+                <div id="question"></div>
+                <button class="vp-btn" id="start-btn" onclick="startGame()">தொடங்குக</button>
+                <button class="vp-btn" id="restart-btn" onclick="restartGame()">திரும்ப விளையாடு</button>
+                <a href="w-study.html"><button class="vp-btn" id="study-link-btn">பயில்க</button></a>
             </div>
 
-            <div id="map-area" style="width: 393px;">
+            <div id="map-area" class="d-flex justify-content-center">
                 <img src='img/lkmap.png' usemap='#lkmap' class='map img-fluid' title='imgmap201293016112'
-                    alt='imgmap201293016112' id='img' style="position: fixed;" />
-                <svg id="svg-map" style="position: fixed;">
-                </svg>
+                    alt='imgmap201293016112' id='lkmap' />
             </div>
+            <map id='innermap' name='lkmap'>
+            </map>
+
+            <div id="myModal" class="modal">
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div id="modal-header-text">வரைபடவி</div>
+                    </div>
+                    <div class="modal-body">
+                        <div id="modal-text">வரைபடவி</div>
+                        <input type="text" id="username-input" placeholder="உங்கள் பெயரை உள்ளிடுக" />
+                        <button class="vp-btn" id="add-time-btn" onclick="addRankToDatabase()">புள்ளியை சேர்</button>
+                        <button class="vp-btn" id="replay-btn" onclick="restartGame()">திரும்ப விளையாடு</button>
+                        <a href="w-study.html"><button class="vp-btn" id="study-link-btn">பயில்க</button></a>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 
     <script>
-        function test() {
-            var quiz = $('#quiz-name').val();
-            firebase.firestore().collection("quizes").doc(quiz).collection('coords').doc('sello').set({
-                name: quiz,
-                img: 'sdg'
-            })
+        var loaded = 0;
+        let stopwatch = new Stopwatch(
+            document.querySelector('.stopwatch'),
+            document.querySelector('.results'));
+
+        var modal = document.getElementById("myModal");
+
+        $(function () {
+            $('.map').maphilight({
+                fillColor: '008800'
+            });
+        });
+
+        function load() {
+            if (loaded >= 2) {
+                $('#web-view').show();
+                $('#quiz-loader').hide();
+            }
         }
+
+        function showModal(header, text) {
+            document.getElementById('modal-header-text').innerHTML = header;
+            document.getElementById('modal-text').innerHTML = text;
+            modal.style.display = "block";
+        }
+
+        function shuffle(array) {
+            array.sort(() => Math.random() - 0.5);
+        };
+
+        function addArea(place, coords, shape) {
+            var area;
+            if (shape == "circ") {
+                area = '<area onclick="markPlace(\'' + place + '\')" shape="circle" coords="' + coords + ',14">';
+            } else {
+                area = '<area onclick="markPlace(\'' + place + '\')" shape="poly" coords="' + coords + '">';
+            }
+            document.getElementById('innermap').innerHTML = document.getElementById('innermap').innerHTML + area;
+        }
+
+        function addQuestion(place) {
+            var text = "<div id=" + place + ">" + place.replace("_", " ") + "</div>";
+            document.getElementById('question').innerHTML = text;
+        }
+
+        function addRankToTable(rank, user, time) {
+            var text = '<tr><td>' + rank + '</td><td>' + user + '</td><td>' + time + '</td></tr>';
+            document.getElementById('rank-table').innerHTML = document.getElementById('rank-table').innerHTML + text;
+        }
+
+        // *****
+        // ***
+        // Main Script
+        function startGame() {
+            $("#question, #restart-btn, .map").show();
+            stopwatch.start();
+        }
+
+        function restartGame() {
+            location.reload();
+        }
+
+        var answers = 0;
+        function markPlace(place) {
+            if ($("#" + place).length == 0) {
+                alert("இவ்விடை தவறு");
+            } else {
+                answers += 1;
+                if (answers == 10) {
+                    stopwatch.stop();
+                    document.getElementById('question').innerHTML = '';
+                    $("#add-time-btn").show();
+                    showModal('வாழ்த்துக்கள்!', 'உங்கள் புள்ளி நேரம்: <b>' + stopwatch.lap().replace(/;/g, "a") + '</b>');
+                } else {
+                    addQuestion(places[answers]);
+                }
+                $(function () {
+                    var coord = $('#a-' + place).attr("coords").split(',');
+                    var textVerticalCoord = +coord[1];
+                    var textHorizontalCoord = +coord[0];
+                    $('#candiv').append('<div style="z-index: 1; color: #0040ff; position: fixed; top: ' + textVerticalCoord + 'px; left: ' + textHorizontalCoord + 'px; font-size:10px;"><b>' + place + '</b></div>');
+                    $('#a-' + place).attr("coords", coord[0] + ", " + coord[1] + ", 4");
+                    var data = $('#a-' + place).mouseout().data('maphilight') || {};
+                    data.alwaysOn = !data.alwaysOn;
+                    $('#a-' + place).data('maphilight', data).trigger('alwaysOn.maphilight');
+                });
+            }
+        }
+
+        // ***
+        // Firebase
+        var url = new URL(window.location.href);
+        var quiz = url.searchParams.get("quiz");
+        var database = firebase.firestore();
+
+        var places = [];
+        database.collection("quizes").doc(quiz).collection('coords').get().then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                places.push(doc.data()['place'])
+                addArea(doc.data()['place'], doc.data()['coordinates'], doc.data()['shape']);
+                console.log(doc.data()['place']);
+            });
+            loaded++;
+            load();
+            var qPlaces = shuffle(places);
+            addQuestion(places[0]);
+        });
+
+        firebase.auth().onAuthStateChanged(function (user) {
+            if (user) {
+                var displayName = user.displayName;
+                $('#user').append(displayName);
+                loaded++;
+                load();
+            } else {
+                window.location = "login.html";
+            }
+        });
     </script>
 </body>
 

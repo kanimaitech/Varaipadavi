@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <meta charset="UTF-8">
+<meta content="width=device-width, initial-scale=1" name="viewport" />
 
 <head>
     <title>வரைபடவி - Varaipadavi</title>
@@ -67,18 +68,30 @@
         </nav>
         <div id="quiz">
             <div id="edit-area">
-                <input id="quiz-name" placeholder="Quiz name"/> </br>
+                <input id="quiz-name" placeholder="Quiz name" /> </br>
                 <input type="file" id="files" name="files[]" />
                 <button onclick="upload()">Create Quiz</button>
             </div>
 
             <div id="map-area">
-                <img src='' id='img' style="position: fixed; max-height: 600px; max-width: 800px;"/>
+                <img src='' id='img' class="vp-map"/>
             </div>
         </div>
     </div>
 
     <script>
+        $('#files').change(function() {
+            var file = document.getElementById('files').files[0]; // FileList object
+            var reader = new FileReader();
+
+            // Closure to capture the file information.
+            reader.onload = (function (theFile) {
+                return function (e) {
+                    $('#img').attr('src', e.target.result);
+                };
+            })(file);
+            reader.readAsDataURL(file);
+        });
         function upload() {
             var file = document.getElementById('files').files[0]; // FileList object
             var quiz = $('#quiz-name').val();
@@ -126,11 +139,14 @@
                             // Upload completed successfully, now we can get the download URL
                             uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
                                 console.log('File available at', downloadURL);
-                                $('#image').attr('src', downloadURL);
+                                $('#img').attr('src', downloadURL);
                                 firebase.firestore().collection("quizes").doc(quiz).set({
                                     name: quiz,
                                     img: downloadURL
-                                })
+                                }).then(function(){
+
+                                    window.location.replace('edit.html?quiz=' + quiz);
+                                });
                             });
                         });
                 }

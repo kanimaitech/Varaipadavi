@@ -74,7 +74,7 @@
                     <option value="circ">Circle</option>
                     <option value="poly">Polygon</option>
                 </select> <input id="radius" value="10" /> </br> <br />
-                <input id="place" placeholder="Place" /> <input id="coords" placeholder="Coordinates" />
+                <input id="place" placeholder="Place"/> <input id="coords" placeholder="Coordinates"/>
                 <button onclick="addArea()">Add Area</button>
                 <br />
                 <br />
@@ -85,12 +85,10 @@
             </div>
             <div id="map-area">
                 <img src='' id='img' class="vp-map" />
-                <div class="vp-map">
-                    <svg id="svg-map2" preserveAspectRatio="none">
-                    </svg>
+                <svg id="svg-map2" class="vp-map">
+                </svg>
 
-                    <svg id="svg-map" preserveAspectRatio="none"></svg>
-                </div>
+                <svg id="svg-map" class="vp-map"></svg>
             </div>
 
         </div>

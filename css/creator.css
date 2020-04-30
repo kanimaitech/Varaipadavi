@@ -1,6 +1,25 @@
 #map-area {
+	position: fixed;
 	margin-top: 0.5%;
+	margin-left: 0.5%;
 }
+area {
+	cursor: pointer;
+}
+.vp-map {
+	cursor: pointer;
+	position: fixed;
+	margin-top: 0;
+	margin-left: 0;
+	max-height: 580px;
+	max-width: 800px;
+	-khtml-user-select: none;
+	-o-user-select: none;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+}
+
 #edit-area {
 	position: fixed;
 	right: 0.5%;
