@@ -2,7 +2,6 @@
 <html>
 <meta charset="UTF-8">
 <meta content="width=device-width, initial-scale=1" name="viewport" />
-
 <head>
     <title>வரைபடவி - Varaipadavi</title>
 
@@ -29,7 +28,7 @@
     <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-storage.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-firestore.js"></script>
 
-    <script type="text/javascript" src="js/maphilight.js"></script>
+    
     <script type="text/javascript" src="js/firebase.js"></script>
     <script type="text/javascript" src="js/timer.js"></script>
 
@@ -86,10 +85,9 @@
             <div id="map-area">
                 <img src='' id='img' class="vp-map" />
                 <div class="vp-map">
-                    <svg id="svg-map2" preserveAspectRatio="none">
+                    <svg id="svg-map2" style="position: fixed" preserveAspectRatio="none">
                     </svg>
-
-                    <svg id="svg-map" preserveAspectRatio="none"></svg>
+                    <svg id="svg-map" style="position: fixed" preserveAspectRatio="none"></svg>
                 </div>
             </div>
 
