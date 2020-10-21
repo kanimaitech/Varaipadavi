@@ -53,7 +53,8 @@
 	position: relative;
 	width: 80px;
 	height: 80px;
-	padding-left: 42.5%;
+	/* padding-left: 42.5%; */
+	padding: 13px;
 	margin-top: 18%;
 }
 .vp-loader div {
@@ -422,4 +423,13 @@ td.rank {
 	-webkit-transform: rotate(45deg);
 	-ms-transform: rotate(45deg);
 	transform: rotate(45deg);
+}
+
+
+#quiz-loader, 
+#body-loader,
+#question-loader,
+#rank-loader,
+#place-loader {
+	text-align: center;
 }
