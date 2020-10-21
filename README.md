@@ -1,6 +1,6 @@
 # Varaipadavi
 
-* A Tamil Map Marking Game.
+* An Awesome Map Marking Quiz Game.
 
 ## How to start ? 🎪
 
