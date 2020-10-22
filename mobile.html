@@ -49,12 +49,12 @@
 
             <div class="collapse navbar-collapse" id="navbarToggler">
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                    <li class="nav-item"><a class="nav-link" href=""><i class="pr-1 fa fa-home"></i>Interface</a></li>
+                    <li class="nav-item"><a class="nav-link" href=""><i class="pr-1 fa fa-home"></i>Home</a></li>
                     <li class="nav-item"><a class="nav-link" href=""><i class="pr-1 fa fa-globe"></i>About us</a>
                     </li>
                     <li class="nav-item active"><a class="nav-link" href="mobile.html"><i
                                 class="pr-1 fa fa-flag"></i>Competition</a></li>
-                    <li class="nav-item"><a class="nav-link" href="rank.html"><i class="pr-1 fa fa-list-ol"></i>Condition</a>
+                    <li class="nav-item"><a class="nav-link" href="rank.html"><i class="pr-1 fa fa-list-ol"></i>Rank</a>
                     </li>
                     <li class="nav-item"><a class="nav-link" href="study.html"><i class="pr-1 fa fa-book"></i>Learn</a>
                     </li>
@@ -88,7 +88,7 @@
                 <!-- Modal content -->
                 <div class="modal-content">
                     <div class="modal-header">
-                        <div id="modal-header-text">வரைபடவி-Map</div>
+                        <div id="modal-header-text">வரைபடவி-Varaipadavi</div>
                     </div>
                     <div class="modal-body">
                         <div id="question-loader">
@@ -109,12 +109,12 @@
                             <div class="text-center">Loading</div>
                         </div>
                         <div id="modal-text"></div>
-                        <button class="vp-btn" id="start-btn" onclick="startGame()">Get Started</button>
+                        <button class="vp-btn" id="start-btn" onclick="startGame()">Start</button>
                         <a href="study.html"><button class="vp-btn" id="study-link-btn">Learn</button></a>
                         <input type="text" id="username-input" placeholder="Enter your name" />
-                        <button class="vp-btn" id="add-time-btn" onclick="addRankToDatabase()">Add the point</button>
+                        <button class="vp-btn" id="add-time-btn" onclick="addRankToDatabase()">Add Score</button>
                         <button class="vp-btn" id="replay-btn" onclick="restartGame()">Play again</button>
-                        <a href="rank.html"><button class="vp-btn" id="rank-link-btn">Show Levels</button></a>
+                        <a href="rank.html"><button class="vp-btn" id="rank-link-btn">Rank</button></a>
                     </div>
                 </div>
 
@@ -194,7 +194,7 @@
                 if (answers >= 10) {
                     stopwatch.stop();
                     document.getElementById('question').innerHTML = '';
-                    showModal('Congratulations!', 'Your point time: <b>' + stopwatch.lap().replace(/;/g, "a") + '</b>');
+                    showModal('Congratulations!', 'Your Score time: <b>' + stopwatch.lap().replace(/;/g, "a") + '</b>');
                     $("#username-input").show();
                     $("#replay-btn").show();
                     $("#add-time-btn").show();
@@ -243,7 +243,7 @@
             })
             $("#add-time-btn").hide();
             $("#username-input").hide();
-            showModal('Success!', 'Your point is Added, ' + name + ".\n Are you going to play again?");
+            showModal('Success!', 'Your Score is, ' + name + ".\n Are you going to play again?");
             $("#replay-btn").show();
             $("#rank-link-btn").show();
         };
