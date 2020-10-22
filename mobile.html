@@ -49,14 +49,14 @@
 
             <div class="collapse navbar-collapse" id="navbarToggler">
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                    <li class="nav-item"><a class="nav-link" href=""><i class="pr-1 fa fa-home"></i>முகப்பு</a></li>
-                    <li class="nav-item"><a class="nav-link" href=""><i class="pr-1 fa fa-globe"></i>எங்களை பற்றி</a>
+                    <li class="nav-item"><a class="nav-link" href=""><i class="pr-1 fa fa-home"></i>Interface</a></li>
+                    <li class="nav-item"><a class="nav-link" href=""><i class="pr-1 fa fa-globe"></i>About us</a>
                     </li>
                     <li class="nav-item active"><a class="nav-link" href="mobile.html"><i
-                                class="pr-1 fa fa-flag"></i>போட்டி</a></li>
-                    <li class="nav-item"><a class="nav-link" href="rank.html"><i class="pr-1 fa fa-list-ol"></i>நிலை</a>
+                                class="pr-1 fa fa-flag"></i>Competition</a></li>
+                    <li class="nav-item"><a class="nav-link" href="rank.html"><i class="pr-1 fa fa-list-ol"></i>Condition</a>
                     </li>
-                    <li class="nav-item"><a class="nav-link" href="study.html"><i class="pr-1 fa fa-book"></i>பயில்க</a>
+                    <li class="nav-item"><a class="nav-link" href="study.html"><i class="pr-1 fa fa-book"></i>Learn</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav">
@@ -81,14 +81,14 @@
                 <div class="stopwatch"></div>
                 <div id="question"></div>
                 <button class="vp-btn" id="restart-btn" onclick="restartGame()">Restart</button>
-                <div class="text-center" id="answer">விடைகள்: 0/10</div>
+                <div class="text-center" id="answer">Answers: 0/10</div>
             </div>
             <div id="myModal" class="modal">
 
                 <!-- Modal content -->
                 <div class="modal-content">
                     <div class="modal-header">
-                        <div id="modal-header-text">வரைபடவி</div>
+                        <div id="modal-header-text">வரைபடவி-Map</div>
                     </div>
                     <div class="modal-body">
                         <div id="question-loader">
@@ -109,13 +109,12 @@
                             <div class="text-center">Loading</div>
                         </div>
                         <div id="modal-text"></div>
-                        <button class="vp-btn" id="start-btn" onclick="startGame()">தொடங்குக</button>
-                        <a href="study.html"><button class="vp-btn" id="study-link-btn">பயில்க</button></a>
-                        <input type="text" id="username-input" placeholder="உங்கள் பெயரை உள்ளிடுக" />
-                        <button class="vp-btn" id="add-time-btn" onclick="addRankToDatabase()">புள்ளியை
-                            சேர்</button>
-                        <button class="vp-btn" id="replay-btn" onclick="restartGame()">திரும்ப விளையாடு</button>
-                        <a href="rank.html"><button class="vp-btn" id="rank-link-btn">நிலைகளை காட்டு</button></a>
+                        <button class="vp-btn" id="start-btn" onclick="startGame()">Get Started</button>
+                        <a href="study.html"><button class="vp-btn" id="study-link-btn">Learn</button></a>
+                        <input type="text" id="username-input" placeholder="Enter your name" />
+                        <button class="vp-btn" id="add-time-btn" onclick="addRankToDatabase()">Add the point</button>
+                        <button class="vp-btn" id="replay-btn" onclick="restartGame()">Play again</button>
+                        <a href="rank.html"><button class="vp-btn" id="rank-link-btn">Show Levels</button></a>
                     </div>
                 </div>
 
@@ -189,19 +188,19 @@
         var answers = 0;
         function markPlace(place) {
             if ($("#" + place).length == 0) {
-                showSnackbar("தவறு, அது " + place.replace("_", " "), "red", 2000);
+                showSnackbar("Wrong, that is " + place.replace("_", " "), "red", 2000);
             } else {
                 answers += 1;
                 if (answers >= 10) {
                     stopwatch.stop();
                     document.getElementById('question').innerHTML = '';
-                    showModal('வாழ்த்துக்கள்!', 'உங்கள் புள்ளி நேரம்: <b>' + stopwatch.lap().replace(/;/g, "a") + '</b>');
+                    showModal('Congratulations!', 'Your point time: <b>' + stopwatch.lap().replace(/;/g, "a") + '</b>');
                     $("#username-input").show();
                     $("#replay-btn").show();
                     $("#add-time-btn").show();
                 } else {
-                    showSnackbar("சரியான பதில்.", "green", 800);
-                    $("#answer").replaceWith('<div class="text-center" id="answer">விடைகள்: ' + answers + '/10</div>');
+                    showSnackbar("The correct answer.", "green", 800);
+                    $("#answer").replaceWith('<div class="text-center" id="answer">Answers: ' + answers + '/10</div>');
                     addQuestion(places[answers][0]);
                 }
                 $(function () {
@@ -227,7 +226,7 @@
                 places.push([doc.data()['Place'], doc.data()['Coordinates']])
                 addArea(doc.data()['Place'], doc.data()['Coordinates']);
                 $("#question-loader").hide();
-                document.getElementById('modal-text').innerHTML = 'நீங்கள் விளையாடத் தயாரா?';
+                document.getElementById('modal-text').innerHTML = 'Are you ready to play?';
                 $("#start-btn").show();
             });
             var i = 0;
@@ -244,7 +243,7 @@
             })
             $("#add-time-btn").hide();
             $("#username-input").hide();
-            showModal('வெற்றி!', 'உங்கள் புள்ளி சேர்க்கப்பட்டது, ' + name + ".\n மறுதடவை விளையாடப் போகின்றீர்களா?");
+            showModal('Success!', 'Your point is Added, ' + name + ".\n Are you going to play again?");
             $("#replay-btn").show();
             $("#rank-link-btn").show();
         };
