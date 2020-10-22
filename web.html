@@ -69,7 +69,7 @@
                     <li class="nav-item"><a class="nav-link" href=""><i class="pr-1 fa fa-globe"></i>About us</a>
                     </li>
                     <li class="nav-item active"><a class="nav-link" href="web.html"><i
-                                class="pr-1 fa fa-flag"></i>Competition</a></li>
+                                class="pr-1 fa fa-flag"></i>Quiz</a></li>
                     <li class="nav-item"><a class="nav-link" href="w-study.html"><i
                                 class="pr-1 fa fa-book"></i>Learn</a></li>
                 </ul>
@@ -113,10 +113,10 @@
                 <!-- Modal content -->
                 <div class="modal-content">
                     <div class="modal-header">
-                        <div id="modal-header-text">வரைபடவி-Varaipadavi</div>
+                        <div id="modal-header-text">Varaipadavi</div>
                     </div>
                     <div class="modal-body">
-                        <div id="modal-text">வரைபடவி-Map</div>
+                        <div id="modal-text">Varaipadavi</div>
                         <input type="text" id="username-input" placeholder="Enter your name" />
                         <button class="vp-btn" id="add-time-btn" onclick="addRankToDatabase()">Add Score</button>
                         <button class="vp-btn" id="replay-btn" onclick="restartGame()">Play again</button>
@@ -251,7 +251,7 @@
             })
             $("#add-time-btn").hide();
             $("#username-input").hide();
-            showModal('Success!', 'Your Score is Added , ' + name + ".\n Are you going to play again?");
+            showModal('Success!', 'Your Score has been added , ' + name + ".\n Are you going to play again?");
         };
 
         firebase.auth().onAuthStateChanged(function (user) {
