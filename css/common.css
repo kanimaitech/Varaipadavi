@@ -54,7 +54,7 @@
 	width: 80px;
 	height: 80px;
 	/* padding-left: 42.5%; */
-	padding: 13px;
+	padding: 15px;
 	margin-top: 18%;
 }
 .vp-loader div {
@@ -432,4 +432,9 @@ td.rank {
 #rank-loader,
 #place-loader {
 	text-align: center;
+}
+
+.loading-text {
+	margin-top: -15px;
+	margin-bottom: 15px;
 }

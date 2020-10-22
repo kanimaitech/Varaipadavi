@@ -24,3 +24,7 @@
     margin-top: 5px;
     margin-left: -10px;
 }
+
+.vp-loader {
+    margin-top: 0% !important;
+}
