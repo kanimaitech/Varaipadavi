@@ -197,7 +197,7 @@
                     stopwatch.stop();
                     document.getElementById('question').innerHTML = '';
                     $("#add-time-btn").show();
-                    showModal('Congratulations!', 'Your Score time: <b>' + stopwatch.lap().replace(/;/g, "a") + '</b>');
+                    showModal('Congratulations!', 'Your Score is: <b>' + stopwatch.lap().replace(/;/g, "a") + '</b>');
                 } else {
                     addQuestion(places[answers][0]);
                 }
@@ -251,7 +251,7 @@
             })
             $("#add-time-btn").hide();
             $("#username-input").hide();
-            showModal('Success!', 'Your Score is , ' + name + ".\n Are you going to play again?");
+            showModal('Success!', 'Your Score is Added , ' + name + ".\n Are you going to play again?");
         };
 
         firebase.auth().onAuthStateChanged(function (user) {
