@@ -65,7 +65,7 @@
 
             <div class="collapse navbar-collapse" id="navbarToggler">
                 <ul class="navbar-nav mr-auto ml-2">
-                    <li class="nav-item"><a class="nav-link" href=""><i class="pr-1 fa fa-home"></i>Interface</a></li>
+                    <li class="nav-item"><a class="nav-link" href=""><i class="pr-1 fa fa-home"></i>Home</a></li>
                     <li class="nav-item"><a class="nav-link" href=""><i class="pr-1 fa fa-globe"></i>About us</a>
                     </li>
                     <li class="nav-item active"><a class="nav-link" href="web.html"><i
@@ -87,7 +87,7 @@
             <div id="rank-area">
                 <table id="rank-table">
                     <tr>
-                        <th>Condition</th>
+                        <th>Rank</th>
                         <th>User</th>
                         <th>Time</th>
                     </tr>
@@ -97,7 +97,7 @@
             <div id="question-area">
                 <div class="stopwatch"></div>
                 <div id="question"></div>
-                <button class="vp-btn" id="start-btn" onclick="startGame()">Get Started</button>
+                <button class="vp-btn" id="start-btn" onclick="startGame()">Start</button>
                 <button class="vp-btn" id="restart-btn" onclick="restartGame()">Play again</button>
                 <a href="w-study.html"><button class="vp-btn" id="study-link-btn">Learn</button></a>
             </div>
@@ -113,12 +113,12 @@
                 <!-- Modal content -->
                 <div class="modal-content">
                     <div class="modal-header">
-                        <div id="modal-header-text">வரைபடவி-Map</div>
+                        <div id="modal-header-text">வரைபடவி-Varaipadavi</div>
                     </div>
                     <div class="modal-body">
                         <div id="modal-text">வரைபடவி-Map</div>
                         <input type="text" id="username-input" placeholder="Enter your name" />
-                        <button class="vp-btn" id="add-time-btn" onclick="addRankToDatabase()">Add the point</button>
+                        <button class="vp-btn" id="add-time-btn" onclick="addRankToDatabase()">Add Score</button>
                         <button class="vp-btn" id="replay-btn" onclick="restartGame()">Play again</button>
                         <a href="w-study.html"><button class="vp-btn" id="study-link-btn">Learn</button></a>
                     </div>
@@ -197,7 +197,7 @@
                     stopwatch.stop();
                     document.getElementById('question').innerHTML = '';
                     $("#add-time-btn").show();
-                    showModal('Congratulations!', 'Your point time: <b>' + stopwatch.lap().replace(/;/g, "a") + '</b>');
+                    showModal('Congratulations!', 'Your Score time: <b>' + stopwatch.lap().replace(/;/g, "a") + '</b>');
                 } else {
                     addQuestion(places[answers][0]);
                 }
@@ -251,7 +251,7 @@
             })
             $("#add-time-btn").hide();
             $("#username-input").hide();
-            showModal('Success!', 'Your point is added, ' + name + ".\n Are you going to play again?");
+            showModal('Success!', 'Your Score is , ' + name + ".\n Are you going to play again?");
         };
 
         firebase.auth().onAuthStateChanged(function (user) {
