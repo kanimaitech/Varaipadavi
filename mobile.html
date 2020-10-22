@@ -53,7 +53,7 @@
                     <li class="nav-item"><a class="nav-link" href=""><i class="pr-1 fa fa-globe"></i>About us</a>
                     </li>
                     <li class="nav-item active"><a class="nav-link" href="mobile.html"><i
-                                class="pr-1 fa fa-flag"></i>Competition</a></li>
+                                class="pr-1 fa fa-flag"></i>Quiz</a></li>
                     <li class="nav-item"><a class="nav-link" href="rank.html"><i class="pr-1 fa fa-list-ol"></i>Rank</a>
                     </li>
                     <li class="nav-item"><a class="nav-link" href="study.html"><i class="pr-1 fa fa-book"></i>Learn</a>
@@ -88,7 +88,7 @@
                 <!-- Modal content -->
                 <div class="modal-content">
                     <div class="modal-header">
-                        <div id="modal-header-text">வரைபடவி-Varaipadavi</div>
+                        <div id="modal-header-text">Varaipadavi</div>
                     </div>
                     <div class="modal-body">
                         <div id="question-loader">
@@ -199,7 +199,7 @@
                     $("#replay-btn").show();
                     $("#add-time-btn").show();
                 } else {
-                    showSnackbar("The correct answer.", "green", 800);
+                    showSnackbar("correct answer.", "green", 800);
                     $("#answer").replaceWith('<div class="text-center" id="answer">Answers: ' + answers + '/10</div>');
                     addQuestion(places[answers][0]);
                 }
@@ -243,7 +243,7 @@
             })
             $("#add-time-btn").hide();
             $("#username-input").hide();
-            showModal('Success!', 'Your Score is, ' + name + ".\n Are you going to play again?");
+            showModal('Success!', 'Your Score has been added, ' + name + ".\n Are you going to play again?");
             $("#replay-btn").show();
             $("#rank-link-btn").show();
         };
