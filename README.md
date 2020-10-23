@@ -9,9 +9,9 @@ For starters, you could help in improving the sections in this document by eithe
 
 * If you are a first-time contributor, please see [Steps to Contribute](#steps-to-contribute).
 
-* If you would like to suggest new programs to be added to the repository, please go ahead and [create a new issue](https://github.com/kanimaitech/Varaipadavi/issues/new?assignees=&labels=hacktoberfest%2C+good+first+issue) describing your test. All you need to do is specify the Question's explanation and the mention the language you would want to solve it in.
+* If you would like to suggest new feature to be added to the this application, please go ahead and [create a new issue](https://github.com/kanimaitech/Varaipadavi/issues/new?assignees=&labels=hacktoberfest%2C+good+first+issue%2C+enhancement) describing your new feauture. All you need to do is specify the New Feauture.
 
-  
+* If you found a bug or an error in this application, please go ahead and [create a new issue](https://github.com/kanimaitech/Varaipadavi/issues/new?assignees=&labels=hacktoberfest%2C+good+first+issue%2C+bug) describing the error or bug you saw.
 
 ### Steps to Contribute :
 
