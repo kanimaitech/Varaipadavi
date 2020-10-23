@@ -5,7 +5,7 @@
 <head>
     <title>வரைபடவி - Varaipadavi</title>
 
-    <link rel="icon" href="../assets/img/favicon.png" type="image/png">
+    <link rel="icon" href="img/favicon.png" type="image/png">
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -13,8 +13,8 @@
     <link type="text/css" rel="stylesheet"
         href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <link type="text/css" rel="stylesheet" href="../assets/css/common.css">
-    <link type="text/css" rel="stylesheet" href="../assets/css/web.css">
+    <link type="text/css" rel="stylesheet" href="css/common.css">
+    <link type="text/css" rel="stylesheet" href="css/web.css">
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -27,15 +27,15 @@
     <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-analytics.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-firestore.js"></script>
-
-    <script type="text/javascript" src="../assets/js/maphilight.js"></script>
-    <script type="text/javascript" src="../assets/js/firebase.js"></script>
-    <script type="text/javascript" src="../assets/js/timer.js"></script>
+    
+    <script type="text/javascript" src="js/maphilight.js"></script>
+    <script type="text/javascript" src="js/firebase.js"></script>
+    <script type="text/javascript" src="js/timer.js"></script>
 
 </head>
 
 <body>
-    <div id="quiz-loader" class="text-center">
+    <div id="body-loader" class="text-center">
         <div class="vp-loader">
             <div></div>
             <div></div>
@@ -52,11 +52,11 @@
         </div>
         <div class="loading-text">Loading</div>
     </div>
+    <div id="body" style="min-width: 1280px; margin: 0 auto;">
 
-    <div id="web-view" style="min-width: 1280px; margin: 0 auto;">
         <nav class="navbar navbar-expand-md">
             <div class="navbar-header">
-                <img class="d-inline-block align-top pb-2" src="../assets/img/brand.png" height="35px" />
+                <img class="brand pb-2" src="img/brand.png" height="35px" />
             </div>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler"
                 aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
@@ -64,14 +64,15 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarToggler">
-                <ul class="navbar-nav mr-auto ml-2">
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0 ml-2">
                     <li class="nav-item"><a class="nav-link" href=""><i class="pr-1 fa fa-home"></i>Home</a></li>
                     <li class="nav-item"><a class="nav-link" href=""><i class="pr-1 fa fa-globe"></i>About us</a>
                     </li>
-                    <li class="nav-item active"><a class="nav-link" href="web.html"><i
-                                class="pr-1 fa fa-flag"></i>Quiz</a></li>
-                    <li class="nav-item"><a class="nav-link" href="w-study.html"><i
+                    <li class="nav-item"><a class="nav-link" href="web.html"><i class="pr-1 fa fa-flag"></i>Quiz</a>
+                    </li>
+                    <li class="nav-item active"><a class="nav-link" href="w-study.html"><i
                                 class="pr-1 fa fa-book"></i>Learn</a></li>
+
                 </ul>
                 <ul class="navbar-nav">
                     <li class="nav-item active"><a id="user" class="nav-link" href="profile.html"><i
@@ -79,9 +80,10 @@
                     <li class="nav-item active"><a id="sign-out" class="nav-link" href=""
                             onclick="firebase.auth().signOut();"><i class="pr-1 fa fa-sign-out"></i>Sign Out</a>
                     </li>
-                </ul> 
+                </ul>
             </div>
         </nav>
+
         <div id="quiz">
 
             <div id="rank-area">
@@ -95,57 +97,34 @@
             </div>
 
             <div id="question-area">
-                <div class="stopwatch"></div>
-                <div id="question"></div>
-                <button class="vp-btn" id="start-btn" onclick="startGame()">Start</button>
-                <button class="vp-btn" id="restart-btn" onclick="restartGame()">Play again</button>
-                <a href="w-study.html"><button class="vp-btn" id="study-link-btn">Learn</button></a>
+                <div>Choose places to show</div>
+                <div id="places-list"></div>
             </div>
 
             <div id="map-area" class="d-flex justify-content-center">
-                <img src='../assets/img/lkmap.png' usemap='#lkmap' class='map img-fluid' title='imgmap201293016112'
+                <img src='img/lkmap.png' usemap='#lkmap' class='map img-fluid' title='imgmap201293016112'
                     alt='imgmap201293016112' id='lkmap' />
             </div>
             <map id='innermap' name='lkmap'>
             </map>
 
-            <div id="myModal" class="modal">
-                <!-- Modal content -->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <div id="modal-header-text">Varaipadavi</div>
-                    </div>
-                    <div class="modal-body">
-                        <div id="modal-text">Varaipadavi</div>
-                        <input type="text" id="username-input" placeholder="Enter your name" />
-                        <button class="vp-btn" id="add-time-btn" onclick="addRankToDatabase()">Add Score</button>
-                        <button class="vp-btn" id="replay-btn" onclick="restartGame()">Play again</button>
-                        <a href="w-study.html"><button class="vp-btn" id="study-link-btn">Learn</button></a>
-                    </div>
-                </div>
-            </div>
-
         </div>
     </div>
 
     <script>
+
         var loaded = 0;
-        let stopwatch = new Stopwatch(
-            document.querySelector('.stopwatch'),
-            document.querySelector('.results'));
-
         var modal = document.getElementById("myModal");
-
         $(function () {
             $('.map').maphilight({
                 fillColor: '008800'
             });
         });
-        
+
         function load() {
-            if(loaded >= 3) {
-                $('#web-view').show();
-                $('#quiz-loader').hide();
+            if (loaded >= 3) {
+                $('#body').show();
+                $('#body-loader').hide();
             }
         }
 
@@ -155,19 +134,16 @@
             modal.style.display = "block";
         }
 
-        function shuffle(array) {
-            array.sort(() => Math.random() - 0.5);
-        };
-
         function addArea(place, coords) {
-            var text = '<area id="a-' + place + '" style="display: none;" shape="circ" coords="' + coords + ', 14"  onclick="markPlace(\'' + place + '\')" data-maphilight=\'{"strokeColor":"0000ff","strokeWidth":3,"fillColor":"00ff00","fillOpacity":0.6}\' data-clicked="0"/>'
+            var text = '<area id="a-' + place + '" class="m-area" style="display: none;" shape="circ" coords="' + coords + ', 14"  onclick="markPlace(\'' + place + '\')" data-maphilight=\'{"strokeColor":"0000ff","strokeWidth":3,"fillColor":"00ff00","fillOpacity":0.6}\' data-clicked="0"/>'
             document.getElementById('innermap').innerHTML = document.getElementById('innermap').innerHTML + text;
         }
 
-        function addQuestion(place) {
-            var text = "<div id=" + place + ">" + place.replace("_", " ") + "</div>";
-            document.getElementById('question').innerHTML = text;
+        function addPlace(place) {
+            var text = '<label class="checkbox-container">' + place.replace("_", " ") + '<input type="checkbox" onclick="markPlace(\'' + place + '\')"><span class="checkmark"></span></label>\n';
+            document.getElementById('places-list').innerHTML = document.getElementById('places-list').innerHTML + text;
         }
+
 
         function addRankToTable(rank, user, time) {
             var text = '<tr><td>' + rank + '</td><td>' + user + '</td><td>' + time + '</td></tr>';
@@ -177,40 +153,21 @@
         // *****
         // ***
         // Main Script
-        function startGame() {
-            $("#question, #restart-btn, .map").show();
-            stopwatch.start();
-        } 
-
-        function restartGame() {
-            location.reload();
-        }
-
-        var answers = 0;
-        function markPlace(element) {
-            var place = element;
-            if ($("#" + place).length == 0) {
-                alert("This is incorrect");
-            } else {
-                answers += 1;
-                if (answers == 10) {
-                    stopwatch.stop();
-                    document.getElementById('question').innerHTML = '';
-                    $("#add-time-btn").show();
-                    showModal('Congratulations!', 'Your Score is: <b>' + stopwatch.lap().replace(/;/g, "a") + '</b>');
-                } else {
-                    addQuestion(places[answers][0]);
-                }
-                $(function () {
-                    var coord = $('#a-' + place).attr("coords").split(',');
-                    var textVerticalCoord = +coord[1];
-                    var textHorizontalCoord = +coord[0];
-                    $('#candiv').append('<div style="z-index: 1; color: #0040ff; position: fixed; top: ' + textVerticalCoord + 'px; left: ' + textHorizontalCoord + 'px; font-size:10px;"><b>' + place + '</b></div>');
-                    $('#a-' + place).attr("coords", coord[0] + ", " + coord[1] + ", 4");
-                    var data = $('#a-' + place).mouseout().data('maphilight') || {};
-                    data.alwaysOn = !data.alwaysOn;
-                    $('#a-' + place).data('maphilight', data).trigger('alwaysOn.maphilight');
-                });
+        function markPlace(place) {
+            var coord = $('#a-' + place).attr("coords").split(',');
+            $('#a-' + place).attr("coords", coord[0] + ", " + coord[1] + ", 4");
+            var data = $('#a-' + place).mouseout().data('maphilight') || {};
+            data.alwaysOn = !data.alwaysOn;
+            $('#a-' + place).data('maphilight', data).trigger('alwaysOn.maphilight');
+            if ($("#t-" + place).length == 0) {
+                var textVerticalCoord = +coord[1] + 55;
+                var textHorizontalCoord = +coord[0] + 516;
+                $('#innermap').append('<div id="t-' + place + '" style="color: #0040ff; position: absolute; top: ' + textVerticalCoord + 'px; left: ' + textHorizontalCoord + 'px; font-size:10px;"><b>' + place + '</b></div>');
+            } else if (document.getElementById('t-' + place).style.display == "none") {
+                document.getElementById('t-' + place).style.display = "block";
+            }
+            else {
+                document.getElementById('t-' + place).style.display = "none";
             }
         }
 
@@ -223,36 +180,21 @@
             querySnapshot.forEach((doc) => {
                 places.push([doc.data()['Place'], doc.data()['Coordinates']])
                 addArea(doc.data()['Place'], doc.data()['Coordinates']);
-                console.log(doc.data()['Place']);
+                addPlace(doc.data()['Place']);
+                loaded++;
+                load();
             });
-            loaded++;
-            load();
-            var i = 0;
-            var qPlaces = shuffle(places);
-            addQuestion(places[0][0]);
         });
 
         var rank = 1;
         database.collection("rank").orderBy("time").get().then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
+                loaded++;
+                load();
                 addRankToTable(rank, doc.data()['name'], doc.data()['time']);
                 rank++;
             });
-            loaded++;
-            load();
         });
-
-        function addRankToDatabase() {
-            var time = stopwatch.lap().replace(/;/g, "a");
-            var name = document.getElementById("username-input").value;
-            database.collection("rank").add({
-                name: name,
-                time: time
-            })
-            $("#add-time-btn").hide();
-            $("#username-input").hide();
-            showModal('Success!', 'Your Score has been added , ' + name + ".\n Are you going to play again?");
-        };
 
         firebase.auth().onAuthStateChanged(function (user) {
             if (user) {
