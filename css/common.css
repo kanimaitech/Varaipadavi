@@ -426,14 +426,6 @@ td.rank {
 }
 
 
-#quiz-loader, 
-#body-loader,
-#question-loader,
-#rank-loader,
-#place-loader {
-	text-align: center;
-}
-
 .loading-text {
 	margin-top: -15px;
 	margin-bottom: 15px;
