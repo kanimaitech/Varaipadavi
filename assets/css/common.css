@@ -31,7 +31,7 @@
 	border: 3px solid #969696;
 }
 
-.vp-input-text[type=text] {
+/* .vp-input-text[type=text] {
 	width: 100%;
 	padding: 5px 8px;
 	margin: 8px 0;
@@ -44,7 +44,7 @@
 
 .vp-input-text[type=text]:focus {
 	border: 3px solid #555;
-}
+} */
 
 
 .vp-loader {
@@ -129,9 +129,9 @@
 	}
 }
 
-.vp-blue {
+/* .vp-blue {
 	color: #0040cc;
-}
+} */
 .stopwatch {
 	font-size: 38px;
 	text-align: center;
@@ -171,9 +171,9 @@ tbody tr:hover {
 	background-color: rgba(50, 98, 149, .3);
 }
 
-td.rank {
+/* td.rank {
 	text-transform: capitalize;
-}
+} */
 
 .navbar {
 	width: 100%;
@@ -183,7 +183,7 @@ td.rank {
 }
 
 .navbar li a,
-.navbar .navbar-brand {
+.navbar {
 	color: rgb(214, 214, 214) !important;
 }
 
