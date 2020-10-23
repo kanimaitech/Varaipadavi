@@ -14,8 +14,8 @@
     <link type="text/css" rel="stylesheet"
         href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <link type="text/css" rel="stylesheet" href="../assets/css/mobile.css">
     <link type="text/css" rel="stylesheet" href="../assets/css/common.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/study.css">
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -29,7 +29,6 @@
     <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-firestore.js"></script>
 
-    <script type="text/javascript" src="../assets/js/timer.js"></script>
     <script type="text/javascript" src="../assets/js/firebase.js"></script>
     <script type="text/javascript" src="../assets/js/maphilight.js"></script>
 </head>
@@ -52,12 +51,12 @@
                     <li class="nav-item"><a class="nav-link" href=""><i class="pr-1 fa fa-home"></i>Home</a></li>
                     <li class="nav-item"><a class="nav-link" href=""><i class="pr-1 fa fa-globe"></i>About us</a>
                     </li>
-                    <li class="nav-item active"><a class="nav-link" href="mobile/mobile.html"><i
+                    <li class="nav-item"><a class="nav-link" href="index.html"><i
                                 class="pr-1 fa fa-flag"></i>Quiz</a></li>
-                    <li class="nav-item"><a class="nav-link" href="web/rank.html"><i class="pr-1 fa fa-list-ol"></i>Rank</a>
+                    <li class="nav-item"><a class="nav-link" href="rank.html"><i class="pr-1 fa fa-list-ol"></i>Rank</a>
                     </li>
-                    <li class="nav-item"><a class="nav-link" href="web/study.html"><i class="pr-1 fa fa-book"></i>Learn</a>
-                    </li>
+                    <li class="nav-item active"><a class="nav-link" href="study.html"><i
+                                class="pr-1 fa fa-book"></i>Learn</a></li>
                 </ul>
                 <ul class="navbar-nav">
                     <li class="nav-item active"><a id="user" class="nav-link" href="profile.html"><i
@@ -77,12 +76,11 @@
             <map id='innermap' name='lkmap'>
             </map>
 
-            <div id="question-area">
-                <div class="stopwatch"></div>
-                <div id="question"></div>
-                <button class="vp-btn" id="restart-btn" onclick="restartGame()">Restart</button>
-                <div class="text-center" id="answer">Answers: 0/10</div>
+            <div id="study-area">
+                <div>Choose places to show</div>
+                <button class="vp-btn" id="open-btn" onclick="modal.style.display = 'block';">Select</button>
             </div>
+
             <div id="myModal" class="modal">
 
                 <!-- Modal content -->
@@ -91,7 +89,7 @@
                         <div id="modal-header-text">Varaipadavi</div>
                     </div>
                     <div class="modal-body">
-                        <div id="question-loader" class="text-center">
+                        <div id="place-loader" class="text-center">
                             <div class="vp-loader">
                                 <div></div>
                                 <div></div>
@@ -108,13 +106,8 @@
                             </div>
                             <div class="loading-text">Loading</div>
                         </div>
-                        <div id="modal-text"></div>
-                        <button class="vp-btn" id="start-btn" onclick="startGame()">Start</button>
-                        <a href="study.html"><button class="vp-btn" id="study-link-btn">Learn</button></a>
-                        <input type="text" id="username-input" placeholder="Enter your name" />
-                        <button class="vp-btn" id="add-time-btn" onclick="addRankToDatabase()">Add Score</button>
-                        <button class="vp-btn" id="replay-btn" onclick="restartGame()">Play again</button>
-                        <a href="web/rank.html"><button class="vp-btn" id="rank-link-btn">Rank</button></a>
+                        <div id="places-list"></div>
+                        <button class="vp-btn" id="show-btn" onclick="modal.style.display = 'none';">Show</button>
                     </div>
                 </div>
 
@@ -126,10 +119,6 @@
 
 
     <script>
-        let stopwatch = new Stopwatch(
-            document.querySelector('.stopwatch'),
-            document.querySelector('.results'));
-
         var modal = document.getElementById("myModal");
 
         $(function () {
@@ -154,65 +143,35 @@
             setTimeout(function () { snackbar.className = snackbar.className.replace("show", ""); }, time);
         }
 
-        function shuffle(array) {
-            array.sort(() => Math.random() - 0.5);
-        };
-
         function addArea(place, coords) {
-            var text = '<area id="a-' + place + '" class="map-area" style="display: none;" shape="circ" coords="' + coords + ', 14"  onclick="markPlace(\'' + place + '\')" data-maphilight=\'{"strokeColor":"0000ff","strokeWidth":3,"fillColor":"00ff00","fillOpacity":0.6}\' data-clicked="0"/>'
+            var text = '<area id="a-' + place + '" class="m-area" style="display: none;" shape="circ" coords="' + coords + ', 14"  onclick="markPlace(\'' + place + '\')" data-maphilight=\'{"strokeColor":"0000ff","strokeWidth":3,"fillColor":"00ff00","fillOpacity":0.6}\' data-clicked="0"/>'
             document.getElementById('innermap').innerHTML = document.getElementById('innermap').innerHTML + text;
         }
 
-        function addQuestion(place) {
-            var text = "<div id=" + place + ">" + place.replace("_", " ") + "</div>";
-            document.getElementById('question').innerHTML = text;
+        function addPlace(place) {
+            var text = '<label class="checkbox-container">' + place.replace("_", " ") + '<input type="checkbox" onclick="markPlace(\'' + place + '\')"><span class="checkmark"></span></label>\n';
+            document.getElementById('places-list').innerHTML = document.getElementById('places-list').innerHTML + text;
         }
 
 
         // *****
         // ***
         // Main Script
-        function startGame() {
-            $("#question").show();
-            setTimeout(stopwatch.start(), 1000);
-            $("#start-btn").hide();
-            $("#study-link-btn").hide();
-            $("#restart-btn").show();
-            $("#myModal").hide();
-        }
-
-        function restartGame() {
-            location.reload();
-        }
-
-        var answers = 0;
         function markPlace(place) {
-            if ($("#" + place).length == 0) {
-                showSnackbar("Wrong, that is " + place.replace("_", " "), "red", 2000);
-            } else {
-                answers += 1;
-                if (answers >= 10) {
-                    stopwatch.stop();
-                    document.getElementById('question').innerHTML = '';
-                    showModal('Congratulations!', 'Your Score time: <b>' + stopwatch.lap().replace(/;/g, "a") + '</b>');
-                    $("#username-input").show();
-                    $("#replay-btn").show();
-                    $("#add-time-btn").show();
-                } else {
-                    showSnackbar("correct answer.", "green", 800);
-                    $("#answer").replaceWith('<div class="text-center" id="answer">Answers: ' + answers + '/10</div>');
-                    addQuestion(places[answers][0]);
-                }
-                $(function () {
-                    var coord = $('#a-' + place).attr("coords").split(',');
-                    var textVerticalCoord = +coord[1] + 48;
-                    var textHorizontalCoord = +coord[0] + 12;
-                    $('#innermap').append('<div style="color: #0040ff; position: absolute; top: ' + textVerticalCoord + 'px; left: ' + textHorizontalCoord + 'px; font-size:10px;"><b>' + place + '</b></div>');
-                    $('#a-' + place).attr("coords", coord[0] + ", " + coord[1] + ", 4");
-                    var data = $('#a-' + place).mouseout().data('maphilight') || {};
-                    data.alwaysOn = !data.alwaysOn;
-                    $('#a-' + place).data('maphilight', data).trigger('alwaysOn.maphilight');
-                });
+            var coord = $('#a-' + place).attr("coords").split(',');
+            $('#a-' + place).attr("coords", coord[0] + ", " + coord[1] + ", 4");
+            var data = $('#a-' + place).mouseout().data('maphilight') || {};
+            data.alwaysOn = !data.alwaysOn;
+            $('#a-' + place).data('maphilight', data).trigger('alwaysOn.maphilight');
+            if ($("#t-" + place).length == 0) {
+                var textVerticalCoord = +coord[1] + 51;
+                var textHorizontalCoord = +coord[0] + 16;
+                $('#innermap').append('<div id="t-' + place + '" style="color: #0040ff; position: absolute; top: ' + textVerticalCoord + 'px; left: ' + textHorizontalCoord + 'px; font-size:10px;"><b>' + place + '</b></div>');
+            } else if (document.getElementById('t-' + place).style.display == "none") {
+                document.getElementById('t-' + place).style.display = "block";
+            }
+            else {
+                document.getElementById('t-' + place).style.display = "none";
             }
         }
 
@@ -225,28 +184,13 @@
             querySnapshot.forEach((doc) => {
                 places.push([doc.data()['Place'], doc.data()['Coordinates']])
                 addArea(doc.data()['Place'], doc.data()['Coordinates']);
-                $("#question-loader").hide();
-                document.getElementById('modal-text').innerHTML = 'Are you ready to play?';
-                $("#start-btn").show();
+                addPlace(doc.data()['Place']);
+                $("#place-loader").hide();
+                $("#modal-text").html("<b>Choose places to show</b>");
+                $("#show-btn").show();
+                $("#places-list").show();
             });
-            var i = 0;
-            shuffle(places);
-            addQuestion(places[0][0]);
         });
-
-        function addRankToDatabase() {
-            var time = stopwatch.lap().replace(/;/g, "a");
-            var name = document.getElementById("username-input").value;
-            database.collection("rank").add({
-                name: name,
-                time: time
-            })
-            $("#add-time-btn").hide();
-            $("#username-input").hide();
-            showModal('Success!', 'Your Score has been added, ' + name + ".\n Are you going to play again?");
-            $("#replay-btn").show();
-            $("#rank-link-btn").show();
-        };
 
         firebase.auth().onAuthStateChanged(function (user) {
             if (user) {
