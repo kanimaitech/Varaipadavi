@@ -6,7 +6,7 @@
 <head>
     <title>வரைபடவி - Varaipadavi</title>
 
-    <link rel="icon" href="assets/img/favicon.png" type="image/png">
+    <link rel="icon" href="../assets/img/favicon.png" type="image/png">
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -14,8 +14,8 @@
     <link type="text/css" rel="stylesheet"
         href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <link type="text/css" rel="stylesheet" href="assets/css/mobile.css">
-    <link type="text/css" rel="stylesheet" href="assets/css/common.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/mobile.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/common.css">
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -29,9 +29,9 @@
     <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-firestore.js"></script>
 
-    <script type="text/javascript" src="assets/js/timer.js"></script>
-    <script type="text/javascript" src="assets/js/firebase.js"></script>
-    <script type="text/javascript" src="assets/js/maphilight.js"></script>
+    <script type="text/javascript" src="../assets/js/timer.js"></script>
+    <script type="text/javascript" src="../assets/js/firebase.js"></script>
+    <script type="text/javascript" src="../assets/js/maphilight.js"></script>
 </head>
 
 <body>
@@ -40,7 +40,7 @@
 
         <nav class="navbar navbar-expand-lg">
             <div class="navbar-header">
-                <img class="brand" src="assets/img/brand.png" height="35px" />
+                <img class="brand" src="../assets/img/brand.png" height="35px" />
             </div>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler"
                 aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
@@ -52,11 +52,11 @@
                     <li class="nav-item"><a class="nav-link" href=""><i class="pr-1 fa fa-home"></i>Home</a></li>
                     <li class="nav-item"><a class="nav-link" href=""><i class="pr-1 fa fa-globe"></i>About us</a>
                     </li>
-                    <li class="nav-item active"><a class="nav-link" href="mobile.html"><i
+                    <li class="nav-item active"><a class="nav-link" href="mobile/mobile.html"><i
                                 class="pr-1 fa fa-flag"></i>Quiz</a></li>
-                    <li class="nav-item"><a class="nav-link" href="rank.html"><i class="pr-1 fa fa-list-ol"></i>Rank</a>
+                    <li class="nav-item"><a class="nav-link" href="web/rank.html"><i class="pr-1 fa fa-list-ol"></i>Rank</a>
                     </li>
-                    <li class="nav-item"><a class="nav-link" href="study.html"><i class="pr-1 fa fa-book"></i>Learn</a>
+                    <li class="nav-item"><a class="nav-link" href="web/study.html"><i class="pr-1 fa fa-book"></i>Learn</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav">
@@ -71,7 +71,7 @@
 
         <div id="quiz">
             <div class="container">
-                <img src='assets/img/lkmap.png' usemap='#lkmap' class='map' title='imgmap201293016112' alt='imgmap201293016112'
+                <img src='../assets/img/lkmap.png' usemap='#lkmap' class='map' title='imgmap201293016112' alt='imgmap201293016112'
                     id='lkmap' />
             </div>
             <map id='innermap' name='lkmap'>
@@ -114,7 +114,7 @@
                         <input type="text" id="username-input" placeholder="Enter your name" />
                         <button class="vp-btn" id="add-time-btn" onclick="addRankToDatabase()">Add Score</button>
                         <button class="vp-btn" id="replay-btn" onclick="restartGame()">Play again</button>
-                        <a href="rank.html"><button class="vp-btn" id="rank-link-btn">Rank</button></a>
+                        <a href="web/rank.html"><button class="vp-btn" id="rank-link-btn">Rank</button></a>
                     </div>
                 </div>
 
