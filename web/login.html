@@ -6,7 +6,7 @@
 <head>
     <title>வரைபடவி - Varaipadavi</title>
 
-    <link rel="icon" href="img/favicon.png" type="image/png">
+    <link rel="icon" href="../assets/img/favicon.png" type="image/png">
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -14,8 +14,8 @@
     <link type="text/css" rel="stylesheet"
         href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <link type="text/css" rel="stylesheet" href="css/common.css">
-    <link type="text/css" rel="stylesheet" href="css/login.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/common.css">
+    <link type="text/css" rel="stylesheet" href="../assets/css/login.css">
 
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
@@ -30,7 +30,7 @@
     <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-firestore.js"></script>
 
-    <script type="text/javascript" src="js/firebase.js"></script>
+    <script type="text/javascript" src="../assets/js/firebase.js"></script>
 
 </head>
 
@@ -39,20 +39,25 @@
         <div class="row justify-content-center pt-5">
             <div id="login">
                 <div class="login-header py-2">
-                    <div id="login-header-text">Sign Up</div>
+                    <div id="login-header-text">Login</div>
                 </div>
                 <div class="login-body">
                     <div class="form-group">
-                        <input type="text" class="form-control vp-input" placeholder="Username" id="username-input">
                         <input type="email" class="form-control vp-input" placeholder="E-mail" id="email-input">
                         <input type="password" class="form-control vp-input" placeholder="Enter password"
                             id="password-input">
-                        <input type="password" class="form-control vp-input" placeholder="Confirm password"
-                            id="password-re-input">
+                    </div>
+                    <div class="row">
+                        <div class="col-7">
+                            <label id="remember=me" class="checkbox-container"> Remember me<input type="checkbox"
+                                    onclick="markPlace()"><span class="checkmark"></span></label>
+                        </div>
+                            <a href="forgot.html" id="forgot-password">forgot password?</a>
                     </div>
                     <div class="alert alert-danger" role="alert" id="alert-box"></div>
-                    <button class="vp-btn" onclick="signUp()">Sign Up</button>
-                    <div id="login-link" class="pt-2 text-center">Already Have an Account? <a href="login.html">Login</a></div>
+                    <button class="vp-btn" onclick="signIn()">Sign In</button>
+                    <div id="signup-link" class="pt-2 text-center">Don't have an account? <a href="signup.html">Create one</a></div>
+                
                 </div>
             </div>
         </div>
@@ -63,60 +68,38 @@
             $('#alert-box').text(message);
             $('#alert-box').show();
         }
-        function signUp() {
-            var username = $("#username-input").val();
+
+        function signIn() {
             var email = $("#email-input").val().toLowerCase();
             var password = $("#password-input").val();
-            var confirmPassword = $("#password-re-input").val();
 
-            var confirmPasswordCheck = password == confirmPassword;
+            if (firebase.auth().currentUser) {
+                firebase.auth().signOut();
+            } else {
+                if (email.length < 4) {
+                    displayAlert('Please enter an email address.');
+                    return;
+                }
+                if (password.length < 4) {
+                    displayAlert('Please enter a password.');
+                    return;
+                }
 
-            userDatabase = firebase.firestore().collection('users');
-
-            userDatabase.where('username', '==', username.toLowerCase()).get().then((querySnapshot) => {
-                var usernameExistCheck = true;
-                querySnapshot.forEach((doc) => {
-                    usernameExistCheck = false;
-                });
-                if (usernameExistCheck) {
-                    if (confirmPasswordCheck) {
-                        firebase.auth().createUserWithEmailAndPassword(email, password).catch(function (error) {
-                            var errorCode = error.code;
-                            var errorMessage = error.message;
-                            userDatabase.where('username', '==', username).get().then((querySnapshot) => {
-                                querySnapshot.forEach((doc) => {
-                                    doc.ref.delete();
-                                });
-                            });
-                                if (errorCode == 'auth/weak-password') {
-                                    displayAlert('The password is too weak.');
-                                } else {
-                                    displayAlert(errorMessage);
-                                }
-                                console.log(error);
-                            });
-                            userDatabase.add({
-                                username: username,
-                                email: email
-                            })
-                            firebase.auth().onAuthStateChanged(function (user) {
-                                user.updateProfile({
-                                    displayName: username
-                                }).then(function () {
-                                    var displayName = user.displayName;
-                                }, function (error) {
-                                    displayAlert(error);
-                                });
-                            });
-                        }
-                    else {
-                                displayAlert('Password doesn\'t match')
-                            }
-                } else {
-                        displayAlert('username exist')
+                firebase.auth().signInWithEmailAndPassword(email, password).catch(function (error) {
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+                    if (errorCode === 'auth/wrong-password') {
+                        displayAlert('Wrong password.');
                     }
+                    else if (errorCode === 'auth/user-not-found') {
+                        displayAlert('User not found. Sign up First.');
+                    } else {
+                        displayAlert(errorMessage);
+                    }
+                    console.log(error);
                 });
 
+            }
         }
         function mobCheck() {
             let check = false;
@@ -126,19 +109,17 @@
 
         function redirect() {
             if (mobCheck()) {
-                window.location = "mobile.html"
+                window.location = "../mobile/index.html"
             }
             else {
-                window.location = "web.html"
+                window.location = "index.html"
             }
         }
 
         window.onload = function () {
             firebase.auth().onAuthStateChanged(function (user) {
                 if (user) {
-                    if (user.displayName !== "") {
-                        redirect();
-                    }
+                    redirect()
                 }
             });
         };
