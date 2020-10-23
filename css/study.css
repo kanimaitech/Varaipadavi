@@ -9,3 +9,7 @@
   right: 10px;
   max-width: 160px;
 }
+
+.vp-loader {
+  margin-top: 0% !important;
+}

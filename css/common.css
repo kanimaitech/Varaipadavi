@@ -53,7 +53,8 @@
 	position: relative;
 	width: 80px;
 	height: 80px;
-	padding-left: 42.5%;
+	/* padding-left: 42.5%; */
+	padding: 15px;
 	margin-top: 18%;
 }
 .vp-loader div {
@@ -422,4 +423,10 @@ td.rank {
 	-webkit-transform: rotate(45deg);
 	-ms-transform: rotate(45deg);
 	transform: rotate(45deg);
+}
+
+
+.loading-text {
+	margin-top: -15px;
+	margin-bottom: 15px;
 }
