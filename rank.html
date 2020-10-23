@@ -53,7 +53,7 @@
     </div>
     <div id="mobile-view">
 
-        <nav id="myNav" class="navbar navbar-expand-lg">
+        <nav id="myNav" class="navbar navbar-expand-lg fixed fixed-top">
             <div class="navbar-header">
                 <img class="brand" src="img/brand.png" height="35px" />
             </div>
@@ -97,6 +97,26 @@
 
 
     <script>
+		
+		// When the user scrolls the page, execute myFunction
+		window.onscroll = function() {myFunction()};
+
+		// Get the header
+		var header = document.getElementById("myNav");
+
+		// Get the offset position of the navbar
+		var sticky = header.offsetTop;
+
+		// Add the sticky class to the header when you reach its scroll position. Remove "sticky" when you leave the scroll position
+		function myFunction() {
+		  if (window.pageYOffset > sticky) {
+			header.classList.add("sticky");
+		  } else {
+			header.classList.remove("sticky");
+		  }
+		}
+			
+	
         function addRankToTable(rank, user, time) {
             var text = '<tr><td>' + rank + '</td><td>' + user + '</td><td>' + time + '</td></tr>';
             document.getElementById('rank-t').innerHTML = document.getElementById('rank-t').innerHTML + text;

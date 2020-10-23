@@ -1,5 +1,6 @@
 #rank-loader {
     margin-left: auto;
+
 }
 
 #mobile-view {
@@ -15,4 +16,39 @@
     -webkit-animation: spin 2s linear infinite;
     /* Safari */
     animation: spin 2s linear infinite;
+}
+
+/*namrata*/
+
+
+.navbar{
+	position: sticky;
+  top: 0;
+  
+}
+
+.rank-header{
+	position: sticky;
+  top: 40px;
+  
+}
+
+
+#rank-t{
+	position: absolute;
+    top: 50px; 
+}
+
+
+
+.content {
+  padding: 16px;
+  top: 50px
+}
+
+
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%
 }
