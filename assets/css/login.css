@@ -26,11 +26,11 @@ body {
     font-size: 28px;
     text-align: center;
 }
-.login-icon {
+/* .login-icon {
     width: 100%;
     text-align: center;
     color: #0045cc;
-}
+} */
 
 #alert-box {
     display: none;
