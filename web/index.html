@@ -189,9 +189,7 @@
         var answers = 0;
         function markPlace(element) {
             var place = element;
-            if ($("#" + place).length == 0) {
-                alert("This is incorrect");
-            } else {
+            if ($("#" + place).length !== 0) {
                 answers += 1;
                 if (answers == 10) {
                     stopwatch.stop();
