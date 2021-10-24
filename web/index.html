@@ -205,7 +205,7 @@
                     var coord = $('#a-' + place).attr("coords").split(',');
                     var textVerticalCoord = +coord[1];
                     var textHorizontalCoord = +coord[0];
-                    $('#candiv').append('<div style="z-index: 1; color: #0040ff; position: fixed; top: ' + textVerticalCoord + 'px; left: ' + textHorizontalCoord + 'px; font-size:10px;"><b>' + place.replace('_', '') + '</b></div>');
+                    $('#candiv').append('<div style="z-index: 1; color: #0040ff; position: fixed; top: ' + textVerticalCoord + 'px; left: ' + textHorizontalCoord + 'px; font-size:10px;"><b>' + place.replace('_', " ") + '</b></div>');
                     $('#a-' + place).attr("coords", coord[0] + ", " + coord[1] + ", 4");
                     var data = $('#a-' + place).mouseout().data('maphilight') || {};
                     data.alwaysOn = !data.alwaysOn;
