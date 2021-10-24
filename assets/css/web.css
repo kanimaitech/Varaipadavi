@@ -10,6 +10,9 @@
 #map-area {
 	margin-top: 0.5%;
 }
+#imgbox {
+	position: relative;
+  }
 #question-area {
 	position: fixed;
 	right: 0.5%;
