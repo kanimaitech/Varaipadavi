@@ -70,8 +70,10 @@
 
         <div id="quiz">
             <div class="container">
-                <img src='../assets/img/lkmap.png' usemap='#lkmap' class='map' title='imgmap201293016112' alt='imgmap201293016112'
-                    id='lkmap' />
+                <div id="imgbox">
+                    <img src='../assets/img/lkmap.png' usemap='#lkmap' class='map' title='imgmap201293016112' alt='imgmap201293016112'
+                        id='lkmap' />
+                </div>
             </div>
             <map id='innermap' name='lkmap'>
             </map>
@@ -164,9 +166,9 @@
             data.alwaysOn = !data.alwaysOn;
             $('#a-' + place).data('maphilight', data).trigger('alwaysOn.maphilight');
             if ($("#t-" + place).length == 0) {
-                var textVerticalCoord = +coord[1] + 51;
-                var textHorizontalCoord = +coord[0] + 16;
-                $('#innermap').append('<div id="t-' + place + '" style="color: #0040ff; position: absolute; top: ' + textVerticalCoord + 'px; left: ' + textHorizontalCoord + 'px; font-size:10px;"><b>' + place + '</b></div>');
+                var textVerticalCoord = +coord[1]-8;
+                var textHorizontalCoord = +coord[0]+8;
+                $('#imgbox').append('<div id="t-' + place + '" style="color: #0040ff; position: absolute; top: ' + textVerticalCoord + 'px; left: ' + textHorizontalCoord + 'px; font-size:10px;"><b>' + place + '</b></div>');
             } else if (document.getElementById('t-' + place).style.display == "none") {
                 document.getElementById('t-' + place).style.display = "block";
             }

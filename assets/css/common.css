@@ -425,8 +425,11 @@ tbody tr:hover {
 	transform: rotate(45deg);
 }
 
-
 .loading-text {
 	margin-top: -15px;
 	margin-bottom: 15px;
 }
+
+#imgbox {
+	position: relative;
+  }
